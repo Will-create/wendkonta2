@@ -5468,6 +5468,9 @@ public function store3(StoreSaleRequest $request)
         $query = Product::join('product_warehouse', 'products.id', '=', 'product_warehouse.product_id')
                 ->where('products.is_active', true)
                 ->where('product_warehouse.warehouse_id', $warehouse_id)
+                ->when(config('without_stock') == 'no', function ($query) {
+                    $query->where('product_warehouse.qty', '>', 0);
+                })
                 ->where(function ($q) use ($search) {
                     $q->where('products.code', 'like', '%' . $search . '%')
                     ->orWhere('products.name', 'like', '%' . $search . '%')

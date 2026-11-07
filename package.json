@@ -1,6 +1,8 @@
 {
     "private": true,
     "scripts": {
+        "test:sale-selection": "node tests/js/sale-product-select.dom.test.cjs",
+        "test:sale-selection:browser": "node tests/js/sale-product-select.test.mjs",
         "dev": "npm run development",
         "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "watch": "npm run development -- --watch",
@@ -13,10 +15,12 @@
         "axios": "^0.19",
         "bootstrap": "^4.0.0",
         "cross-env": "^7.0",
+        "jsdom": "^26.1.0",
         "jquery": "^3.2",
         "laravel-mix": "^5.0.1",
         "lodash": "^4.17.13",
         "popper.js": "^1.12",
+        "playwright": "^1.63.0",
         "resolve-url-loader": "2.3.1",
         "sass": "^1.20.1",
         "sass-loader": "7.*",

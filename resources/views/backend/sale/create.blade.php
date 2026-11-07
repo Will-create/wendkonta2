@@ -730,11 +730,30 @@
         const $input = $('#product-search-input');
         const $results = $('#product-results-container');
         const $noResults = $('#no-results-message');
+        let blurTimer = null;
+        let pointerOnResult = false;
 
         function clearResults() {
             $results.empty().css('padding', '0');
             $noResults.hide();
         }
+
+        // A result press must not blur the search field. Blur empties this list
+        // after 150ms, and a normal click lasts longer than that, so the row is
+        // gone before mouseup and the click never reaches .product-img.
+        $results.on('mousedown', '.product-img', function (event) {
+            event.preventDefault();
+            pointerOnResult = true;
+            if (blurTimer) {
+                clearTimeout(blurTimer);
+                blurTimer = null;
+            }
+        });
+        $(document).on('mouseup', function () {
+            setTimeout(function () {
+                pointerOnResult = false;
+            }, 0);
+        });
 
         function searchProducts(search) {
             $results.css('padding', '0 10px 15px');
@@ -742,7 +761,7 @@
             $noResults.hide();
 
             $.ajax({
-                url: '{{url("/")}}/sales/search/' + warehouse_id + '/' + search,
+                url: '{{url("/")}}/sales/search/' + $('#warehouse_id').val() + '/' + search,
                 type: 'GET',
                 success: function (data) {
                     $results.empty();
@@ -830,6 +849,7 @@
                     }
                 },
                 error: function () {
+                    $results.empty();
                     $noResults.text("Error searching products.").show();
                 }
             });
@@ -858,14 +878,24 @@
             }
         });
 
-        // Trigger on blur (click outside)
+        // Results belong to the warehouse used for that request. Never allow a
+        // stale result to be selected after the warehouse changes.
+        $('#warehouse_id').on('change', function () {
+            clearTimeout(typingTimer);
+            clearResults();
+        });
+
+        // Trigger on blur (click outside). A result press cancels this timer
+        // and sets pointerOnResult so a slow click is not cleared first.
         $input.on('blur', function () {
-            setTimeout(() => {
-                // only clear if results are still visible/non-empty
+            blurTimer = setTimeout(() => {
+                if (pointerOnResult) {
+                    return;
+                }
                 if ($results.children().length > 0) {
                     clearResults();
                 }
-            }, 150); // slight delay so clicks still register
+            }, 150);
         });
 
     });
@@ -1022,7 +1052,7 @@ var reward_point_setting = <?php echo json_encode($lims_reward_point_setting_dat
 @endif
 
 var rowindex;
-var customer_group_rate;
+var customer_group_rate = 0;
 var row_product_price;
 var pos;
 var role_id = <?php echo json_encode(Auth::user()->role_id)?>;
@@ -1212,7 +1242,7 @@ $("#myTable").on('click', '.plus', function() {
     }else{
         checkDiscount(qty, true);
     }
-    $("#myTable .dplus").click();
+    $(this).closest('tr').find('.dplus').trigger('click');
     updateDstatus(rowindex);
 });
 
@@ -1228,7 +1258,7 @@ $("#myTable").on('click', '.minus', function() {
     else
         checkDiscount(qty, '3');
 
-    $("#myTable .dminus").click();
+    $(this).closest('tr').find('.dminus').trigger('click');
 
     updateDstatus(rowindex);
 });
@@ -1312,6 +1342,17 @@ $(document).on('click', '.product-img', function() {
     }
 });
 
+// Index 23 is delivered qty. Restaurant extras, when the module is on, are appended at index 25.
+function saleProductExtras(data) {
+    if (Array.isArray(data[25])) {
+        return data[25];
+    }
+    if (Array.isArray(data[23])) {
+        return data[23];
+    }
+    return null;
+}
+
 function productSearch(data) {
     if(data.embedded == 1) {
         alert('{{ __("db.This product has been added using the weight scale machine.")}}');
@@ -1359,7 +1400,8 @@ function productSearch(data) {
                 data: product
             },
             success: function(data) {
-                if(data[23]) {
+                var extras = saleProductExtras(data);
+                if (extras && extras.length) {
                     data[15] = 1;
                     pre_qty = 0;
                 }
@@ -1375,8 +1417,16 @@ function productSearch(data) {
                 var flag = 1;
                 if (pre_qty > 0) {
                     var qty = data[15];
-                    $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ') .qty').val(qty);
-                    
+                    var $row = $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')');
+                    $row.find('.qty').val(qty);
+                    if (!Array.isArray(data[23]) && data[23] !== '' && data[23] != null) {
+                        var delivered = parseFloat(data[23]);
+                        if (!isNaN(delivered)) {
+                            $row.find('.dqty').val(Math.min(delivered, parseFloat(qty)));
+                        }
+                    }
+                    updateDstatus(rowindex);
+
                     product_price[rowindex] = parseFloat(data[2] * currency['exchange_rate']) + parseFloat(data[2] * currency['exchange_rate'] * customer_group_rate);
 
                     checkDiscount(String(qty), true);
@@ -1395,6 +1445,13 @@ function productSearch(data) {
                         imeiNumbers = data[18];
                     $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.imei-number').val(imeiNumbers);
                 }
+            },
+            error: function (xhr) {
+                var message = 'Could not add this product.';
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    message = xhr.responseJSON.error;
+                }
+                alert(message);
             }
         });
     }
@@ -1404,6 +1461,7 @@ function productSearch(data) {
 function addNewProduct(data){
     console.log(data);
     $('.payment-btn').removeAttr('disabled');
+    var extras = saleProductExtras(data);
     var newRow = $('<tr id='+ data[1] +'>');
     var cols = '';
     temp_unit_name = (data[6]).split(',');
@@ -1495,7 +1553,7 @@ function addNewProduct(data){
         cols += '<input type="hidden" class="imei-number" name="imei_number[]" value="'+data[18]+'" />';
     else
         cols += '<input type="hidden" class="imei-number" name="imei_number[]" value="" />';
-    if(data[23]){
+    if(extras && extras.length > 0){
         cols += '<input type="hidden" class="topping_product" name="topping_product[]" value="" />';
         cols += '<input type="hidden" class="topping-price" name="topping-price" value="" />';
     }
@@ -1527,13 +1585,14 @@ function addNewProduct(data){
 
     checkQuantity(data[15], true);
     checkDiscount(data[15], true);
+    updateDstatus(rowindex);
 
     if(data[16]) {
         populatePriceOption();
         $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.edit-product').click();
     }
 
-    if (data[23] && Array.isArray(data[23]) && data[23].length > 0) {
+    if (extras && extras.length > 0) {
         if(productSale && productSale.length > 0) {
 
             if (product_discount[rowindex] < 1) {
@@ -1579,7 +1638,7 @@ function addNewProduct(data){
 
             function openToppingsModal(data, selectedToppings = [], rowIndex = null) {
                 let modalContent = '<form id="product-selection-form">';
-                data[23].forEach(product => {
+                extras.forEach(product => {
                     const selected = selectedToppings.find(t => t.id == product.id);
                     const isChecked = selected ? 'checked' : '';
                     const qty = selected ? selected.qty : 1;
