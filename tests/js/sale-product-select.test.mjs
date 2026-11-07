@@ -66,6 +66,10 @@ check(
         !blade.includes('$("#myTable .dminus").click()')
 );
 check(
+    'a single search result is never auto-selected',
+    !blade.includes("$('#product-results-container .product-img').first().trigger('click')")
+);
+check(
     'backend keeps delivered qty at index 23 and appends extras after it',
     controller.includes('$dqty, //23') &&
         controller.includes("$dqty. '/'.$dqty // 24") &&
@@ -82,7 +86,7 @@ if (searchScript.includes('{{')) {
 
 const clickHandler = stripAtLines(sliceBetween(
     blade,
-    "$(document).on('click', '.product-img'",
+    'function addSaleProductResult',
     'function saleProductExtras',
     'click handler'
 ));
@@ -309,6 +313,21 @@ try {
     const resultCount = await page.locator('#product-results-container .product-img').count();
     check('search returns more than one match so the click is manual', resultCount > 1, String(resultCount));
 
+    await page.locator('.add-selected-products').click();
+    check('bulk add requires a selected product', await rows(page).count() === 0 && dialogs.some((message) => message.includes('at least one')));
+    const resultCheckboxes = page.locator('.product-result-select');
+    for (let i = 0; i < await resultCheckboxes.count(); i++) {
+        await resultCheckboxes.nth(i).check();
+    }
+    await page.locator('.add-selected-products').click();
+    check('bulk add pushes all selected results into the cart', await rows(page).count() === resultCount);
+    while (await rows(page).count()) {
+        await rows(page).first().locator('.ibtnDel').click();
+    }
+
+    await search(page, 'huile');
+    await page.waitForSelector('#product-results-container .product-img');
+
     await slowClick(page, page.locator('#product-results-container .product-img').first());
     check('slow click adds the product to the cart', await rows(page).count() === 1, 'rows=' + await rows(page).count());
     check('added row is HUILE 20L SALWA', (await rows(page).nth(0).locator('.product-code').inputValue()) === '21014058');
@@ -347,8 +366,9 @@ try {
     await search(page, 'riz');
     await page.waitForSelector('#product-results-container .product-img');
     const rowsBeforeMissingCustomer = await rows(page).count();
-    await slowClick(page, page.locator('#product-results-container .product-img').first());
-    check('missing customer does not add a product', await rows(page).count() === rowsBeforeMissingCustomer);
+    await page.locator('.product-result-select').first().check();
+    await page.locator('.add-selected-products').click();
+    check('missing customer blocks bulk product insertion', await rows(page).count() === rowsBeforeMissingCustomer);
     check('missing customer explains why', dialogs.some((message) => message.includes('Customer')));
     await page.selectOption('#customer_id', '21');
 
@@ -386,9 +406,11 @@ try {
 
     const rowsBeforeSingle = await rows(page).count();
     await search(page, 'parabole');
-    await page.waitForTimeout(200);
-    check('the only search match is added immediately', await rows(page).count() === rowsBeforeSingle + 1);
-    check('the automatic match is the rice product', (await rows(page).nth(0).locator('.product-code').inputValue()) === '15233690');
+    await page.waitForSelector('#product-results-container .product-img');
+    check('the only search match waits for an explicit click', await rows(page).count() === rowsBeforeSingle);
+    await slowClick(page, page.locator('#product-results-container .product-img').first());
+    check('clicking the only match adds it', await rows(page).count() === rowsBeforeSingle + 1);
+    check('the clicked match is the rice product', (await rows(page).nth(0).locator('.product-code').inputValue()) === '15233690');
 
     const serialized = await page.evaluate(async () => {
         const body = $('form.payment-form').serialize();

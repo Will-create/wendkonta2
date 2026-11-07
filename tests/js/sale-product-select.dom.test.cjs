@@ -32,7 +32,7 @@ const searchHandlers = between(blade, '$(document).ready(function() {', '</scrip
     .replaceAll("{{__('db.expired')}}", 'expired');
 const clickHandler = stripBladeDirectives(between(
     blade,
-    "$(document).on('click', '.product-img'",
+    'function addSaleProductResult',
     'function saleProductExtras'
 ));
 const productSearch = between(blade, 'function saleProductExtras', 'function addNewProduct')
@@ -217,6 +217,17 @@ async function slowClick(element) {
     let results = [...window.document.querySelectorAll('.product-img')];
     check('search returns multiple selectable products', results.length === 2, `count=${results.length}`);
 
+    $('.add-selected-products').trigger('click');
+    check('bulk add requires at least one selected product', $('tbody tr').length === 0 && window.dialogs.some((message) => message.includes('at least one')));
+    $('.product-result-select').prop('checked', true);
+    $('.add-selected-products').trigger('click');
+    check('bulk add pushes every selected result into the cart', $('tbody tr').length === 2 && $('.product-code').map((_, element) => element.value).get().sort().join(',') === 'OIL-1,OIL-2');
+    $('tbody .ibtnDel').each(function () { $(this).trigger('click'); });
+    check('bulk-added products remain independently removable', $('tbody tr').length === 0);
+
+    await search('oil');
+    results = [...window.document.querySelectorAll('.product-img')];
+
     await slowClick(results[0]);
     check('a slow pointer click adds the selected product', $('tbody tr').length === 1);
     check('the selected product identifier reaches the cart', $('.product-code').val() === 'OIL-1');
@@ -230,7 +241,8 @@ async function slowClick(element) {
     check('delivery ratio is synchronized for submission', $('.dstatus-value').val() === '2 / 2');
 
     await search('rice');
-    await wait(10); // one result auto-selects
+    check('a single search match waits for an explicit click', $('tbody tr').length === 1 && $('.product-img').length === 1);
+    await slowClick(window.document.querySelector('.product-img'));
     check('a different product is inserted as a separate row', $('tbody tr').length === 2);
 
     const firstRow = $('tbody tr').first();
@@ -257,8 +269,9 @@ async function slowClick(element) {
     await search('oil');
     results = [...window.document.querySelectorAll('.product-img')];
     const rowsBefore = $('tbody tr').length;
-    await slowClick(results[0]);
-    check('customer validation prevents cart insertion', $('tbody tr').length === rowsBefore && window.dialogs.some((message) => message.includes('Customer')));
+    $('.product-result-select').first().prop('checked', true);
+    $('.add-selected-products').trigger('click');
+    check('bulk add applies customer validation before cart insertion', $('tbody tr').length === rowsBefore && window.dialogs.some((message) => message.includes('Customer')));
 
     check('cart fields serialize for sale submission', $('.payment-form').serialize().includes('product_code%5B%5D=OIL-1'));
     check('selection workflow emits no JavaScript errors', window.scriptErrors.length === 0, window.scriptErrors.join(' | '));

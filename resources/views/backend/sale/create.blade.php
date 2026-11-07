@@ -741,7 +741,7 @@
         // A result press must not blur the search field. Blur empties this list
         // after 150ms, and a normal click lasts longer than that, so the row is
         // gone before mouseup and the click never reaches .product-img.
-        $results.on('mousedown', '.product-img', function (event) {
+        $results.on('mousedown', '.product-img, .add-selected-products', function (event) {
             event.preventDefault();
             pointerOnResult = true;
             if (blurTimer) {
@@ -790,6 +790,7 @@
                                                             data-embedded="${product.is_embeded}" 
                                                             data-batch="${batch_id}" 
                                                             data-price="${product.price}">
+                                        <input type="checkbox" class="product-result-select mr-2" aria-label="Select ${product.name}">
                                         ${product.name} (${product.code}) | ${product.price} | IMEI: ${product.imei_number}
                                     </div>
                                 `;
@@ -808,6 +809,7 @@
                                                                             data-embedded="${product.is_embeded}" 
                                                                             data-batch="${batch_id}" 
                                                                             data-price="${product.price}">
+                                            <input type="checkbox" class="product-result-select mr-2" aria-label="Select ${product.name}">
                                             ${product.name} (${product.code}) - ${product.expired_date} | ${product.price} ${displayStock}
                                         </div>
                                     `;
@@ -822,6 +824,7 @@
                                                             data-embedded="${product.is_embeded}" 
                                                             data-batch="${batch_id}" 
                                                             data-price="${product.price}">
+                                        <input type="checkbox" class="product-result-select mr-2" aria-label="Select ${product.name}">
                                         ${product.name} (${product.code}) | ${product.price} ${displayStock}
                                     </div>
                                 `;
@@ -830,18 +833,7 @@
                             $results.append(productHtml);
                         });
 
-                        $('.product-img').on('click', function () {
-                            clearResults();
-                        });
-
-                        // Auto-click if only one result
-                        if (data.length === 1) {
-                            if(click === 0){
-                                $('#product-results-container .product-img').first().trigger('click');
-                            }
-                            clearResults();
-                            click = 1;
-                        }
+                        $results.append('<div class="product-selection-actions text-right mt-2"><button type="button" class="btn btn-primary btn-sm add-selected-products">Add selected</button></div>');
 
                     } else {
                         clearResults();
@@ -855,13 +847,10 @@
             });
         }
 
-        var click = 0;
-
         // Trigger on input
         $input.on('input', function () {
             const value = $(this).val().trim();
             if (value.length >= 3) {
-                click = 0;
                 clearTimeout(typingTimer);
                 typingTimer = setTimeout(() => searchProducts(value), doneTypingInterval);
             } else {
@@ -873,7 +862,6 @@
         $input.on('paste', function (e) {
             const pastedData = (e.originalEvent || e).clipboardData.getData('text');
             if (pastedData.length >= 3) {
-                click = 0;
                 searchProducts(pastedData.trim());
             }
         });
@@ -883,6 +871,39 @@
         $('#warehouse_id').on('change', function () {
             clearTimeout(typingTimer);
             clearResults();
+        });
+
+        $results.on('click', '.product-result-select', function (event) {
+            event.stopPropagation();
+            $(this).closest('.product-img').toggleClass('selected', this.checked);
+        });
+
+        $results.on('click', '.add-selected-products', function () {
+            const $selected = $results.find('.product-result-select:checked').closest('.product-img');
+            if (!$selected.length) {
+                alert('Please select at least one product.');
+                return;
+            }
+
+            let added = 0;
+            $selected.each(function () {
+                if (addSaleProductResult(this)) {
+                    added++;
+                } else {
+                    return false;
+                }
+            });
+
+            if (added > 0) {
+                $input.val('');
+                clearResults();
+                $input.focus();
+            }
+        });
+
+        $input.on('sale-product-added', function () {
+            clearResults();
+            $input.focus();
         });
 
         // Trigger on blur (click outside). A result press cancels this timer
@@ -1310,8 +1331,7 @@ $("#myTable").on("change", ".batch-no", function () {
     });
 });
 
-$(document).on('click', '.product-img', function() {
-    
+function addSaleProductResult(element) {
     var customer_id = $('#customer_id').val();
     var warehouse_id = $('#warehouse_id').val();
     var biller_id = $('#biller_id').val();
@@ -1322,23 +1342,42 @@ $(document).on('click', '.product-img', function() {
     var service_id = $('#service_id').val();
     @endif
 
-    if(!customer_id)
+    if(!customer_id) {
         alert('Please select Customer!');
-    else if(!warehouse_id)
+        return false;
+    }
+    else if(!warehouse_id) {
         alert('Please select Warehouse!');
-    else if(!biller_id)
+        return false;
+    }
+    else if(!biller_id) {
         alert('Please select Biller!');
+        return false;
+    }
     @if(in_array('restaurant',explode(',',$general_setting->modules)))
     else if(!table_id && service_id == 1){
         alert('Please select Table!');
+        return false;
     }
     else if(!waiter_id && service_id == 1){
         alert('Please select Waiter!');
+        return false;
     }
     @endif
     else{
-        var data = $(this).data();
+        var data = $(element).data();
         productSearch(data);
+        return true;
+    }
+}
+
+$(document).on('click', '.product-img', function(event) {
+    if ($(event.target).is('.product-result-select')) {
+        return;
+    }
+
+    if (addSaleProductResult(this)) {
+        $('#product-search-input').trigger('sale-product-added');
     }
 });
 
