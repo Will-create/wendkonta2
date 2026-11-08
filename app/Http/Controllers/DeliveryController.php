@@ -239,7 +239,7 @@ class DeliveryController extends Controller
                 $delivery->delivered_by = $data['delivered_by'] ?? null;
                 $delivery->recieved_by = $data['recieved_by'] ?? null;
                 $delivery->status = $data['status'] ?? '1';
-                $delivery->note = $data['note'] ?? null;
+                $delivery->note = $this->deliveryNote($request);
                 $document = $request->file;
                 if ($document) {
                     $ext = pathinfo($document->getClientOriginalName(), PATHINFO_EXTENSION);
@@ -434,6 +434,7 @@ class DeliveryController extends Controller
         }
 
         $input = $request->except('file', 'deliver_qty', 'deliver_lines', 'track_lines');
+        $input['note'] = $this->deliveryNote($request);
         $lims_delivery_data = Delivery::find($input['delivery_id']);
         if(!$lims_delivery_data) {
             return redirect()->back()->with('not_permitted', __('db.Delivery not found'));
@@ -771,6 +772,16 @@ class DeliveryController extends Controller
             ->reverse()
             ->values()
             ->all();
+    }
+
+    private function deliveryNote(Request $request): string
+    {
+        $note = $request->input('note', '');
+        if (!is_scalar($note)) {
+            return '';
+        }
+
+        return trim((string) $note);
     }
 
     private function submittedQuantities(Request $request): array

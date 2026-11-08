@@ -514,6 +514,7 @@ Route::group(['middleware' => ['common', 'auth', 'active']], function() {
             Route::post('warehouse-expense-data', 'warehouseExpenseData');
             Route::post('warehouse-quotation-data', 'warehouseQuotationData');
             Route::post('warehouse-return-data', 'warehouseReturnData');
+            Route::post('warehouse-stock-data', 'warehouseStockData');
             Route::post('user_report', 'userReport')->name('report.user');
             Route::post('user-sale-data', 'userSaleData');
             Route::post('user-purchase-data', 'userPurchaseData');

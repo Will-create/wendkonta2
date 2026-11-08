@@ -2275,6 +2275,69 @@ class ReportController extends Controller
         return view('backend.report.warehouse_report',compact('start_date', 'end_date', 'warehouse_id', 'lims_warehouse_list'));
     }
 
+    public function warehouseStockData(Request $request)
+    {
+        $warehouseId = $request->input('warehouse_id');
+        $product = trim((string) $request->input('product', ''));
+
+        $query = DB::table('product_warehouse')
+            ->join('products', 'products.id', '=', 'product_warehouse.product_id')
+            ->leftJoin('warehouses', 'warehouses.id', '=', 'product_warehouse.warehouse_id')
+            ->select(
+                'product_warehouse.id',
+                'product_warehouse.product_id',
+                'product_warehouse.warehouse_id',
+                'product_warehouse.qty',
+                'products.name',
+                'products.code',
+                'warehouses.name as warehouse'
+            );
+
+        if ($warehouseId !== null && $warehouseId !== '' && (int) $warehouseId !== 0) {
+            $query->where('product_warehouse.warehouse_id', (int) $warehouseId);
+        }
+        if ($product !== '') {
+            $like = '%'.$this->escapeLike($product).'%';
+            $query->where(function ($inner) use ($like) {
+                $inner->where('products.name', 'LIKE', $like)
+                    ->orWhere('products.code', 'LIKE', $like);
+            });
+        }
+
+        $total = (clone $query)->count('product_warehouse.id');
+        $query->orderBy('products.name')->orderBy('product_warehouse.id');
+
+        $length = $request->input('length');
+        if ($length !== null && $length !== '' && (int) $length !== -1) {
+            $query->offset(max(0, (int) $request->input('start', 0)))->limit((int) $length);
+        }
+
+        $rows = [];
+        foreach ($query->get() as $row) {
+            $rows[] = [
+                'id' => (int) $row->id,
+                'product_id' => (int) $row->product_id,
+                'warehouse_id' => (int) $row->warehouse_id,
+                'name' => (string) $row->name,
+                'code' => (string) ($row->code ?? ''),
+                'warehouse' => (string) ($row->warehouse ?? ''),
+                'qty' => $row->qty,
+            ];
+        }
+
+        return response()->json([
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => $total,
+            'recordsFiltered' => $total,
+            'data' => $rows,
+        ]);
+    }
+
+    private function escapeLike(string $value): string
+    {
+        return str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $value);
+    }
+
     public function warehouseSaleData(Request $request)
     {
         $columns = array(

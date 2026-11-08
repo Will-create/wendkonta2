@@ -1199,8 +1199,7 @@ columns.push(
         }
     }
 
-    $(document).on("click", "table.sale-list tbody .add-delivery", function(event) {
-        var id = $(this).data('id').toString();
+    function openAddDelivery(id) {
         $.get('delivery/create/'+id, function(data) {
             if (data.error) {
                 alert(data.error);
@@ -1223,6 +1222,10 @@ columns.push(
             renderDeliveryLines(data[9]);
             $('#add-delivery').modal('show');
         });
+    }
+
+    $(document).on("click", "table.sale-list tbody .add-delivery", function(event) {
+        openAddDelivery($(this).data('id').toString());
     });
 
     $('#add-delivery form').on('submit', function(event) {
@@ -1694,13 +1697,26 @@ columns.push(
         $('#sale-details').modal('show');
     }
 
-    var openSaleId = new URLSearchParams(window.location.search).get('open_sale');
+    var salePageParams = new URLSearchParams(window.location.search);
+    var openSaleId = salePageParams.get('open_sale');
     if (openSaleId) {
+        if (salePageParams.get('show') === 'delivery-history') {
+            $('#sale-details').one('shown.bs.modal', function() {
+                var history = document.getElementById('delivery-history');
+                if (history) {
+                    history.scrollIntoView({block: 'start'});
+                }
+            });
+        }
         $.get('sales/' + openSaleId + '/detail-card', function(sale) {
             if ($.isArray(sale) && sale.length) {
                 saleDetails(sale);
             }
         });
+    }
+    var addDeliveryId = salePageParams.get('add_delivery');
+    if (addDeliveryId) {
+        openAddDelivery(addDeliveryId);
     }
 
     $(document).on('submit', '.payment-form', function(e) {

@@ -150,6 +150,7 @@
                           <th>{{__('db.reference')}}</th>
                           <th>{{__('db.customer')}}</th>
                           <th>{{__('db.grand total')}}</th>
+                          <th>{{__('db.Delivery Status')}}</th>
                           <th></th>
                         </tr>
                       </thead>
@@ -460,24 +461,33 @@
         var emptySearch = @json(__('db.Enter an invoice date, a reference or a customer name.'));
         var noResult = @json(__('db.No invoice matches this search.'));
         var openInvoice = @json(__('db.Open invoice'));
+        var saleDetailsLabel = @json(__('db.Sale Details'));
+        var deliveryHistoryLabel = @json(__('db.Delivery history'));
+        var addDeliveryLabel = @json(__('db.Add Delivery'));
         body.empty();
         if (!date && !$.trim(reference) && !$.trim(customer)) {
-            body.append('<tr><td colspan="5">'+$('<div>').text(emptySearch).html()+'</td></tr>');
+            body.append('<tr><td colspan="6">'+$('<div>').text(emptySearch).html()+'</td></tr>');
             return;
         }
         $.get('{{ route('sale.invoiceLookup') }}', {date: date, reference: reference, customer: customer}, function(rows) {
             if (!rows || !rows.length) {
-                body.append('<tr><td colspan="5">'+$('<div>').text(noResult).html()+'</td></tr>');
+                body.append('<tr><td colspan="6">'+$('<div>').text(noResult).html()+'</td></tr>');
                 return;
             }
             $.each(rows, function(_, row) {
-                var link = $('<a>', {class: 'btn btn-sm btn-primary', href: row.invoice_url, text: openInvoice});
+                var status = $.trim((row.delivery_status || '') + (row.delivery_qty ? ' (' + row.delivery_qty + ')' : ''));
+                var actions = $('<div>', {class: 'btn-group-vertical'});
+                actions.append($('<a>', {class: 'btn btn-sm btn-primary mb-1 invoice-link', href: row.invoice_url, text: openInvoice}));
+                actions.append($('<a>', {class: 'btn btn-sm btn-info mb-1 sale-details-link', href: row.details_url, text: saleDetailsLabel}));
+                actions.append($('<a>', {class: 'btn btn-sm btn-secondary mb-1 delivery-history-link', href: row.history_url, text: deliveryHistoryLabel}));
+                actions.append($('<a>', {class: 'btn btn-sm btn-success add-delivery-link', href: row.add_delivery_url, text: addDeliveryLabel}));
                 var tr = $('<tr>');
                 tr.append($('<td>').text(row.date));
                 tr.append($('<td>').text(row.reference_no));
                 tr.append($('<td>').text(row.customer));
                 tr.append($('<td>').text(row.grand_total));
-                tr.append($('<td>').append(link));
+                tr.append($('<td>', {class: 'delivery-status'}).text(status));
+                tr.append($('<td>').append(actions));
                 body.append(tr);
             });
         });

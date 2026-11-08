@@ -60,6 +60,9 @@
       <li class="nav-item">
         <a class="nav-link" href="#warehouse-expense" role="tab" data-toggle="tab">{{__('db.Expense')}}</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#warehouse-stock" role="tab" data-toggle="tab">{{__('db.Stock Quantity')}}</a>
+      </li>
     </ul>
 
     <div class="tab-content">
@@ -217,6 +220,33 @@
                             <th></th>
                         </tr>
                     </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="warehouse-stock">
+            <div class="container-fluid mt-3 mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>{{__('db.Product name or code')}}</label>
+                        <input type="text" id="stock-product" class="form-control" placeholder="{{__('db.Product name or code')}}">
+                    </div>
+                    <div class="col-md-2">
+                        <label>&nbsp;</label>
+                        <button type="button" id="stock-filter" class="btn btn-primary btn-block">{{__('db.submit')}}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive mb-4">
+                <table id="stock-table" class="table table-hover" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>{{__('db.product')}}</th>
+                            <th>{{__('db.Code')}}</th>
+                            <th>{{__('db.Warehouse')}}</th>
+                            <th>{{__('db.qty')}}</th>
+                        </tr>
+                    </thead>
                 </table>
             </div>
         </div>
@@ -881,6 +911,64 @@
         $('input[name="start_date"]').val(start_date);
         $('input[name="end_date"]').val(end_date);
     }
+    });
+
+    var stockTable = $('#stock-table').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            url: "warehouse-stock-data",
+            data: function(d) {
+                d.warehouse_id = warehouse_id;
+                d.product = $('#stock-product').val();
+            },
+            dataType: "json",
+            type: "post"
+        },
+        "columns": [
+            {"data": "name"},
+            {"data": "code"},
+            {"data": "warehouse"},
+            {"data": "qty"}
+        ],
+        'language': {
+            'lengthMenu': '_MENU_ {{__("db.records per page")}}',
+            "info": '<small>{{__("db.Showing")}} _START_ - _END_ (_TOTAL_)</small>',
+            "search": '{{__("db.Search")}}',
+            'paginate': {
+                'previous': '<i class="dripicons-chevron-left"></i>',
+                'next': '<i class="dripicons-chevron-right"></i>'
+            }
+        },
+        order: [[0, 'asc']],
+        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "{{ __('db.All') }}"]],
+        dom: '<"row"lfB>rtip',
+        buttons: [
+            {
+                extend: 'csv',
+                text: '<i title="{{ __('db.export to csv') }}" class="fa fa-file-text-o"></i>',
+                exportOptions: { columns: ':visible', rows: ':visible' }
+            },
+            {
+                extend: 'print',
+                text: '<i title="{{ __('db.print') }}" class="fa fa-print"></i>',
+                exportOptions: { columns: ':visible', rows: ':visible' }
+            },
+            {
+                extend: 'colvis',
+                text: '<i title="{{ __('db.column visibility') }}" class="fa fa-eye"></i>'
+            }
+        ]
+    });
+
+    $('#stock-filter').on('click', function() {
+        stockTable.ajax.reload();
+    });
+    $('#stock-product').on('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            stockTable.ajax.reload();
+        }
     });
 
 </script>

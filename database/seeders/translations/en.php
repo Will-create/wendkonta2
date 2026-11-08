@@ -10798,4 +10798,10 @@ return array (
     'key' => 'Close',
     'value' => 'Close',
   ),
+  100319 =>
+  array (
+    'locale' => 'en',
+    'key' => 'Product name or code',
+    'value' => 'Product name or code',
+  ),
 );

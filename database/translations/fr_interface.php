@@ -2539,4 +2539,8 @@ return [
         'en' => 'Close',
         'fr' => 'Fermer',
     ],
+    'Product name or code' => [
+        'en' => 'Product name or code',
+        'fr' => 'Nom ou code du produit',
+    ],
 ];

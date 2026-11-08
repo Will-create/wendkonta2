@@ -3690,8 +3690,21 @@ public function store3(StoreSaleRequest $request)
         }
 
         $sales = $q->orderByDesc('id')->limit(30)->get();
+        $progressMap = DeliveryProgress::forSales($sales->pluck('id'));
         $rows = [];
         foreach ($sales as $sale) {
+            $progress = $progressMap[(int) $sale->id] ?? [
+                'status' => DeliveryProgress::NOT_DELIVERED,
+                'sold' => 0,
+                'delivered' => 0,
+                'remaining' => 0,
+            ];
+            $saleDate = $sale->created_at ? $sale->created_at->toDateString() : date('Y-m-d');
+            $saleParams = [
+                'open_sale' => $sale->id,
+                'starting_date' => $saleDate,
+                'ending_date' => $saleDate,
+            ];
             $rows[] = [
                 'id' => $sale->id,
                 'date' => date(config('date_format'), strtotime($sale->created_at)),
@@ -3699,7 +3712,17 @@ public function store3(StoreSaleRequest $request)
                 'customer' => optional($sale->customer)->name ?? '',
                 'phone' => optional($sale->customer)->phone_number ?? '',
                 'grand_total' => number_format($sale->grand_total, config('decimal')),
+                'delivery_status' => DeliveryProgress::label($progress['status']),
+                'delivery_status_key' => $progress['status'],
+                'delivery_qty' => DeliveryProgress::formatQty($progress['delivered']).' / '.DeliveryProgress::formatQty($progress['sold']),
                 'invoice_url' => route('sale.invoice', $sale->id),
+                'details_url' => url('sales').'?'.http_build_query($saleParams),
+                'history_url' => url('sales').'?'.http_build_query($saleParams + ['show' => 'delivery-history']),
+                'add_delivery_url' => url('sales').'?'.http_build_query([
+                    'add_delivery' => $sale->id,
+                    'starting_date' => $saleDate,
+                    'ending_date' => $saleDate,
+                ]),
             ];
         }
 
