@@ -59,7 +59,7 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'print_barcode',
-    'value' => 'print_barcode',
+    'value' => 'Imprimer le code-barres',
   ),
   10 => 
   array (
@@ -119,7 +119,7 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'submit',
-    'value' => 'soumettre',
+    'value' => 'Valider',
   ),
   20 => 
   array (
@@ -155,7 +155,7 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'profit',
-    'value' => 'profit',
+    'value' => 'bénéfice',
   ),
   26 => 
   array (
@@ -2093,7 +2093,7 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'Bill No',
-    'value' => 'Bill No',
+    'value' => 'N° de facture',
   ),
   349 => 
   array (
@@ -2429,7 +2429,7 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'Delivering',
-    'value' => 'Livrer',
+    'value' => 'En livraison',
   ),
   405 => 
   array (
@@ -3047,7 +3047,7 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'Clear',
-    'value' => 'Clair',
+    'value' => 'Effacer',
   ),
   508 => 
   array (
@@ -3227,7 +3227,7 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'Total Cash',
-    'value' => 'Total Cash',
+    'value' => 'Total espèces',
   ),
   538 => 
   array (
@@ -3467,7 +3467,7 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'Cheque',
-    'value' => 'Vérifier',
+    'value' => 'Chèque',
   ),
   578 => 
   array (
@@ -4235,7 +4235,7 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'og Description',
-    'value' => 'og Description',
+    'value' => 'Description Open Graph',
   ),
   706 => 
   array (
@@ -4673,19 +4673,19 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'Update Table',
-    'value' => 'Mettre à jour le tableau',
+    'value' => 'Mettre à jour la table',
   ),
   779 => 
   array (
     'locale' => 'fr',
     'key' => 'Tables',
-    'value' => 'Tableaux',
+    'value' => 'Tables',
   ),
   780 => 
   array (
     'locale' => 'fr',
     'key' => 'Table',
-    'value' => 'Tableau',
+    'value' => 'Table',
   ),
   781 => 
   array (
@@ -4799,7 +4799,7 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'Records',
-    'value' => 'Records',
+    'value' => 'Enregistrements',
   ),
   800 => 
   array (
@@ -5183,7 +5183,7 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'Bug No',
-    'value' => 'Bug No',
+    'value' => 'N° de bug',
   ),
   864 => 
   array (
@@ -5735,19 +5735,19 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'Og_Title',
-    'value' => 'Og_Title',
+    'value' => 'Titre Open Graph',
   ),
   956 => 
   array (
     'locale' => 'fr',
     'key' => 'Og_description',
-    'value' => 'Og_description',
+    'value' => 'Description Open Graph',
   ),
   957 => 
   array (
     'locale' => 'fr',
     'key' => 'Og_Image',
-    'value' => 'Og_Image',
+    'value' => 'Image Open Graph',
   ),
   958 => 
   array (
@@ -6167,7 +6167,7 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'POS',
-    'value' => 'POS',
+    'value' => 'Point de vente',
   ),
   1028 => 
   array (
@@ -6593,7 +6593,7 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'Choose Biller',
-    'value' => 'Choisissez Biller',
+    'value' => 'Choisir un vendeur',
   ),
   1099 => 
   array (
@@ -7319,109 +7319,109 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'Type envato purchase code for WooCommerce addon',
-    'value' => 'Type envato purchase code for WooCommerce addon',
+    'value' => 'Saisir le code d\'achat Envato du module WooCommerce',
   ),
   1220 => 
   array (
     'locale' => 'fr',
     'key' => 'Type envato purchase code for eCommerce addon',
-    'value' => 'Type envato purchase code for eCommerce addon',
+    'value' => 'Saisir le code d\'achat Envato du module e-commerce',
   ),
   1221 => 
   array (
     'locale' => 'fr',
     'key' => 'top_margin',
-    'value' => 'top_margin',
+    'value' => 'marge haute',
   ),
   1222 => 
   array (
     'locale' => 'fr',
     'key' => 'For SEO',
-    'value' => 'For SEO',
+    'value' => 'Pour le référencement',
   ),
   1223 => 
   array (
     'locale' => 'fr',
     'key' => 'Stock Worth',
-    'value' => 'Stock Worth',
+    'value' => 'Valeur du stock',
   ),
   1224 => 
   array (
     'locale' => 'fr',
     'key' => 'Type currency name',
-    'value' => 'Type currency name',
+    'value' => 'Saisir le nom de la devise',
   ),
   1225 => 
   array (
     'locale' => 'fr',
     'key' => 'Type currency code',
-    'value' => 'Type currency code',
+    'value' => 'Saisir le code devise',
   ),
   1226 => 
   array (
     'locale' => 'fr',
     'key' => 'Type exchange rate',
-    'value' => 'Type exchange rate',
+    'value' => 'Saisir le taux de change',
   ),
   1227 => 
   array (
     'locale' => 'fr',
     'key' => 'Only default currency can have 1 as exchange rate. Please change the exchange rate of your default currency',
-    'value' => 'Only default currency can have 1 as exchange rate. Please change the exchange rate of your default currency',
+    'value' => 'Seule la devise par défaut peut avoir un taux de 1. Modifiez le taux de votre devise par défaut',
   ),
   1228 => 
   array (
     'locale' => 'fr',
     'key' => 'HRM',
-    'value' => 'HRM',
+    'value' => 'RH',
   ),
   1229 => 
   array (
     'locale' => 'fr',
     'key' => 'Months',
-    'value' => 'Months',
+    'value' => 'Mois',
   ),
   1230 => 
   array (
     'locale' => 'fr',
     'key' => 'Years',
-    'value' => 'Years',
+    'value' => 'Années',
   ),
   1231 => 
   array (
     'locale' => 'fr',
     'key' => 'This is topping',
-    'value' => 'This is topping',
+    'value' => 'Ceci est un supplément',
   ),
   1232 => 
   array (
     'locale' => 'fr',
     'key' => 'Check this if the item is a topping or extra or add-on only to be served with a main course',
-    'value' => 'Check this if the item is a topping or extra or add-on only to be served with a main course',
+    'value' => 'Cochez si l\'article est uniquement un supplément servi avec un plat',
   ),
   1233 => 
   array (
     'locale' => 'fr',
     'key' => 'Extras',
-    'value' => 'Extras',
+    'value' => 'Suppléments',
   ),
   1234 => 
   array (
     'locale' => 'fr',
     'key' => 'Kitchen',
-    'value' => 'Kitchen',
+    'value' => 'Cuisine',
   ),
   1235 => 
   array (
     'locale' => 'fr',
     'key' => 'Menu Type',
-    'value' => 'Menu Type',
+    'value' => 'Type de menu',
   ),
   1236 => 
   array (
     'locale' => 'fr',
     'key' => 'Credit Card',
-    'value' => 'Credit Card',
+    'value' => 'Carte bancaire',
   ),
   1237 => 
   array (
@@ -7433,7 +7433,7 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'Scan/Search product by name/code',
-    'value' => 'Scan/Search product by name/code',
+    'value' => 'Scanner ou rechercher un produit par nom ou code',
   ),
   1239 => 
   array (
@@ -7445,673 +7445,673 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'Dine In',
-    'value' => 'Dine In',
+    'value' => 'Sur place',
   ),
   1241 => 
   array (
     'locale' => 'fr',
     'key' => 'Take Away',
-    'value' => 'Take Away',
+    'value' => 'À emporter',
   ),
   1242 => 
   array (
     'locale' => 'fr',
     'key' => 'Waiter',
-    'value' => 'Waiter',
+    'value' => 'Serveur',
   ),
   1243 => 
   array (
     'locale' => 'fr',
     'key' => 'Total Payable',
-    'value' => 'Total Payable',
+    'value' => 'Total à payer',
   ),
   1244 => 
   array (
     'locale' => 'fr',
     'key' => 'Total Paying',
-    'value' => 'Total Paying',
+    'value' => 'Total payé',
   ),
   1245 => 
   array (
     'locale' => 'fr',
     'key' => 'Card Number',
-    'value' => 'Card Number',
+    'value' => 'Numéro de carte',
   ),
   1246 => 
   array (
     'locale' => 'fr',
     'key' => 'Card Holder Name',
-    'value' => 'Card Holder Name',
+    'value' => 'Nom du titulaire de la carte',
   ),
   1247 => 
   array (
     'locale' => 'fr',
     'key' => 'Card Type',
-    'value' => 'Card Type',
+    'value' => 'Type de carte',
   ),
   1248 => 
   array (
     'locale' => 'fr',
     'key' => 'Template Name',
-    'value' => 'Template Name',
+    'value' => 'Nom du modèle',
   ),
   1249 => 
   array (
     'locale' => 'fr',
     'key' => 'Floor',
-    'value' => 'Floor',
+    'value' => 'Étage',
   ),
   1250 => 
   array (
     'locale' => 'fr',
     'key' => 'Enter operation value',
-    'value' => 'Enter operation value',
+    'value' => 'Saisir la valeur de l\'opération',
   ),
   1251 => 
   array (
     'locale' => 'fr',
     'key' => 'We',
-    'value' => 'We',
+    'value' => 'Me',
   ),
   1252 => 
   array (
     'locale' => 'fr',
     'key' => 'Sorry for the inconvenience. We',
-    'value' => 'Sorry for the inconvenience. We',
+    'value' => 'Veuillez nous excuser. Nous',
   ),
   1253 => 
   array (
     'locale' => 'fr',
     'key' => 'Sorry! You are not allowed to access this module',
-    'value' => 'Sorry! You are not allowed to access this module',
+    'value' => 'Désolé, vous n\'avez pas accès à ce module',
   ),
   1254 => 
   array (
     'locale' => 'fr',
     'key' => 'Account created successfully',
-    'value' => 'Account created successfully',
+    'value' => 'Le compte a été créé avec succès.',
   ),
   1255 => 
   array (
     'locale' => 'fr',
     'key' => 'Account updated successfully',
-    'value' => 'Account updated successfully',
+    'value' => 'Le compte a été mis à jour avec succès.',
   ),
   1256 => 
   array (
     'locale' => 'fr',
     'key' => 'This feature is disable for demo!',
-    'value' => 'This feature is disable for demo!',
+    'value' => 'Cette fonction est désactivée pour la démonstration.',
   ),
   1257 => 
   array (
     'locale' => 'fr',
     'key' => 'Account deleted successfully!',
-    'value' => 'Account deleted successfully!',
+    'value' => 'Le compte a été supprimé avec succès.',
   ),
   1258 => 
   array (
     'locale' => 'fr',
     'key' => 'Please make another account default first!',
-    'value' => 'Please make another account default first!',
+    'value' => 'Définissez d\'abord un autre compte par défaut.',
   ),
   1259 => 
   array (
     'locale' => 'fr',
     'key' => 'Woocommerce addon installed successfully!',
-    'value' => 'Woocommerce addon installed successfully!',
+    'value' => 'Module WooCommerce installé avec succès.',
   ),
   1260 => 
   array (
     'locale' => 'fr',
     'key' => 'Wrong purchase code!',
-    'value' => 'Wrong purchase code!',
+    'value' => 'Code d\'achat incorrect.',
   ),
   1261 => 
   array (
     'locale' => 'fr',
     'key' => 'eCommerce add-on installed successfully!',
-    'value' => 'eCommerce add-on installed successfully!',
+    'value' => 'Module e-commerce installé avec succès.',
   ),
   1262 => 
   array (
     'locale' => 'fr',
     'key' => 'Data inserted successfully',
-    'value' => 'Data inserted successfully',
+    'value' => 'Données ajoutées avec succès',
   ),
   1263 => 
   array (
     'locale' => 'fr',
     'key' => 'Data updated successfully',
-    'value' => 'Data updated successfully',
+    'value' => 'Données mises à jour avec succès',
   ),
   1264 => 
   array (
     'locale' => 'fr',
     'key' => 'Data deleted successfully',
-    'value' => 'Data deleted successfully',
+    'value' => 'Données supprimées avec succès',
   ),
   1265 => 
   array (
     'locale' => 'fr',
     'key' => 'Attendance created successfully',
-    'value' => 'Attendance created successfully',
+    'value' => 'La présence a été créée avec succès.',
   ),
   1266 => 
   array (
     'locale' => 'fr',
     'key' => 'Please select Attendance Device Date Format and upload a CSV file',
-    'value' => 'Please select Attendance Device Date Format and upload a CSV file',
+    'value' => 'Sélectionnez le format de date du pointeur et envoyez un fichier CSV',
   ),
   1267 => 
   array (
     'locale' => 'fr',
     'key' => 'Please upload a CSV file',
-    'value' => 'Please upload a CSV file',
+    'value' => 'Veuillez envoyer un fichier CSV',
   ),
   1268 => 
   array (
     'locale' => 'fr',
     'key' => 'Attendance deleted successfully',
-    'value' => 'Attendance deleted successfully',
+    'value' => 'La présence a été supprimée avec succès.',
   ),
   1269 => 
   array (
     'locale' => 'fr',
     'key' => 'Username And Password Are Wrong.',
-    'value' => 'Username And Password Are Wrong.',
+    'value' => 'Le nom d\'utilisateur ou le mot de passe est incorrect.',
   ),
   1270 => 
   array (
     'locale' => 'fr',
     'key' => 'Invalid username or password',
-    'value' => 'Invalid username or password',
+    'value' => 'Nom d\'utilisateur ou mot de passe invalide',
   ),
   1271 => 
   array (
     'locale' => 'fr',
     'key' => 'something_went_wrong',
-    'value' => 'something_went_wrong',
+    'value' => 'Une erreur s\'est produite',
   ),
   1272 => 
   array (
     'locale' => 'fr',
     'key' => 'deleted_success',
-    'value' => 'deleted_success',
+    'value' => 'Supprimé avec succès',
   ),
   1273 => 
   array (
     'locale' => 'fr',
     'key' => 'Brand imported successfully',
-    'value' => 'Brand imported successfully',
+    'value' => 'La marque a été importée avec succès.',
   ),
   1274 => 
   array (
     'locale' => 'fr',
     'key' => 'Brand deleted successfully!',
-    'value' => 'Brand deleted successfully!',
+    'value' => 'La marque a été supprimée avec succès.',
   ),
   1275 => 
   array (
     'locale' => 'fr',
     'key' => 'Cash register created successfully',
-    'value' => 'Cash register created successfully',
+    'value' => 'La caisse a été créée avec succès.',
   ),
   1276 => 
   array (
     'locale' => 'fr',
     'key' => 'Cash register closed successfully',
-    'value' => 'Cash register closed successfully',
+    'value' => 'La caisse a été fermée avec succès',
   ),
   1277 => 
   array (
     'locale' => 'fr',
     'key' => 'Category inserted successfully',
-    'value' => 'Category inserted successfully',
+    'value' => 'La catégorie a été ajoutée avec succès.',
   ),
   1278 => 
   array (
     'locale' => 'fr',
     'key' => 'Category updated successfully',
-    'value' => 'Category updated successfully',
+    'value' => 'La catégorie a été mise à jour avec succès.',
   ),
   1279 => 
   array (
     'locale' => 'fr',
     'key' => 'Category imported successfully',
-    'value' => 'Category imported successfully',
+    'value' => 'La catégorie a été importée avec succès.',
   ),
   1280 => 
   array (
     'locale' => 'fr',
     'key' => 'Category deleted successfully',
-    'value' => 'Category deleted successfully',
+    'value' => 'La catégorie a été supprimée avec succès.',
   ),
   1281 => 
   array (
     'locale' => 'fr',
     'key' => 'Please select at least one packing slip',
-    'value' => 'Please select at least one packing slip',
+    'value' => 'Sélectionnez au moins un bon de préparation',
   ),
   1282 => 
   array (
     'locale' => 'fr',
     'key' => 'Please close previous challan before creating a new one',
-    'value' => 'Please close previous challan before creating a new one',
+    'value' => 'Clôturez le bon précédent avant d\'en créer un nouveau',
   ),
   1283 => 
   array (
     'locale' => 'fr',
     'key' => 'Challan created successfully',
-    'value' => 'Challan created successfully',
+    'value' => 'Le bon a été créé avec succès.',
   ),
   1284 => 
   array (
     'locale' => 'fr',
     'key' => 'Challan finalized successfully',
-    'value' => 'Challan finalized successfully',
+    'value' => 'Le bon a été finalisé avec succès.',
   ),
   1285 => 
   array (
     'locale' => 'fr',
     'key' => 'Coupon created successfully',
-    'value' => 'Coupon created successfully',
+    'value' => 'Le coupon a été créé avec succès.',
   ),
   1286 => 
   array (
     'locale' => 'fr',
     'key' => 'Coupon updated successfully',
-    'value' => 'Coupon updated successfully',
+    'value' => 'Le coupon a été mis à jour avec succès.',
   ),
   1287 => 
   array (
     'locale' => 'fr',
     'key' => 'Coupon deleted successfully',
-    'value' => 'Coupon deleted successfully',
+    'value' => 'Le coupon a été supprimé avec succès.',
   ),
   1288 => 
   array (
     'locale' => 'fr',
     'key' => 'Courier created successfully',
-    'value' => 'Courier created successfully',
+    'value' => 'Le coursier a été créé avec succès.',
   ),
   1289 => 
   array (
     'locale' => 'fr',
     'key' => 'Courier updated successfully',
-    'value' => 'Courier updated successfully',
+    'value' => 'Le coursier a été mis à jour avec succès.',
   ),
   1290 => 
   array (
     'locale' => 'fr',
     'key' => 'Courier deleted successfully',
-    'value' => 'Courier deleted successfully',
+    'value' => 'Le coursier a été supprimé avec succès.',
   ),
   1291 => 
   array (
     'locale' => 'fr',
     'key' => 'Currency created successfully',
-    'value' => 'Currency created successfully',
+    'value' => 'La devise a été créée avec succès.',
   ),
   1292 => 
   array (
     'locale' => 'fr',
     'key' => 'Currency updated successfully',
-    'value' => 'Currency updated successfully',
+    'value' => 'La devise a été mise à jour avec succès.',
   ),
   1293 => 
   array (
     'locale' => 'fr',
     'key' => 'Currency deleted successfully',
-    'value' => 'Currency deleted successfully',
+    'value' => 'La devise a été supprimée avec succès.',
   ),
   1294 => 
   array (
     'locale' => 'fr',
     'key' => 'Custom Field created successfully',
-    'value' => 'Custom Field created successfully',
+    'value' => 'Le champ personnalisé a été créé avec succès.',
   ),
   1295 => 
   array (
     'locale' => 'fr',
     'key' => 'Custom Field updated successfully',
-    'value' => 'Custom Field updated successfully',
+    'value' => 'Le champ personnalisé a été mis à jour avec succès.',
   ),
   1296 => 
   array (
     'locale' => 'fr',
     'key' => 'This feature is disabled for demo!',
-    'value' => 'This feature is disabled for demo!',
+    'value' => 'Cette fonction est désactivée pour la démonstration.',
   ),
   1297 => 
   array (
     'locale' => 'fr',
     'key' => 'Custom Field not found!',
-    'value' => 'Custom Field not found!',
+    'value' => 'Champ personnalisé introuvable.',
   ),
   1298 => 
   array (
     'locale' => 'fr',
     'key' => 'Invalid custom field table!',
-    'value' => 'Invalid custom field table!',
+    'value' => 'Table de champ personnalisé invalide.',
   ),
   1299 => 
   array (
     'locale' => 'fr',
     'key' => 'Custom Field deleted successfully!',
-    'value' => 'Custom Field deleted successfully!',
+    'value' => 'Le champ personnalisé a été supprimé avec succès.',
   ),
   1300 => 
   array (
     'locale' => 'fr',
     'key' => 'Due cleared successfully',
-    'value' => 'Due cleared successfully',
+    'value' => 'Dû soldé avec succès',
   ),
   1301 => 
   array (
     'locale' => 'fr',
     'key' => 'Customer Group imported successfully',
-    'value' => 'Customer Group imported successfully',
+    'value' => 'Groupe de clients importé avec succès',
   ),
   1302 => 
   array (
     'locale' => 'fr',
     'key' => 'Delivery deleted successfully',
-    'value' => 'Delivery deleted successfully',
+    'value' => 'Livraison supprimée avec succès',
   ),
   1303 => 
   array (
     'locale' => 'fr',
     'key' => 'Department created successfully',
-    'value' => 'Department created successfully',
+    'value' => 'Le département a été créé avec succès.',
   ),
   1304 => 
   array (
     'locale' => 'fr',
     'key' => 'Department updated successfully',
-    'value' => 'Department updated successfully',
+    'value' => 'Le département a été mis à jour avec succès.',
   ),
   1305 => 
   array (
     'locale' => 'fr',
     'key' => 'Department deleted successfully',
-    'value' => 'Department deleted successfully',
+    'value' => 'Le département a été supprimé avec succès.',
   ),
   1306 => 
   array (
     'locale' => 'fr',
     'key' => 'Discount created successfully',
-    'value' => 'Discount created successfully',
+    'value' => 'La remise a été créée avec succès.',
   ),
   1307 => 
   array (
     'locale' => 'fr',
     'key' => 'Discount updated successfully',
-    'value' => 'Discount updated successfully',
+    'value' => 'La remise a été mise à jour avec succès.',
   ),
   1308 => 
   array (
     'locale' => 'fr',
     'key' => 'Discount Plan created successfully',
-    'value' => 'Discount Plan created successfully',
+    'value' => 'Le plan de remise a été créé avec succès.',
   ),
   1309 => 
   array (
     'locale' => 'fr',
     'key' => 'Discount Plan updated successfully',
-    'value' => 'Discount Plan updated successfully',
+    'value' => 'Le plan de remise a été mis à jour avec succès.',
   ),
   1310 => 
   array (
     'locale' => 'fr',
     'key' => 'Employee updated successfully',
-    'value' => 'Employee updated successfully',
+    'value' => 'L\'employé a été mis à jour avec succès.',
   ),
   1311 => 
   array (
     'locale' => 'fr',
     'key' => 'Employee deleted successfully',
-    'value' => 'Employee deleted successfully',
+    'value' => 'L\'employé a été supprimé avec succès.',
   ),
   1312 => 
   array (
     'locale' => 'fr',
     'key' => 'Expense Category imported successfully',
-    'value' => 'Expense Category imported successfully',
+    'value' => 'La catégorie de dépense a été importée avec succès.',
   ),
   1313 => 
   array (
     'locale' => 'fr',
     'key' => 'GiftCard updated successfully',
-    'value' => 'GiftCard updated successfully',
+    'value' => 'Carte cadeau mise à jour avec succès',
   ),
   1314 => 
   array (
     'locale' => 'fr',
     'key' => 'Holiday created successfully',
-    'value' => 'Holiday created successfully',
+    'value' => 'Le congé a été créé avec succès.',
   ),
   1315 => 
   array (
     'locale' => 'fr',
     'key' => 'Holiday updated successfully',
-    'value' => 'Holiday updated successfully',
+    'value' => 'Le congé a été mis à jour avec succès.',
   ),
   1316 => 
   array (
     'locale' => 'fr',
     'key' => 'Holiday deleted successfully',
-    'value' => 'Holiday deleted successfully',
+    'value' => 'Le congé a été supprimé avec succès.',
   ),
   1317 => 
   array (
     'locale' => 'fr',
     'key' => 'language_added',
-    'value' => 'language_added',
+    'value' => 'Langue ajoutée',
   ),
   1318 => 
   array (
     'locale' => 'fr',
     'key' => 'Money transfered successfully',
-    'value' => 'Money transfered successfully',
+    'value' => 'Virement effectué avec succès',
   ),
   1319 => 
   array (
     'locale' => 'fr',
     'key' => 'Money transfer updated successfully',
-    'value' => 'Money transfer updated successfully',
+    'value' => 'Virement mis à jour avec succès',
   ),
   1320 => 
   array (
     'locale' => 'fr',
     'key' => 'Notification send successfully',
-    'value' => 'Notification send successfully',
+    'value' => 'Notification envoyée avec succès',
   ),
   1321 => 
   array (
     'locale' => 'fr',
     'key' => 'Packing slip created successfully',
-    'value' => 'Packing slip created successfully',
+    'value' => 'Bon de préparation créé avec succès',
   ),
   1322 => 
   array (
     'locale' => 'fr',
     'key' => 'Packing Slip deletes successfully',
-    'value' => 'Packing Slip deletes successfully',
+    'value' => 'Bon de préparation supprimé avec succès',
   ),
   1323 => 
   array (
     'locale' => 'fr',
     'key' => 'Payroll updated succesfully',
-    'value' => 'Payroll updated succesfully',
+    'value' => 'Paie mise à jour avec succès',
   ),
   1324 => 
   array (
     'locale' => 'fr',
     'key' => 'Payroll deleted succesfully',
-    'value' => 'Payroll deleted succesfully',
+    'value' => 'Paie supprimée avec succès',
   ),
   1325 => 
   array (
     'locale' => 'fr',
     'key' => 'This variant has a quantity; you cannot delete it',
-    'value' => 'This variant has a quantity; you cannot delete it',
+    'value' => 'Cette variante a une quantité ; vous ne pouvez pas la supprimer',
   ),
   1326 => 
   array (
     'locale' => 'fr',
     'key' => 'Failed to update product Please try again',
-    'value' => 'Failed to update product Please try again',
+    'value' => 'Échec de la mise à jour du produit. Veuillez réessayer',
   ),
   1327 => 
   array (
     'locale' => 'fr',
     'key' => 'Please upload a valid CSV file',
-    'value' => 'Please upload a valid CSV file',
+    'value' => 'Veuillez envoyer un fichier CSV valide',
   ),
   1328 => 
   array (
     'locale' => 'fr',
     'key' => 'CSV file is empty or invalid',
-    'value' => 'CSV file is empty or invalid',
+    'value' => 'Le fichier CSV est vide ou invalide',
   ),
   1329 => 
   array (
     'locale' => 'fr',
     'key' => 'CSV file format is incorrect',
-    'value' => 'CSV file format is incorrect',
+    'value' => 'Le format du fichier CSV est incorrect',
   ),
   1330 => 
   array (
     'locale' => 'fr',
     'key' => 'Unit code does not exist in the database',
-    'value' => 'Unit code does not exist in the database',
+    'value' => 'Ce code d\'unité n\'existe pas dans la base',
   ),
   1331 => 
   array (
     'locale' => 'fr',
     'key' => 'Invalid variant value format',
-    'value' => 'Invalid variant value format',
+    'value' => 'Format de variante invalide',
   ),
   1332 => 
   array (
     'locale' => 'fr',
     'key' => 'Products imported successfully!',
-    'value' => 'Products imported successfully!',
+    'value' => 'Produits importés avec succès.',
   ),
   1333 => 
   array (
     'locale' => 'fr',
     'key' => 'Please install the ecommerce addon!',
-    'value' => 'Please install the ecommerce addon!',
+    'value' => 'Veuillez installer le module e-commerce.',
   ),
   1334 => 
   array (
     'locale' => 'fr',
     'key' => 'All Products set to in stock successfully!',
-    'value' => 'All Products set to in stock successfully!',
+    'value' => 'Tous les produits ont été marqués en stock.',
   ),
   1335 => 
   array (
     'locale' => 'fr',
     'key' => 'All Products will be showed to online!',
-    'value' => 'All Products will be showed to online!',
+    'value' => 'Tous les produits seront visibles en ligne.',
   ),
   1336 => 
   array (
     'locale' => 'fr',
     'key' => 'Product deleted successfully',
-    'value' => 'Product deleted successfully',
+    'value' => 'Le produit a été supprimé avec succès.',
   ),
   1337 => 
   array (
     'locale' => 'fr',
     'key' => 'Duplicate IMEI not allowed!',
-    'value' => 'Duplicate IMEI not allowed!',
+    'value' => 'IMEI en double non autorisé.',
   ),
   1338 => 
   array (
     'locale' => 'fr',
     'key' => 'Purchase created successfully',
-    'value' => 'Purchase created successfully',
+    'value' => 'L\'achat a été créé avec succès.',
   ),
   1339 => 
   array (
     'locale' => 'fr',
     'key' => 'Purchase unit does not exist!',
-    'value' => 'Purchase unit does not exist!',
+    'value' => 'L\'unité d\'achat n\'existe pas.',
   ),
   1340 => 
   array (
     'locale' => 'fr',
     'key' => 'Tax name does not exist!',
-    'value' => 'Tax name does not exist!',
+    'value' => 'Ce nom de taxe n\'existe pas.',
   ),
   1341 => 
   array (
     'locale' => 'fr',
     'key' => 'Purchase update successfully!',
-    'value' => 'Purchase update successfully!',
+    'value' => 'Achat mis à jour avec succès.',
   ),
   1342 => 
   array (
     'locale' => 'fr',
     'key' => 'Purchase updated successfully',
-    'value' => 'Purchase updated successfully',
+    'value' => 'L\'achat a été mis à jour avec succès.',
   ),
   1343 => 
   array (
     'locale' => 'fr',
     'key' => 'Payment created successfully',
-    'value' => 'Payment created successfully',
+    'value' => 'Le paiement a été créé avec succès.',
   ),
   1344 => 
   array (
     'locale' => 'fr',
     'key' => 'Payment updated successfully',
-    'value' => 'Payment updated successfully',
+    'value' => 'Le paiement a été mis à jour avec succès.',
   ),
   1345 => 
   array (
     'locale' => 'fr',
     'key' => 'Payment deleted successfully',
-    'value' => 'Payment deleted successfully',
+    'value' => 'Le paiement a été supprimé avec succès.',
   ),
   1346 => 
   array (
     'locale' => 'fr',
     'key' => 'Purchase deleted successfully',
-    'value' => 'Purchase deleted successfully',
+    'value' => 'L\'achat a été supprimé avec succès.',
   ),
   1347 => 
   array (
     'locale' => 'fr',
     'key' => 'Quotation deleted successfully',
-    'value' => 'Quotation deleted successfully',
+    'value' => 'Le devis a été supprimé avec succès.',
   ),
   1348 => 
   array (
     'locale' => 'fr',
     'key' => 'This reference either does not exist or status not completed!',
-    'value' => 'This reference either does not exist or status not completed!',
+    'value' => 'Cette référence n\'existe pas ou n\'est pas terminée.',
   ),
   1349 => 
   array (
     'locale' => 'fr',
     'key' => 'This reference no does not exist!',
-    'value' => 'This reference no does not exist!',
+    'value' => 'Cette référence n\'existe pas.',
   ),
   1350 => 
   array (
     'locale' => 'fr',
     'key' => 'Permission updated successfully',
-    'value' => 'Permission updated successfully',
+    'value' => 'Permissions mises à jour avec succès',
   ),
   1351 => 
   array (
     'locale' => 'fr',
     'key' => 'Please setup your SMS API first!',
-    'value' => 'Please setup your SMS API first!',
+    'value' => 'Configurez d\'abord l\'API SMS.',
   ),
   1352 => 
   array (
@@ -8123,390 +8123,2629 @@ return array (
   array (
     'locale' => 'fr',
     'key' => 'Sales created successfully',
-    'value' => 'Sales created successfully',
+    'value' => 'Vente créée avec succès',
   ),
   1354 => 
   array (
     'locale' => 'fr',
     'key' => 'Product does not exist!',
-    'value' => 'Product does not exist!',
+    'value' => 'Le produit n\'existe pas.',
   ),
   1355 => 
   array (
     'locale' => 'fr',
     'key' => 'Sale unit does not exist!',
-    'value' => 'Sale unit does not exist!',
+    'value' => 'L\'unité de vente n\'existe pas.',
   ),
   1356 => 
   array (
     'locale' => 'fr',
     'key' => 'Database cleared successfully',
-    'value' => 'Database cleared successfully',
+    'value' => 'Base de données vidée avec succès',
   ),
   1357 => 
   array (
     'locale' => 'fr',
     'key' => 'Reward point setting updated successfully',
-    'value' => 'Reward point setting updated successfully',
+    'value' => 'Paramètres des points de fidélité mis à jour',
   ),
   1358 => 
   array (
     'locale' => 'fr',
     'key' => 'SMS sent successfully',
-    'value' => 'SMS sent successfully',
+    'value' => 'SMS envoyé avec succès',
   ),
   1359 => 
   array (
     'locale' => 'fr',
     'key' => 'Payment options must be unique',
-    'value' => 'Payment options must be unique',
+    'value' => 'Les modes de paiement doivent être uniques',
   ),
   1360 => 
   array (
     'locale' => 'fr',
     'key' => 'POS setting updated successfully',
-    'value' => 'POS setting updated successfully',
+    'value' => 'Paramètres du point de vente mis à jour',
   ),
   1361 => 
   array (
     'locale' => 'fr',
     'key' => 'Stock Count created successfully! Please download the initial file to complete it',
-    'value' => 'Stock Count created successfully! Please download the initial file to complete it',
+    'value' => 'Inventaire créé. Téléchargez le fichier initial pour le terminer',
   ),
   1362 => 
   array (
     'locale' => 'fr',
     'key' => 'No product found!',
-    'value' => 'No product found!',
+    'value' => 'Aucun produit trouvé.',
   ),
   1363 => 
   array (
     'locale' => 'fr',
     'key' => 'Stock Count finalized successfully!',
-    'value' => 'Stock Count finalized successfully!',
+    'value' => 'Inventaire finalisé avec succès.',
   ),
   1364 => 
   array (
     'locale' => 'fr',
     'key' => 'Table created successfully',
-    'value' => 'Table created successfully',
+    'value' => 'La table a été créée avec succès.',
   ),
   1365 => 
   array (
     'locale' => 'fr',
     'key' => 'Table updated successfully',
-    'value' => 'Table updated successfully',
+    'value' => 'La table a été mise à jour avec succès.',
   ),
   1366 => 
   array (
     'locale' => 'fr',
     'key' => 'Table deleted successfully',
-    'value' => 'Table deleted successfully',
+    'value' => 'La table a été supprimée avec succès.',
   ),
   1367 => 
   array (
     'locale' => 'fr',
     'key' => 'Tax imported successfully',
-    'value' => 'Tax imported successfully',
+    'value' => 'La taxe a été importée avec succès.',
   ),
   1368 => 
   array (
     'locale' => 'fr',
     'key' => 'Transfer imported successfully',
-    'value' => 'Transfer imported successfully',
+    'value' => 'Le transfert a été importé avec succès.',
   ),
   1369 => 
   array (
     'locale' => 'fr',
     'key' => 'Transfer updated successfully',
-    'value' => 'Transfer updated successfully',
+    'value' => 'Le transfert a été mis à jour avec succès.',
   ),
   1370 => 
   array (
     'locale' => 'fr',
     'key' => 'Transfer deleted successfully',
-    'value' => 'Transfer deleted successfully',
+    'value' => 'Le transfert a été supprimé avec succès.',
   ),
   1371 => 
   array (
     'locale' => 'fr',
     'key' => 'Unit imported successfully',
-    'value' => 'Unit imported successfully',
+    'value' => 'L\'unité a été importée avec succès.',
   ),
   1372 => 
   array (
     'locale' => 'fr',
     'key' => 'Data updated successfullly',
-    'value' => 'Data updated successfullly',
+    'value' => 'Données mises à jour avec succès',
   ),
   1373 => 
   array (
     'locale' => 'fr',
     'key' => 'Please Confirm your new password',
-    'value' => 'Please Confirm your new password',
+    'value' => 'Veuillez confirmer le nouveau mot de passe',
   ),
   1374 => 
   array (
     'locale' => 'fr',
     'key' => 'Current Password does not match',
-    'value' => 'Current Password does not match',
+    'value' => 'Le mot de passe actuel ne correspond pas',
   ),
   1375 => 
   array (
     'locale' => 'fr',
     'key' => 'Data deleted successfullly',
-    'value' => 'Data deleted successfullly',
+    'value' => 'Données supprimées avec succès',
   ),
   1376 => 
   array (
     'locale' => 'fr',
     'key' => 'Warehouse imported successfully',
-    'value' => 'Warehouse imported successfully',
+    'value' => 'L\'entrepôt a été importé avec succès.',
   ),
   1377 => 
   array (
     'locale' => 'fr',
     'key' => 'Font',
-    'value' => 'Font',
+    'value' => 'Police',
   ),
   1378 => 
   array (
     'locale' => 'fr',
     'key' => 'Allow customers to order',
-    'value' => 'Allow customers to order',
+    'value' => 'Autoriser les clients à commander',
   ),
   1379 => 
   array (
     'locale' => 'fr',
     'key' => 'Place Order',
-    'value' => 'Place Order',
+    'value' => 'Passer la commande',
   ),
   1380 => 
   array (
     'locale' => 'fr',
     'key' => 'Zip / Postal Code',
-    'value' => 'Zip / Postal Code',
+    'value' => 'Code postal',
   ),
   1381 => 
   array (
     'locale' => 'fr',
     'key' => 'Add Point',
-    'value' => 'Add Point',
+    'value' => 'Ajouter des points',
   ),
   1382 => 
   array (
     'locale' => 'fr',
     'key' => 'Invoice Settings',
-    'value' => 'Invoice Settings',
+    'value' => 'Paramètres de facture',
   ),
   1383 => 
   array (
     'locale' => 'fr',
     'key' => 'Invoice Type',
-    'value' => 'Invoice Type',
+    'value' => 'Type de facture',
   ),
   1384 => 
   array (
     'locale' => 'fr',
     'key' => 'Numbering Type',
-    'value' => 'Numbering Type',
+    'value' => 'Type de numérotation',
   ),
   1385 => 
   array (
     'locale' => 'fr',
     'key' => 'Start Number',
-    'value' => 'Start Number',
+    'value' => 'Numéro de départ',
   ),
   1386 => 
   array (
     'locale' => 'fr',
     'key' => 'Header Text',
-    'value' => 'Header Text',
+    'value' => 'Texte d\'en-tête',
   ),
   1387 => 
   array (
     'locale' => 'fr',
     'key' => 'Footer Text',
-    'value' => 'Footer Text',
+    'value' => 'Texte de pied de page',
   ),
   1388 => 
   array (
     'locale' => 'fr',
     'key' => 'Company Logo',
-    'value' => 'Company Logo',
+    'value' => 'Logo de la société',
   ),
   1389 => 
   array (
     'locale' => 'fr',
     'key' => 'Logo Height',
-    'value' => 'Logo Height',
+    'value' => 'Hauteur du logo',
   ),
   1390 => 
   array (
     'locale' => 'fr',
     'key' => 'Logo Width',
-    'value' => 'Logo Width',
+    'value' => 'Largeur du logo',
   ),
   1391 => 
   array (
     'locale' => 'fr',
     'key' => 'Primary Color',
-    'value' => 'Primary Color',
+    'value' => 'Couleur principale',
   ),
   1392 => 
   array (
     'locale' => 'fr',
     'key' => 'Invoice Date Format',
-    'value' => 'Invoice Date Format',
+    'value' => 'Format de date de facture',
   ),
   1393 => 
   array (
     'locale' => 'fr',
     'key' => 'Show Barcode',
-    'value' => 'Show Barcode',
+    'value' => 'Afficher le code-barres',
   ),
   1394 => 
   array (
     'locale' => 'fr',
     'key' => 'Show QR Code',
-    'value' => 'Show QR Code',
+    'value' => 'Afficher le code QR',
   ),
   1395 => 
   array (
     'locale' => 'fr',
     'key' => 'Show Description(Only 58mm,80mm]',
-    'value' => 'Show Description(Only 58mm,80mm]',
+    'value' => 'Afficher la description (58 mm et 80 mm seulement)',
   ),
   1396 => 
   array (
     'locale' => 'fr',
     'key' => 'Show In Words',
-    'value' => 'Show In Words',
+    'value' => 'Afficher le montant en lettres',
   ),
   1397 => 
   array (
     'locale' => 'fr',
     'key' => 'Active Primary Color',
-    'value' => 'Active Primary Color',
+    'value' => 'Couleur principale active',
   ),
   1398 => 
   array (
     'locale' => 'fr',
     'key' => 'Show Warehouse Info',
-    'value' => 'Show Warehouse Info',
+    'value' => 'Afficher l\'entrepôt',
   ),
   1399 => 
   array (
     'locale' => 'fr',
     'key' => 'Show Bill TO Info',
-    'value' => 'Show Bill TO Info',
+    'value' => 'Afficher le destinataire',
   ),
   1400 => 
   array (
     'locale' => 'fr',
     'key' => 'Received By Info',
-    'value' => 'Received By Info',
+    'value' => 'Informations du réceptionnaire',
   ),
   1401 => 
   array (
     'locale' => 'fr',
     'key' => 'Show Footer Text',
-    'value' => 'Show Footer Text',
+    'value' => 'Afficher le pied de page',
   ),
   1402 => 
   array (
     'locale' => 'fr',
     'key' => 'Show Payment Note',
-    'value' => 'Show Payment Note',
+    'value' => 'Afficher la note de paiement',
   ),
   1403 => 
   array (
     'locale' => 'fr',
     'key' => 'Show Reference No',
-    'value' => 'Show Reference No',
+    'value' => 'Afficher la référence',
   ),
   1404 => 
   array (
     'locale' => 'fr',
     'key' => 'Active Date Format',
-    'value' => 'Active Date Format',
+    'value' => 'Format de date actif',
   ),
   1405 => 
   array (
     'locale' => 'fr',
     'key' => 'Invoice Generate Setting',
-    'value' => 'Invoice Generate Setting',
+    'value' => 'Paramètres de génération de facture',
   ),
   1406 => 
   array (
     'locale' => 'fr',
     'key' => 'Active Logo Height Width',
-    'value' => 'Active Logo Height Width',
+    'value' => 'Dimensions du logo actif',
   ),
   1407 => 
   array (
     'locale' => 'fr',
     'key' => 'Add New Invoice Setting',
-    'value' => 'Add New Invoice Setting',
+    'value' => 'Ajouter un modèle de facture',
   ),
   1408 => 
   array (
     'locale' => 'fr',
     'key' => 'Edit Invoice Setting',
-    'value' => 'Edit Invoice Setting',
+    'value' => 'Modifier le modèle de facture',
   ),
   1409 => 
   array (
     'locale' => 'fr',
     'key' => 'Size',
-    'value' => 'Size',
+    'value' => 'Taille',
   ),
   1410 => 
   array (
     'locale' => 'fr',
     'key' => 'Is Default',
-    'value' => 'Is Default',
+    'value' => 'Par défaut',
   ),
   1411 => 
   array (
     'locale' => 'fr',
     'key' => 'Set Default',
-    'value' => 'Set Default',
+    'value' => 'Définir par défaut',
   ),
   1412 => 
   array (
     'locale' => 'fr',
     'key' => 'Date Wise',
-    'value' => 'Date Wise',
+    'value' => 'Par date',
   ),
   1413 => 
   array (
     'locale' => 'fr',
     'key' => 'Random',
-    'value' => 'Random',
+    'value' => 'Aléatoire',
   ),
   1414 => 
   array (
     'locale' => 'fr',
     'key' => 'Sequential',
-    'value' => 'Sequential',
+    'value' => 'Séquentiel',
   ),
   1415 => 
   array (
     'locale' => 'fr',
     'key' => 'Date Range',
-    'value' => 'Date Range',
+    'value' => 'Plage de dates',
   ),
   1416 => 
   array (
     'locale' => 'fr',
     'key' => 'Invoice Create/Edit/Delete',
-    'value' => 'Invoice Create/Edit/Delete',
+    'value' => 'Créer, modifier ou supprimer une facture',
   ),
   1417 => 
   array (
     'locale' => 'fr',
     'key' => 'Served By',
-    'value' => 'Served By',
+    'value' => 'Servi par',
+  ),
+  100000 => 
+  array (
+    'locale' => 'fr',
+    'key' => '            Please try again',
+    'value' => 'Veuillez réessayer',
+  ),
+  100001 => 
+  array (
+    'locale' => 'fr',
+    'key' => '. Required points: ',
+    'value' => '. Points requis : ',
+  ),
+  100002 => 
+  array (
+    'locale' => 'fr',
+    'key' => ':name exceeds the remaining quantity of :qty.',
+    'value' => ':name dépasse la quantité restante de :qty.',
+  ),
+  100003 => 
+  array (
+    'locale' => 'fr',
+    'key' => ':name is already fully delivered.',
+    'value' => ':name est déjà entièrement livré.',
+  ),
+  100004 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'A fresh verification link has been sent to your email address.',
+    'value' => 'Un nouveau lien de vérification a été envoyé à votre adresse e-mail.',
+  ),
+  100005 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'A selected product does not belong to this sale.',
+    'value' => 'Un produit sélectionné n\'appartient pas à cette vente.',
+  ),
+  100006 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Account Selection',
+    'value' => 'Sélection du compte',
+  ),
+  100007 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Add Invoice Setting',
+    'value' => 'Ajouter un modèle de facture',
+  ),
+  100008 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Add Review',
+    'value' => 'Ajouter un avis',
+  ),
+  100009 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Adjust Quantity',
+    'value' => 'Ajuster la quantité',
+  ),
+  100010 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Adjustment Quantity',
+    'value' => 'Quantité d\'ajustement',
+  ),
+  100011 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'All Points',
+    'value' => 'Tous les points',
+  ),
+  100012 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'All Time',
+    'value' => 'Toute la période',
+  ),
+  100013 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'All months',
+    'value' => 'Tous les mois',
+  ),
+  100014 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'All years',
+    'value' => 'Toutes les années',
+  ),
+  100015 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Amount exceeds card balance! Gift Card balance: ',
+    'value' => 'Le montant dépasse le solde de la carte. Solde : ',
+  ),
+  100016 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Amount exceeds customer deposit! Customer deposit : ',
+    'value' => 'Le montant dépasse le dépôt du client. Dépôt du client : ',
+  ),
+  100017 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Apply',
+    'value' => 'Appliquer',
+  ),
+  100018 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Are you sure want to cancel?',
+    'value' => 'Voulez-vous vraiment annuler ?',
+  ),
+  100019 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Are you sure want to close?',
+    'value' => 'Voulez-vous vraiment fermer ?',
+  ),
+  100020 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Are you sure want to delete?',
+    'value' => 'Voulez-vous vraiment supprimer ?',
+  ),
+  100021 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Are you sure want to delete? If you delete this money will be refunded',
+    'value' => 'Voulez-vous vraiment supprimer ? Le montant sera remboursé.',
+  ),
+  100022 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Are you sure want to delete? If you delete this money will be refunded.',
+    'value' => 'Voulez-vous vraiment supprimer ? Le montant sera remboursé.',
+  ),
+  100023 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Are you sure want to delete? If you do this all of your data will be lost.',
+    'value' => 'Voulez-vous vraiment supprimer ? Toutes les données seront perdues.',
+  ),
+  100024 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Are you sure you want to change the status?',
+    'value' => 'Voulez-vous changer le statut ?',
+  ),
+  100025 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Are you sure you want to delete this invoice setting?',
+    'value' => 'Voulez-vous supprimer ce modèle de facture ?',
+  ),
+  100026 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Are you sure you want to permanently delete the selected records? This action cannot be undone!',
+    'value' => 'Voulez-vous supprimer définitivement les enregistrements sélectionnés ? Cette action est irréversible.',
+  ),
+  100027 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Auto Generate Numbering Type',
+    'value' => 'Générer automatiquement le type de numérotation',
+  ),
+  100028 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Available Quantity',
+    'value' => 'Quantité disponible',
+  ),
+  100029 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Barcode added successfully',
+    'value' => 'Code-barres ajouté avec succès',
+  ),
+  100030 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Barcode label error',
+    'value' => 'Erreur d\'étiquette de code-barres',
+  ),
+  100031 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Barcode updated successfully',
+    'value' => 'Code-barres mis à jour avec succès',
+  ),
+  100032 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Before proceeding, please check your email for a verification link.',
+    'value' => 'Avant de continuer, consultez votre e-mail pour le lien de vérification.',
+  ),
+  100033 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Blue',
+    'value' => 'Bleu',
+  ),
+  100034 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Both Warehouse can not be same!',
+    'value' => 'Les deux entrepôts ne peuvent pas être identiques.',
+  ),
+  100035 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Can not delete purchase has sale!',
+    'value' => 'Impossible de supprimer : cet achat a déjà été vendu.',
+  ),
+  100036 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Can not delete, purchase has sale!',
+    'value' => 'Impossible de supprimer : cet achat a déjà été vendu.',
+  ),
+  100037 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Change Currency',
+    'value' => 'Changer la devise',
+  ),
+  100038 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Choose at least one product and a quantity that does not exceed the remaining quantity.',
+    'value' => 'Choisissez au moins un produit et une quantité qui ne dépasse pas le reste à livrer.',
+  ),
+  100039 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Confirmation',
+    'value' => 'Confirmation',
+  ),
+  100040 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Cooked',
+    'value' => 'Préparé',
+  ),
+  100041 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Custom Range',
+    'value' => 'Période personnalisée',
+  ),
+  100042 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Customer Name',
+    'value' => 'Nom du client',
+  ),
+  100043 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Customer does not have sufficient points. Available points: ',
+    'value' => 'Le client n\'a pas assez de points. Points disponibles : ',
+  ),
+  100044 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Customer name',
+    'value' => 'Nom du client',
+  ),
+  100045 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'D.Status',
+    'value' => 'Statut livr.',
+  ),
+  100046 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Dark',
+    'value' => 'Sombre',
+  ),
+  100047 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Data deleted Successfully',
+    'value' => 'Données supprimées avec succès',
+  ),
+  100048 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Date',
+    'value' => 'Date',
+  ),
+  100049 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Default Profit Margin Value',
+    'value' => 'Marge bénéficiaire par défaut',
+  ),
+  100050 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Default invoice cannot be deleted',
+    'value' => 'La facture par défaut ne peut pas être supprimée',
+  ),
+  100051 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Delete',
+    'value' => 'Supprimer',
+  ),
+  100052 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Deleted Purchases',
+    'value' => 'Achats supprimés',
+  ),
+  100053 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Deleted Sales',
+    'value' => 'Ventes supprimées',
+  ),
+  100054 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Deliveries in the period',
+    'value' => 'Livraisons de la période',
+  ),
+  100055 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Delivery Report',
+    'value' => 'Rapport de livraison',
+  ),
+  100056 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Delivery could not be saved.',
+    'value' => 'La livraison n\'a pas pu être enregistrée.',
+  ),
+  100057 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Delivery could not be updated.',
+    'value' => 'La livraison n\'a pas pu être mise à jour.',
+  ),
+  100058 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Delivery created successfully',
+    'value' => 'Livraison créée avec succès',
+  ),
+  100059 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Delivery history',
+    'value' => 'Historique de livraison',
+  ),
+  100060 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Delivery not found',
+    'value' => 'Livraison introuvable',
+  ),
+  100061 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Delivery progress',
+    'value' => 'Avancement de la livraison',
+  ),
+  100062 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Delivery quantity must be a number.',
+    'value' => 'La quantité livrée doit être un nombre.',
+  ),
+  100063 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Delivery report filter help',
+    'value' => 'Une année sans mois affiche toute l\'année. Un mois sans année utilise l\'année en cours. Toutes les années et tous les mois, sans dates, affichent tout le rapport. Renseignez les deux dates seulement pour une période libre.',
+  ),
+  100064 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Delivery updated successfully',
+    'value' => 'Livraison mise à jour avec succès',
+  ),
+  100065 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Do not print Invoice',
+    'value' => 'Ne pas imprimer la facture',
+  ),
+  100066 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Duplicate input is not allowed!',
+    'value' => 'Un doublon n\'est pas autorisé.',
+  ),
+  100067 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'E-Mail Address',
+    'value' => 'Adresse e-mail',
+  ),
+  100068 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Each product can be included only once on the same delivery.',
+    'value' => 'Chaque produit ne peut figurer qu\'une seule fois sur la même livraison.',
+  ),
+  100069 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Edit',
+    'value' => 'Modifier',
+  ),
+  100070 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Edit Recipe',
+    'value' => 'Modifier la recette',
+  ),
+  100071 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Enter an invoice date, a reference or a customer name.',
+    'value' => 'Saisissez une date, une référence ou un nom de client.',
+  ),
+  100072 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Enter production',
+    'value' => 'Saisir la production',
+  ),
+  100073 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Error deleting invoice.',
+    'value' => 'Erreur lors de la suppression de la facture.',
+  ),
+  100074 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Exported to CSV file successfully! Click Ok to download file',
+    'value' => 'Export CSV réussi. Cliquez sur OK pour télécharger le fichier',
+  ),
+  100075 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Failed to update status.',
+    'value' => 'Échec de la mise à jour du statut.',
+  ),
+  100076 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Filter Purchases',
+    'value' => 'Filtrer les achats',
+  ),
+  100077 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Final Quantity',
+    'value' => 'Quantité finale',
+  ),
+  100078 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'First',
+    'value' => 'Premier',
+  ),
+  100079 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Footer Title',
+    'value' => 'Titre de pied de page',
+  ),
+  100080 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'For Digital product sale_unit will be n/a',
+    'value' => 'Pour un produit numérique, l\'unité de vente sera n/a',
+  ),
+  100081 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'For Website',
+    'value' => 'Pour le site web',
+  ),
+  100082 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Fr',
+    'value' => 'Ve',
+  ),
+  100083 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Fully delivered',
+    'value' => 'Entièrement livré',
+  ),
+  100084 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Go Back',
+    'value' => 'Retour',
+  ),
+  100085 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Green',
+    'value' => 'Vert',
+  ),
+  100086 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Handle Discount',
+    'value' => 'Gérer la remise',
+  ),
+  100087 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Hide Total Due',
+    'value' => 'Masquer le total dû',
+  ),
+  100088 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'If you delete category all products under this category will also be deleted. Are you sure want to delete?',
+    'value' => 'Supprimer cette catégorie supprimera aussi ses produits. Voulez-vous continuer ?',
+  ),
+  100089 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'If you did not receive the email',
+    'value' => 'Si vous n\'avez pas reçu l\'e-mail',
+  ),
+  100090 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'If you have any questions or concerns, please don\'t hesitate to reach out to us We are here to help!',
+    'value' => 'Pour toute question, contactez-nous. Nous sommes là pour vous aider.',
+  ),
+  100091 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Import Product',
+    'value' => 'Importer des produits',
+  ),
+  100092 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'In progress',
+    'value' => 'En cours',
+  ),
+  100093 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Ingredient List',
+    'value' => 'Liste des ingrédients',
+  ),
+  100094 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Initial Deposit',
+    'value' => 'Dépôt initial',
+  ),
+  100095 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Invalid Discount Input!',
+    'value' => 'Remise invalide.',
+  ),
+  100096 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Invalid coupon code!',
+    'value' => 'Code coupon invalide.',
+  ),
+  100097 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Invoice date',
+    'value' => 'Date de facturation',
+  ),
+  100098 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Invoice reference',
+    'value' => 'Référence de facture',
+  ),
+  100099 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Invoice search',
+    'value' => 'Recherche de facture',
+  ),
+  100100 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Last',
+    'value' => 'Dernier',
+  ),
+  100101 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Last 30 Days',
+    'value' => '30 derniers jours',
+  ),
+  100102 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Last 90 Days',
+    'value' => '90 derniers jours',
+  ),
+  100103 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Last Year',
+    'value' => 'Année dernière',
+  ),
+  100104 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'List on category dropdown',
+    'value' => 'Afficher dans la liste des catégories',
+  ),
+  100105 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'List on website',
+    'value' => 'Afficher sur le site',
+  ),
+  100106 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Loading delivery history...',
+    'value' => 'Chargement de l\'historique de livraison...',
+  ),
+  100107 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Loading products for selected warehouse',
+    'value' => 'Chargement des produits de l\'entrepôt sélectionné',
+  ),
+  100108 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Loading...',
+    'value' => 'Chargement...',
+  ),
+  100109 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Login',
+    'value' => 'Connexion',
+  ),
+  100110 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Logout',
+    'value' => 'Déconnexion',
+  ),
+  100111 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Mail settings are not configured. Please contact the administrator.',
+    'value' => 'Les paramètres de courriel ne sont pas configurés. Contactez l\'administrateur.',
+  ),
+  100112 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Maximum quantity reached!',
+    'value' => 'Quantité maximale atteinte.',
+  ),
+  100113 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Mo',
+    'value' => 'Lu',
+  ),
+  100114 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Month',
+    'value' => 'Mois',
+  ),
+  100115 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Name',
+    'value' => 'Nom',
+  ),
+  100116 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No biller is selected!',
+    'value' => 'Aucun vendeur n\'est sélectionné.',
+  ),
+  100117 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No brand is selected!',
+    'value' => 'Aucune marque n\'est sélectionnée.',
+  ),
+  100118 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No category is selected!',
+    'value' => 'Aucune catégorie n\'est sélectionnée.',
+  ),
+  100119 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No coupon is selected!',
+    'value' => 'Aucun coupon n\'est sélectionné.',
+  ),
+  100120 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No courier is selected!',
+    'value' => 'Aucun coursier n\'est sélectionné.',
+  ),
+  100121 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No customer group is selected!',
+    'value' => 'Aucun groupe de clients n\'est sélectionné.',
+  ),
+  100122 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No customer is selected!',
+    'value' => 'Aucun client n\'est sélectionné.',
+  ),
+  100123 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No data available in table',
+    'value' => 'Aucune donnée disponible',
+  ),
+  100124 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No delivery has been recorded for this sale.',
+    'value' => 'Aucune livraison n\'a été enregistrée pour cette vente.',
+  ),
+  100125 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No delivery was recorded in this period.',
+    'value' => 'Aucune livraison n\'a été enregistrée sur cette période.',
+  ),
+  100126 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No department is selected!',
+    'value' => 'Aucun département n\'est sélectionné.',
+  ),
+  100127 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No employee is selected!',
+    'value' => 'Aucun employé n\'est sélectionné.',
+  ),
+  100128 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No expense category is selected!',
+    'value' => 'Aucune catégorie de dépense n\'est sélectionnée.',
+  ),
+  100129 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No gift card is selected!',
+    'value' => 'Aucune carte cadeau n\'est sélectionnée.',
+  ),
+  100130 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No income category is selected!',
+    'value' => 'Aucune catégorie de revenu n\'est sélectionnée.',
+  ),
+  100131 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No invoice matches this search.',
+    'value' => 'Aucun résultat trouvé.',
+  ),
+  100132 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No matching records found',
+    'value' => 'Aucun résultat trouvé',
+  ),
+  100133 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No money_transfer is selected!',
+    'value' => 'Aucun virement n\'est sélectionné.',
+  ),
+  100134 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No payroll is selected!',
+    'value' => 'Aucune paie n\'est sélectionnée.',
+  ),
+  100135 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No product is selected!',
+    'value' => 'Aucun produit n\'est sélectionné.',
+  ),
+  100136 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No product is waiting for delivery in this selection.',
+    'value' => 'Aucun produit n\'est en attente de livraison dans cette sélection.',
+  ),
+  100137 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No product quantities were recorded on this delivery.',
+    'value' => 'Aucune quantité n\'a été enregistrée sur cette livraison.',
+  ),
+  100138 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No reviews yet',
+    'value' => 'Aucun avis pour le moment',
+  ),
+  100139 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No sales match these filters.',
+    'value' => 'Aucune vente ne correspond à ces filtres.',
+  ),
+  100140 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No supplier is selected!',
+    'value' => 'Aucun fournisseur n\'est sélectionné.',
+  ),
+  100141 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No tax is selected!',
+    'value' => 'Aucune taxe n\'est sélectionnée.',
+  ),
+  100142 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No unit is selected!',
+    'value' => 'Aucune unité n\'est sélectionnée.',
+  ),
+  100143 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No user is selected!',
+    'value' => 'Aucun utilisateur n\'est sélectionné.',
+  ),
+  100144 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'No warehouse is selected!',
+    'value' => 'Aucun entrepôt n\'est sélectionné.',
+  ),
+  100145 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Not yet delivered',
+    'value' => 'Pas encore livré',
+  ),
+  100146 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Nothing is selected!',
+    'value' => 'Aucune sélection.',
+  ),
+  100147 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Notifications',
+    'value' => 'Notifications',
+  ),
+  100148 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Number Of Digit',
+    'value' => 'Nombre de chiffres',
+  ),
+  100149 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Number Of Digit (min-6, max-12)',
+    'value' => 'Nombre de chiffres (min. 6, max. 12)',
+  ),
+  100150 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'One of products has no quantity!',
+    'value' => 'Un des produits n\'a pas de quantité.',
+  ),
+  100151 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported',
+    'value' => 'Seuls les fichiers jpg, jpeg, png, gif, pdf, csv, docx, xlsx et txt sont acceptés',
+  ),
+  100152 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Open delivery report',
+    'value' => 'Ouvrir le rapport de livraison',
+  ),
+  100153 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Open invoice',
+    'value' => 'Ouvrir la facture',
+  ),
+  100154 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Open warehouse report',
+    'value' => 'Ouvrir le rapport d\'entrepôt',
+  ),
+  100155 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Orders to serve',
+    'value' => 'Commandes à servir',
+  ),
+  100156 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Packing Slip to manage orders/sales',
+    'value' => 'Bon de préparation pour gérer les commandes et ventes',
+  ),
+  100157 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Partially delivered',
+    'value' => 'Partiellement livré',
+  ),
+  100158 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Paying amount cannot be bigger than due amount',
+    'value' => 'Le montant payé ne peut pas dépasser le montant dû',
+  ),
+  100159 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Paying amount cannot be bigger than grand total',
+    'value' => 'Le montant payé ne peut pas dépasser le total',
+  ),
+  100160 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Paying amount cannot be bigger than received amount',
+    'value' => 'Le montant payé ne peut pas dépasser le montant reçu',
+  ),
+  100161 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Paying amount cannot be bigger than recieved amount',
+    'value' => 'Le montant payé ne peut pas dépasser le montant reçu',
+  ),
+  100162 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Paying amount equals to grand total! Please change payment status.',
+    'value' => 'Le montant payé est égal au total. Modifiez le statut de paiement.',
+  ),
+  100163 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Paying amount must be greater than 0',
+    'value' => 'Le montant payé doit être supérieur à 0',
+  ),
+  100164 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Payment Proof',
+    'value' => 'Preuve de paiement',
+  ),
+  100165 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Payment Status should be Paid for Walk in Customer!',
+    'value' => 'Le statut de paiement doit être Payé pour un client de passage.',
+  ),
+  100166 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Paypal',
+    'value' => 'Paypal',
+  ),
+  100167 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Pending, partial and completed deliveries for the current period.',
+    'value' => 'Livraisons en attente, partielles et terminées pour la période en cours.',
+  ),
+  100168 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please choose imei or serial number!',
+    'value' => 'Veuillez choisir un IMEI ou un numéro de série.',
+  ),
+  100169 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please create warehouse first before adding stock!',
+    'value' => 'Créez d\'abord un entrepôt avant d\'ajouter du stock.',
+  ),
+  100170 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please enter a valid URL.',
+    'value' => 'Veuillez saisir une URL valide.',
+  ),
+  100171 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please enter a valid date.',
+    'value' => 'Veuillez saisir une date valide.',
+  ),
+  100172 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please enter a valid email address.',
+    'value' => 'Veuillez saisir une adresse e-mail valide.',
+  ),
+  100173 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please enter a valid number.',
+    'value' => 'Veuillez saisir un nombre valide.',
+  ),
+  100174 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please enter a value greater than or equal to {0}.',
+    'value' => 'Veuillez saisir une valeur supérieure ou égale à {0}.',
+  ),
+  100175 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please enter a value less than or equal to {0}.',
+    'value' => 'Veuillez saisir une valeur inférieure ou égale à {0}.',
+  ),
+  100176 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please enter at least {0} characters.',
+    'value' => 'Veuillez saisir au moins {0} caractères.',
+  ),
+  100177 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please enter no more than {0} characters.',
+    'value' => 'Veuillez saisir au maximum {0} caractères.',
+  ),
+  100178 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please enter only digits.',
+    'value' => 'Veuillez saisir uniquement des chiffres.',
+  ),
+  100179 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please enter the same value again.',
+    'value' => 'Veuillez saisir à nouveau la même valeur.',
+  ),
+  100180 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please fix this field.',
+    'value' => 'Veuillez corriger ce champ.',
+  ),
+  100181 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please insert product to order table!',
+    'value' => 'Veuillez ajouter un produit au tableau de commande.',
+  ),
+  100182 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please insert product to table!',
+    'value' => 'Veuillez ajouter un produit au tableau.',
+  ),
+  100183 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please select Biller!',
+    'value' => 'Veuillez sélectionner un vendeur.',
+  ),
+  100184 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please select Customer!',
+    'value' => 'Veuillez sélectionner un client.',
+  ),
+  100185 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please select Table!',
+    'value' => 'Veuillez sélectionner une table.',
+  ),
+  100186 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please select Waiter!',
+    'value' => 'Veuillez sélectionner un serveur.',
+  ),
+  100187 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please select Warehouse!',
+    'value' => 'Veuillez sélectionner un entrepôt.',
+  ),
+  100188 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please select a biller',
+    'value' => 'Veuillez sélectionner un vendeur',
+  ),
+  100189 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please select at least one product.',
+    'value' => 'Veuillez sélectionner au moins un produit.',
+  ),
+  100190 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please select paper size',
+    'value' => 'Veuillez sélectionner le format de papier',
+  ),
+  100191 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Please setup your :link to send mail.',
+    'value' => 'Veuillez configurer :link pour envoyer le courriel.',
+  ),
+  100192 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Prepared By',
+    'value' => 'Préparé par',
+  ),
+  100193 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Preview Image',
+    'value' => 'Aperçu de l\'image',
+  ),
+  100194 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Processing...',
+    'value' => 'Traitement en cours...',
+  ),
+  100195 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Prodcut Price',
+    'value' => 'Prix du produit',
+  ),
+  100196 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Product',
+    'value' => 'Produit',
+  ),
+  100197 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Product code length must be less than 12',
+    'value' => 'Le code produit doit faire moins de 12 caractères',
+  ),
+  100198 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Product code length must be less than 13',
+    'value' => 'Le code produit doit faire moins de 13 caractères',
+  ),
+  100199 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Product code length must be less than 8',
+    'value' => 'Le code produit doit faire moins de 8 caractères',
+  ),
+  100200 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Product code must be numeric.',
+    'value' => 'Le code produit doit être numérique.',
+  ),
+  100201 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Product is expired!',
+    'value' => 'Le produit est périmé.',
+  ),
+  100202 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Product quantity is 0',
+    'value' => 'La quantité du produit est 0',
+  ),
+  100203 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Product with',
+    'value' => 'Produit avec',
+  ),
+  100204 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Production Cost',
+    'value' => 'Coût de production',
+  ),
+  100205 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Production created successfully',
+    'value' => 'Production créée avec succès',
+  ),
+  100206 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Production deleted successfully',
+    'value' => 'Production supprimée avec succès',
+  ),
+  100207 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Products awaiting delivery',
+    'value' => 'Produits en attente de livraison',
+  ),
+  100208 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Profit',
+    'value' => 'Bénéfice',
+  ),
+  100209 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Profit Margin',
+    'value' => 'Marge bénéficiaire',
+  ),
+  100210 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Progress',
+    'value' => 'Avancement',
+  ),
+  100211 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Purple',
+    'value' => 'Violet',
+  ),
+  100212 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Qty',
+    'value' => 'Qté',
+  ),
+  100213 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Qty delivered',
+    'value' => 'Qté livrée',
+  ),
+  100214 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Qty remaining',
+    'value' => 'Qté restante',
+  ),
+  100215 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Qty sold',
+    'value' => 'Qté vendue',
+  ),
+  100216 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Quantity and Recieved value is same! Please Change Purchase Status or Recieved value',
+    'value' => 'La quantité et la valeur reçue sont identiques. Modifiez le statut d\'achat ou la valeur reçue',
+  ),
+  100217 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Quantity can not be bigger than the actual quantity!',
+    'value' => 'La quantité ne peut pas dépasser la quantité réelle.',
+  ),
+  100218 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Quantity can\'t be less than 0',
+    'value' => 'La quantité ne peut pas être inférieure à 0',
+  ),
+  100219 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Quantity can\'t be less than 1',
+    'value' => 'La quantité ne peut pas être inférieure à 1',
+  ),
+  100220 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Quantity exceeds sales quantity!',
+    'value' => 'La quantité dépasse la quantité vendue.',
+  ),
+  100221 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Quantity exceeds stock quantity!',
+    'value' => 'La quantité dépasse le stock.',
+  ),
+  100222 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Quantity not available',
+    'value' => 'Quantité non disponible',
+  ),
+  100223 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Rating',
+    'value' => 'Note',
+  ),
+  100224 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Recipe',
+    'value' => 'Recette',
+  ),
+  100225 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Remaining',
+    'value' => 'Restant',
+  ),
+  100226 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Removed product',
+    'value' => 'Produit retiré',
+  ),
+  100227 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Removed product #:id',
+    'value' => 'Produit retiré n° :id',
+  ),
+  100228 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Reset Password',
+    'value' => 'Réinitialiser le mot de passe',
+  ),
+  100229 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Review',
+    'value' => 'Avis',
+  ),
+  100230 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Sa',
+    'value' => 'Sa',
+  ),
+  100231 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Sale currency',
+    'value' => 'Devise de la vente',
+  ),
+  100232 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Sale not found',
+    'value' => 'Vente introuvable',
+  ),
+  100233 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Sales and delivery progress',
+    'value' => 'Ventes et avancement des livraisons',
+  ),
+  100234 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Sales in period',
+    'value' => 'Ventes de la période',
+  ),
+  100235 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Same imei or serial number is not allowed!',
+    'value' => 'Le même IMEI ou numéro de série n\'est pas autorisé.',
+  ),
+  100236 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Scan the QR code to pay',
+    'value' => 'Scannez le QR code pour payer',
+  ),
+  100237 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Scan/Search product by name/code/IMEI',
+    'value' => 'Scanner ou rechercher un produit par nom, code ou IMEI',
+  ),
+  100238 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Search invoice',
+    'value' => 'Rechercher une facture',
+  ),
+  100239 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select Additional Products',
+    'value' => 'Sélectionner des produits supplémentaires',
+  ),
+  100240 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select Biller...',
+    'value' => 'Sélectionner un vendeur...',
+  ),
+  100241 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select Brand...',
+    'value' => 'Sélectionner une marque...',
+  ),
+  100242 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select Category...',
+    'value' => 'Sélectionner une catégorie...',
+  ),
+  100243 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select Company...',
+    'value' => 'Sélectionner une société...',
+  ),
+  100244 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select Customer...',
+    'value' => 'Sélectionner un client...',
+  ),
+  100245 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select Employee...',
+    'value' => 'Sélectionner un employé...',
+  ),
+  100246 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select Expense Category...',
+    'value' => 'Sélectionner une catégorie de dépense...',
+  ),
+  100247 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select Gift Card...',
+    'value' => 'Sélectionner une carte cadeau...',
+  ),
+  100248 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select Income Category...',
+    'value' => 'Sélectionner une catégorie de revenu...',
+  ),
+  100249 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select Recipe',
+    'value' => 'Sélectionner une recette',
+  ),
+  100250 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select Role...',
+    'value' => 'Sélectionner un rôle...',
+  ),
+  100251 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select Supplier...',
+    'value' => 'Sélectionner un fournisseur...',
+  ),
+  100252 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select Template',
+    'value' => 'Sélectionner un modèle',
+  ),
+  100253 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select TimeZone...',
+    'value' => 'Sélectionner un fuseau horaire...',
+  ),
+  100254 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select User...',
+    'value' => 'Sélectionner un utilisateur...',
+  ),
+  100255 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select Warehouse...',
+    'value' => 'Sélectionner un entrepôt...',
+  ),
+  100256 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select account...',
+    'value' => 'Sélectionner un compte...',
+  ),
+  100257 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select an operator',
+    'value' => 'Sélectionner un opérateur',
+  ),
+  100258 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select at least one product and a quantity that is still remaining.',
+    'value' => 'Sélectionnez au moins un produit et une quantité encore restante.',
+  ),
+  100259 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select biller...',
+    'value' => 'Sélectionner un vendeur...',
+  ),
+  100260 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select courier...',
+    'value' => 'Sélectionner un coursier...',
+  ),
+  100261 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select customer group...',
+    'value' => 'Sélectionner un groupe de clients...',
+  ),
+  100262 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select customer...',
+    'value' => 'Sélectionner un client...',
+  ),
+  100263 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select customer_group...',
+    'value' => 'Sélectionner un groupe de clients...',
+  ),
+  100264 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select discount plan...',
+    'value' => 'Sélectionner un plan de remise...',
+  ),
+  100265 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select from account...',
+    'value' => 'Sélectionner le compte source...',
+  ),
+  100266 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select kitchen...',
+    'value' => 'Sélectionner une cuisine...',
+  ),
+  100267 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select service...',
+    'value' => 'Sélectionner un service...',
+  ),
+  100268 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select supplier...',
+    'value' => 'Sélectionner un fournisseur...',
+  ),
+  100269 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select table...',
+    'value' => 'Sélectionner une table...',
+  ),
+  100270 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select the products on this delivery. The quantity cannot exceed what is still remaining.',
+    'value' => 'Sélectionnez les produits de cette livraison. La quantité ne peut pas dépasser le reste à livrer.',
+  ),
+  100271 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select to account...',
+    'value' => 'Sélectionner le compte de destination...',
+  ),
+  100272 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select unit...',
+    'value' => 'Sélectionner une unité...',
+  ),
+  100273 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select user...',
+    'value' => 'Sélectionner un utilisateur...',
+  ),
+  100274 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select waiter...',
+    'value' => 'Sélectionner un serveur...',
+  ),
+  100275 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Select warehouse...',
+    'value' => 'Sélectionner un entrepôt...',
+  ),
+  100276 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Served',
+    'value' => 'Servi',
+  ),
+  100277 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Show Amount In Words',
+    'value' => 'Afficher le montant en lettres',
+  ),
+  100278 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Show Bill To Info',
+    'value' => 'Afficher le destinataire',
+  ),
+  100279 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Show Description',
+    'value' => 'Afficher la description',
+  ),
+  100280 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Show Description ',
+    'value' => 'Afficher la description',
+  ),
+  100281 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Show Description[58mm,80mm]',
+    'value' => 'Afficher la description (58 mm et 80 mm)',
+  ),
+  100282 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Show Paid Info',
+    'value' => 'Afficher les informations de paiement',
+  ),
+  100283 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Show _MENU_ entries',
+    'value' => 'Afficher _MENU_ lignes',
+  ),
+  100284 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Show complete report',
+    'value' => 'Tout le rapport',
+  ),
+  100285 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Showing 0 to 0 of 0 entries',
+    'value' => 'Affichage de 0 à 0 sur 0',
+  ),
+  100286 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Showing _START_ to _END_ of _TOTAL_ entries',
+    'value' => 'Affichage de _START_ à _END_ sur _TOTAL_',
+  ),
+  100287 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Size, Color etc...',
+    'value' => 'Taille, couleur, etc.',
+  ),
+  100288 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Something error please try again',
+    'value' => 'Une erreur s\'est produite, veuillez réessayer',
+  ),
+  100289 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Someting Error',
+    'value' => 'Une erreur s\'est produite',
+  ),
+  100290 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Someting Error
+            Please try again',
+    'value' => 'Une erreur s\'est produite. Veuillez réessayer',
+  ),
+  100291 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Someting Error Please try again',
+    'value' => 'Une erreur s\'est produite. Veuillez réessayer',
+  ),
+  100292 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Still remaining',
+    'value' => 'Encore restant',
+  ),
+  100293 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Su',
+    'value' => 'Di',
+  ),
+  100294 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Sub total',
+    'value' => 'Sous-total',
+  ),
+  100295 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Th',
+    'value' => 'Je',
+  ),
+  100296 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'The specified table does not exist.',
+    'value' => 'La table indiquée n\'existe pas.',
+  ),
+  100297 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'This Coupon has expired!',
+    'value' => 'Ce coupon a expiré.',
+  ),
+  100298 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'This Coupon is no longer available',
+    'value' => 'Ce coupon n\'est plus disponible',
+  ),
+  100299 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'This card is expired!',
+    'value' => 'Cette carte est expirée.',
+  ),
+  100300 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'This delivery',
+    'value' => 'Cette livraison',
+  ),
+  100301 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'This field is required.',
+    'value' => 'Ce champ est obligatoire.',
+  ),
+  100302 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'This product already exists in the list.',
+    'value' => 'Ce produit est déjà dans la liste.',
+  ),
+  100303 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'This product has been added using the weight scale machine.',
+    'value' => 'Ce produit a été ajouté avec la balance.',
+  ),
+  100304 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'This product has variant. Please insert variant to table',
+    'value' => 'Ce produit a des variantes. Ajoutez une variante au tableau',
+  ),
+  100305 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'This sale has no products left to deliver.',
+    'value' => 'Cette vente n\'a plus de produit à livrer.',
+  ),
+  100306 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Toggle Dropdown',
+    'value' => 'Ouvrir le menu',
+  ),
+  100307 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Total Qty',
+    'value' => 'Qté totale',
+  ),
+  100308 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Total Supplier Payment',
+    'value' => 'Total des paiements fournisseur',
+  ),
+  100309 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Tu',
+    'value' => 'Ma',
+  ),
+  100310 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Type Coupon Code...',
+    'value' => 'Saisir le code coupon...',
+  ),
+  100311 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Type imei or serial numbers and separate them by comma. Example:1001,2001',
+    'value' => 'Saisissez les IMEI ou numéros de série séparés par une virgule. Exemple : 1001,2001',
+  ),
+  100312 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Type purchase code',
+    'value' => 'Saisir le code d\'achat',
+  ),
+  100313 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Update Point',
+    'value' => 'Mettre à jour les points',
+  ),
+  100314 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Upload payment proof',
+    'value' => 'Envoyer la preuve de paiement',
+  ),
+  100315 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Username',
+    'value' => 'Nom d\'utilisateur',
+  ),
+  100316 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Verify Your Email Address',
+    'value' => 'Vérifiez votre adresse e-mail',
+  ),
+  100317 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'View Points',
+    'value' => 'Voir les points',
+  ),
+  100318 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Wastage Percent',
+    'value' => 'Pourcentage de perte',
+  ),
+  100319 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Wastage percent',
+    'value' => 'Pourcentage de perte',
+  ),
+  100320 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Year',
+    'value' => 'Année',
+  ),
+  100321 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'You already review this product',
+    'value' => 'Vous avez déjà donné un avis sur ce produit',
+  ),
+  100322 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'You already reviewed this product',
+    'value' => 'Vous avez déjà évalué ce produit',
+  ),
+  100323 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'You don’t have permission to review this product. Only verified purchasers can leave a review',
+    'value' => 'Vous ne pouvez pas évaluer ce produit. Seuls les acheteurs vérifiés peuvent laisser un avis',
+  ),
+  100324 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'You must be logged in to write a review',
+    'value' => 'Vous devez être connecté pour écrire un avis',
+  ),
+  100325 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'You must buy it to leave a review',
+    'value' => 'Vous devez l\'acheter pour laisser un avis',
+  ),
+  100326 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Your Rating',
+    'value' => 'Votre note',
+  ),
+  100327 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'Your Review',
+    'value' => 'Votre avis',
+  ),
+  100328 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'add_Ingredient',
+    'value' => 'Ajouter un ingrédient',
+  ),
+  100329 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'add_production',
+    'value' => 'Ajouter une production',
+  ),
+  100330 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'add_recipe',
+    'value' => 'Ajouter une recette',
+  ),
+  100331 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'add_recipes',
+    'value' => 'Ajouter des recettes',
+  ),
+  100332 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'barcode_stickers_in_one_sheet',
+    'value' => 'Étiquettes par feuille',
+  ),
+  100333 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'cannot exceed the remaining quantity of',
+    'value' => 'ne peut pas dépasser la quantité restante de',
+  ),
+  100334 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'click here to request another',
+    'value' => 'cliquez ici pour en demander un autre',
+  ),
+  100335 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'column visibility',
+    'value' => 'visibilité des colonnes',
+  ),
+  100336 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'duplicate input is not allowed!',
+    'value' => 'Un doublon n\'est pas autorisé.',
+  ),
+  100337 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'expired',
+    'value' => 'expiré',
+  ),
+  100338 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'export to csv',
+    'value' => 'exporter en CSV',
+  ),
+  100339 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'export to excel',
+    'value' => 'exporter en Excel',
+  ),
+  100340 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'export to pdf',
+    'value' => 'exporter en PDF',
+  ),
+  100341 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'filtered from _MAX_ total entries',
+    'value' => '(filtré sur _MAX_ au total)',
+  ),
+  100342 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'fully delivered',
+    'value' => 'entièrement livré',
+  ),
+  100343 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'hide',
+    'value' => 'masquer',
+  ),
+  100344 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'mail setting',
+    'value' => 'les paramètres de courriel',
+  ),
+  100345 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'month_1',
+    'value' => 'Janvier',
+  ),
+  100346 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'month_10',
+    'value' => 'Octobre',
+  ),
+  100347 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'month_11',
+    'value' => 'Novembre',
+  ),
+  100348 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'month_12',
+    'value' => 'Décembre',
+  ),
+  100349 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'month_2',
+    'value' => 'Février',
+  ),
+  100350 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'month_3',
+    'value' => 'Mars',
+  ),
+  100351 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'month_4',
+    'value' => 'Avril',
+  ),
+  100352 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'month_5',
+    'value' => 'Mai',
+  ),
+  100353 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'month_6',
+    'value' => 'Juin',
+  ),
+  100354 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'month_7',
+    'value' => 'Juillet',
+  ),
+  100355 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'month_8',
+    'value' => 'Août',
+  ),
+  100356 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'month_9',
+    'value' => 'Septembre',
+  ),
+  100357 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'print',
+    'value' => 'imprimer',
+  ),
+  100358 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'remaining',
+    'value' => 'restant',
+  ),
+  100359 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'save',
+    'value' => 'enregistrer',
+  ),
+  100360 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'show',
+    'value' => 'afficher',
+  ),
+  100361 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'show Products Details in Purchase List',
+    'value' => 'Afficher le détail des produits dans la liste des achats',
+  ),
+  100362 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'show Products Details in Sales List',
+    'value' => 'Afficher le détail des produits dans la liste des ventes',
+  ),
+  100363 => 
+  array (
+    'locale' => 'fr',
+    'key' => 'table',
+    'value' => 'table',
+  ),
+  100364 =>
+  array (
+    'locale' => 'fr',
+    'key' => 'Day',
+    'value' => 'Jour',
+  ),
+  100365 =>
+  array (
+    'locale' => 'fr',
+    'key' => 'Week',
+    'value' => 'Semaine',
+  ),
+  100366 =>
+  array (
+    'locale' => 'fr',
+    'key' => 'Quarter',
+    'value' => 'Trimestre',
+  ),
+  100367 =>
+  array (
+    'locale' => 'fr',
+    'key' => 'Product List',
+    'value' => 'Liste des produits',
+  ),
+  100368 =>
+  array (
+    'locale' => 'fr',
+    'key' => 'Order No',
+    'value' => 'N° de commande',
+  ),
+  100369 =>
+  array (
+    'locale' => 'fr',
+    'key' => 'Closing Date',
+    'value' => 'Date de clôture',
+  ),
+  100370 =>
+  array (
+    'locale' => 'fr',
+    'key' => 'Total Amount',
+    'value' => 'Montant total',
+  ),
+  100371 =>
+  array (
+    'locale' => 'fr',
+    'key' => 'Closed By',
+    'value' => 'Fermé par',
+  ),
+  100372 =>
+  array (
+    'locale' => 'fr',
+    'key' => 'Close',
+    'value' => 'Fermer',
   ),
 );

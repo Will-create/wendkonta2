@@ -134,7 +134,7 @@ class LabelsController extends Controller
         } catch (\Exception $e) {
             \Log::emergency('File:'.$e->getFile().'Line:'.$e->getLine().'Message:'.$e->getMessage());
 
-            $output = __('lang_v1.barcode_label_error');
+            $output = __('db.Barcode label error');
         }
 
         // return view('backend.labels.print_label');

@@ -17,7 +17,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>{{__('db.Warehouse')}} *</label>
-                                            <select required id="warehouse_id" name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
+                                            <select required id="warehouse_id" name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select warehouse...') }}">
                                                 @foreach($lims_warehouse_list as $warehouse)
                                                 <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                                                 @endforeach
@@ -183,7 +183,7 @@
 	$('#adjustment-form').on('submit',function(e){
 	    var rownumber = $('table.order-list tbody tr:last').index();
 	    if (rownumber < 0) {
-	        alert("Please insert product to order table!")
+	        alert(@json(__('db.Please insert product to order table!')))
 	        e.preventDefault();
 	    }
 	});
@@ -235,7 +235,7 @@
 	    var pos = product_code.indexOf(row_product_code);
 
 	    if ( (qty > parseFloat(product_qty[pos])) && (action == '-') ) {
-	        alert('Quantity exceeds stock quantity!');
+	        alert(@json(__('db.Quantity exceeds stock quantity!')));
             var row_qty = $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.qty').val();
             row_qty = row_qty.substring(0, row_qty.length - 1);
             $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.qty').val(row_qty);

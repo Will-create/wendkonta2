@@ -260,7 +260,7 @@
         });
 
     $('.add-more-variant').on("click", function() {
-        var htmlText = '<div class="row"><div class="col-md-4 form-group mt-2"><label>Option *</label><input type="text" name="variant_option[]" class="form-control variant-field" placeholder="Size, Color etc..."></div><div class="col-md-7 form-group mt-2"><label>Value *</label><input type="text" name="variant_value[]" class="type-variant form-control variant-field"></div><div class="col-sm-1 form-group mt-2" style="display:flex;flex-direction:column;align-items:center;justify-content:end;"><button type="button" class="delVarOption btn btn-danger btn-sm mr-3"><i class="dripicons-cross"></i></button></div></div>';
+        var htmlText = '<div class="row"><div class="col-md-4 form-group mt-2"><label>Option *</label><input type="text" name="variant_option[]" class="form-control variant-field" placeholder="{{ __('db.Size, Color etc...') }}"></div><div class="col-md-7 form-group mt-2"><label>Value *</label><input type="text" name="variant_value[]" class="type-variant form-control variant-field"></div><div class="col-sm-1 form-group mt-2" style="display:flex;flex-direction:column;align-items:center;justify-content:end;"><button type="button" class="delVarOption btn btn-danger btn-sm mr-3"><i class="dripicons-cross"></i></button></div></div>';
         $("#variant-input-section").append(htmlText);
         $('.type-variant').tagsInput();
     });
@@ -765,7 +765,7 @@
                     var flag = 1;
                     $(".product-id").each(function() {
                         if ($(this).val() == data[8]) {
-                            alert('Duplicate input is not allowed!')
+                            alert(@json(__('db.Duplicate input is not allowed!')))
                             flag = 0;
                         }
                     });
@@ -790,7 +790,7 @@
                                             name="product_qty[]"
                                             value="1"
                                             step="any"
-                                            placeholder="Qty"
+                                            placeholder="{{ __('db.Qty') }}"
                                             aria-label="Quantity">
                                         <div class="input-group-append">
                                             `+data[13]+`

@@ -161,7 +161,7 @@
                 var flag = 1;
                 $(".product-code").each(function() {
                     if ($(this).text() == data[1]) {
-                        alert('duplicate input is not allowed!')
+                        alert(@json(__('db.duplicate input is not allowed!')))
                         flag = 0;
                     }
                 });
@@ -172,7 +172,7 @@
                     cols += '<td>' + data[0] + '</td>';
                     cols += '<td class="product-code">' + data[1] + '</td>';
                     cols += '<td><input type="number" class="form-control qty" name="qty[]" value="1" /></td>';
-                    cols += '<td><button type="button" class="ibtnDel btn btn-md btn-danger">Delete</button></td>';
+                    cols += '<td><button type="button" class="ibtnDel btn btn-md btn-danger">{{__('db.delete')}}</button></td>';
 
                     newRow.append(cols);
                     $("table.order-list tbody").append(newRow);
@@ -260,7 +260,7 @@
             $('#print-barcode').modal('show');
         }
         else
-            alert('Please select paper size');
+            alert(@json(__('db.Please select paper size')));
     });
 
     $("#print-btn").on("click", function(){

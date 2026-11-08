@@ -61,7 +61,7 @@
                                 <th style="border: 1px solid #ccc; padding: 5px">#</th>
                                 <th style="border: 1px solid #ccc; padding: 5px">Product</th>
                                 <th style="border: 1px solid #ccc; padding: 5px">Download Link</th>
-                                <th style="border: 1px solid #ccc; padding: 5px">Qty</th>
+                                <th style="border: 1px solid #ccc; padding: 5px">{{__('db.Qty')}}</th>
                                 <th style="border: 1px solid #ccc; padding: 5px">Unit Price</th>
                                 <th style="border: 1px solid #ccc; padding: 5px">SubTotal</th>
                             </thead>

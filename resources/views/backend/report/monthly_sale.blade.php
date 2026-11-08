@@ -25,18 +25,9 @@
 						</thead>
 					    <tbody>
 						    <tr>
-						      <td><strong>January</strong></td>
-						      <td><strong>February</strong></td>
-						      <td><strong>March</strong></td>
-						      <td><strong>April</strong></td>
-						      <td><strong>May</strong></td>
-						      <td><strong>June</strong></td>
-						      <td><strong>July</strong></td>
-						      <td><strong>August</strong></td>
-						      <td><strong>September</strong></td>
-						      <td><strong>October</strong></td>
-						      <td><strong>November</strong></td>
-						      <td><strong>December</strong></td>
+						      @for ($month = 1; $month <= 12; $month++)
+						      <td><strong>{{ __('db.month_'.$month) }}</strong></td>
+						      @endfor
 						    </tr>
 						    <tr>
 						    	@foreach($total_discount as $key => $discount)

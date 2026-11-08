@@ -67,7 +67,7 @@
                                                     }
                                                 @endphp
                                                 @if($customer_active)
-                                                <select required name="customer_id" id="customer_id" class="selectpicker form-control" data-live-search="true" title="Select customer..." style="width: 100px">
+                                                <select required name="customer_id" id="customer_id" class="selectpicker form-control" data-live-search="true" title="{{ __('db.Select customer...') }}" style="width: 100px">
                                                 @foreach($lims_customer_list as $customer)
                                                     @php
                                                       $deposit[$customer->id] = $customer->deposit - $customer->expense;
@@ -79,7 +79,7 @@
                                                 </select>
                                                 <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#addCustomer"><i class="dripicons-plus"></i></button>
                                                 @else
-                                                <select required name="customer_id" id="customer_id" class="selectpicker form-control" data-live-search="true" title="Select customer...">
+                                                <select required name="customer_id" id="customer_id" class="selectpicker form-control" data-live-search="true" title="{{ __('db.Select customer...') }}">
                                                 @foreach($lims_customer_list as $customer)
                                                     @php
                                                       $deposit[$customer->id] = $customer->deposit - $customer->expense;
@@ -108,7 +108,7 @@
                                                 $warehouse_id = $lims_warehouse_list[0]->id;
                                             }
                                             @endphp
-                                            <select required name="warehouse_id" id="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
+                                            <select required name="warehouse_id" id="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select warehouse...') }}">
                                                 @foreach($lims_warehouse_list as $warehouse)
                                                 <option value="{{$warehouse->id}}" @if($warehouse->id == $warehouse_id) selected @endif>{{$warehouse->name}}</option>
                                                 @endforeach
@@ -131,7 +131,7 @@
                                                 $biller_id = $lims_biller_list[0]->id;
                                             }
                                             @endphp
-                                            <select required id="biller_id" name="biller_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Biller...">
+                                            <select required id="biller_id" name="biller_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Biller...') }}">
                                                 @foreach($lims_biller_list as $biller)
                                                 <option value="{{$biller->id}}" @if($biller->id == $biller_id) selected @endif>{{$biller->name . ' (' . $biller->company_name . ')'}}</option>
                                                 @endforeach
@@ -142,7 +142,7 @@
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label>{{__('db.Currency')}} *</label>
-                                            <select name="currency_id" id="currency" class="form-control selectpicker" data-toggle="tooltip" title="" data-original-title="Sale currency">
+                                            <select name="currency_id" id="currency" class="form-control selectpicker" data-toggle="tooltip" title="" data-original-title="{{ __('db.Sale currency') }}">
                                                 @foreach($currency_list as $currency_data)
                                                 <option value="{{$currency_data->id}}" data-rate="{{$currency_data->exchange_rate}}">{{$currency_data->code}}</option>
                                                 @endforeach
@@ -166,7 +166,7 @@
                                             <label>{{__('db.Service')}}</label>
                                             @if(!empty($service_id))
                                             <div class="input-group pos">
-                                                <select required id="service_id" name="service_id" class="selectpicker form-control" title="Select service...">
+                                                <select required id="service_id" name="service_id" class="selectpicker form-control" title="{{ __('db.Select service...') }}">
                                                     <option value="1" @if($service_id == 1) selected @endif>{{__('db.Dine In')}}</option>
                                                     <option value="2" @if($service_id == 2) selected @endif>{{__('db.Take Away')}}</option>
                                                     <option value="3" @if($service_id == 3) selected @endif>{{__('db.Delivery')}}</option>
@@ -174,7 +174,7 @@
                                             </div>
                                             @else
                                             <div class="input-group pos">
-                                                <select required id="service_id" name="service_id" class="selectpicker form-control" title="Select service...">
+                                                <select required id="service_id" name="service_id" class="selectpicker form-control" title="{{ __('db.Select service...') }}">
                                                     <option value="1" selected>{{__('db.Dine In')}}</option>
                                                     <option value="2">{{__('db.Take Away')}}</option>
                                                     <option value="3">{{__('db.Delivery')}}</option>
@@ -187,7 +187,7 @@
                                         <div class="form-group top-fields">
                                             <label>{{__('db.table')}}</label>
                                             <div class="input-group pos">
-                                                <select required id="table_id" name="table_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select table...">
+                                                <select required id="table_id" name="table_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select table...') }}">
                                                     @foreach($lims_table_list as $table)
                                                     <option value="{{$table->id}}" @if(!empty($table_id) && $table->id == $table_id) selected @endif>
                                                         {{$table->name}} at {{$table->floor}} ( ðŸ‘¤ {{$table->number_of_person}})
@@ -202,7 +202,7 @@
                                         <div class="form-group top-fields">
                                             <label>{{__('db.Waiter')}}</label>
                                             <div class="input-group pos">
-                                                <select required id="waiter_id" name="waiter_id" class="selectpicker form-control" title="Select waiter...">
+                                                <select required id="waiter_id" name="waiter_id" class="selectpicker form-control" title="{{ __('db.Select waiter...') }}">
                                                     @if(auth()->user()->service_staff == 1)
                                                     <option value="{{auth()->user()->id}}" selected >{{auth()->user()->name}}</option>
                                                     @else
@@ -223,7 +223,7 @@
                                         <label>{{__('db.Select Product')}}</label>
                                         <div class="search-box form-group mb-2" style="position:relative">
                                             <div class="input-group pos">
-                                                <input style="border: 1px solid #7c5cc4;" type="text" name="product_code_name" id="product-search-input" placeholder="Scan/Search product by name/code/IMEI" class="form-control" autofocus />
+                                                <input style="border: 1px solid #7c5cc4;" type="text" name="product_code_name" id="product-search-input" placeholder="{{ __('db.Scan/Search product by name/code/IMEI') }}" class="form-control" autofocus />
                                                 <button type="button" class="btn btn-primary" onclick="barcode()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upc" viewBox="0 0 16 16"><path d="M3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0z"/></svg></button>
                                             </div>
                                             <div id="product-results-container">
@@ -342,7 +342,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>{{__('db.Attach Document')}}</label> <i class="dripicons-question" data-toggle="tooltip" title="Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported"></i>
+                                            <label>{{__('db.Attach Document')}}</label> <i class="dripicons-question" data-toggle="tooltip" title="{{ __('db.Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported') }}"></i>
                                             <input type="file" name="document" class="form-control" />
                                             <x-validation-error fieldName="document" />
                                             <x-validation-error fieldName="extension" />
@@ -522,7 +522,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label> {{__('db.Gift Card')}} *</label>
-                                                <select id="gift_card_id" name="gift_card_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Gift Card..."></select>
+                                                <select id="gift_card_id" name="gift_card_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Gift Card...') }}"></select>
                                             </div>
                                         </div>
                                     </div>
@@ -881,7 +881,7 @@
         $results.on('click', '.add-selected-products', function () {
             const $selected = $results.find('.product-result-select:checked').closest('.product-img');
             if (!$selected.length) {
-                alert('Please select at least one product.');
+                alert(@json(__('db.Please select at least one product.')));
                 return;
             }
 
@@ -1196,7 +1196,7 @@ $('button[name="update_btn"]').on("click", function() {
     var edit_unit_price = $('input[name="edit_unit_price"]').val();
 
     if (parseFloat(edit_discount) > parseFloat(edit_unit_price)) {
-        alert('Invalid Discount Input!');
+        alert(@json(__('db.Invalid Discount Input!')));
         return;
     }
 
@@ -1343,24 +1343,24 @@ function addSaleProductResult(element) {
     @endif
 
     if(!customer_id) {
-        alert('Please select Customer!');
+        alert(@json(__('db.Please select Customer!')));
         return false;
     }
     else if(!warehouse_id) {
-        alert('Please select Warehouse!');
+        alert(@json(__('db.Please select Warehouse!')));
         return false;
     }
     else if(!biller_id) {
-        alert('Please select Biller!');
+        alert(@json(__('db.Please select Biller!')));
         return false;
     }
     @if(in_array('restaurant',explode(',',$general_setting->modules)))
     else if(!table_id && service_id == 1){
-        alert('Please select Table!');
+        alert(@json(__('db.Please select Table!')));
         return false;
     }
     else if(!waiter_id && service_id == 1){
-        alert('Please select Waiter!');
+        alert(@json(__('db.Please select Waiter!')));
         return false;
     }
     @endif
@@ -1408,7 +1408,7 @@ function productSearch(data) {
                 imeiNumbersArray = imeiNumbers.split(",");
 
                 if(imeiNumbersArray.includes(data.imei)) {
-                    alert('Same imei or serial number is not allowed!');
+                    alert(@json(__('db.Same imei or serial number is not allowed!')));
                     flag = false;
                     $('#product-search-input').val('');
                     return;
@@ -1707,7 +1707,7 @@ function addNewProduct(data){
                                 </div>
                                 <div class="modal-body">${modalContent}</div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('db.Cancel')}}</button>
                                     <button type="button" class="btn btn-primary" id="confirmSelection">Confirm</button>
                                 </div>
                             </div>
@@ -1931,7 +1931,7 @@ function checkQuantity(sale_qty, flag) {
                 total_qty = sale_qty / operation_value[0];
             if (total_qty > parseFloat(qty)) {
                 is_checking = true;
-                alert('Quantity exceeds stock quantity!');
+                alert(@json(__('db.Quantity exceeds stock quantity!')));
                 if (flag) {
                     sale_qty = parseFloat(qty);
                     is_checking = false;
@@ -1969,7 +1969,7 @@ function checkQuantity2(sale_qty, flag) {
 
     if (sale_qty > parseFloat(qty)) {
         is_checking = true;
-        alert('Quantity exceeds sales quantity!');
+        alert(@json(__('db.Quantity exceeds sales quantity!')));
         if (flag) {
             sale_qty = parseFloat(qty);
             is_checking = false;
@@ -2262,7 +2262,7 @@ $('select[name="paid_by_id[]"]').on("change", function() {
         $("#cheque").hide();
         if (id == 6) {
             if($('input[name="paid_amount[]"]').val() > deposit[$('#customer_id').val()]){
-                alert('Amount exceeds customer deposit! Customer deposit : '+ deposit[$('#customer_id').val()]);
+                alert(@json(__('db.Amount exceeds customer deposit! Customer deposit : '))+ deposit[$('#customer_id').val()]);
             }
         }
         else if (id == 7) {
@@ -2275,7 +2275,7 @@ function pointCalculation() {
     paid_amount = $('input[name="paid_amount[]"]').val();
     required_point = Math.ceil(paid_amount / reward_point_setting['per_point_amount']);
     if(required_point > points[$('#customer_id').val()]) {
-        alert('Customer does not have sufficient points. Available points: '+points[$('#customer_id').val()]);
+        alert(@json(__('db.Customer does not have sufficient points. Available points: '))+points[$('#customer_id').val()]);
     }
     else {
         $("input[name='used_points']").val(required_point);
@@ -2285,7 +2285,7 @@ function pointCalculation() {
 $('select[name="gift_card_id"]').on("change", function() {
     var balance = gift_card_amount[$(this).val()] - gift_card_expense[$(this).val()];
     if($('input[name="paid_amount[]"]').val() > balance){
-        alert('Amount exceeds card balance! Gift Card balance: '+ balance);
+        alert(@json(__('db.Amount exceeds card balance! Gift Card balance: '))+ balance);
     }
 });
 
@@ -2293,13 +2293,13 @@ $('input[name="paid_amount[]"]').on("input", function() {
     if( $(this).val() > parseFloat($('input[name="paying_amount[]"]').val()) ) {
         $('#paying-amount-error').addClass('d-none');
         $("#submit-button").prop('disabled', true).css('cursor', 'default');
-        alert('Paying amount cannot be bigger than recieved amount');
+        alert(@json(__('db.Paying amount cannot be bigger than recieved amount')));
         // $(this).val('');
     }
     else if( $(this).val() > parseFloat($('#grand_total').text()) ){
         $('#paying-amount-error').addClass('d-none');
         $("#submit-button").prop('disabled', true).css('cursor', 'default');
-        alert('Paying amount cannot be bigger than grand total');
+        alert(@json(__('db.Paying amount cannot be bigger than grand total')));
         // $(this).val('');
     } else if ($(this).val() <= 0) {
         $("#submit-button").prop('disabled', true).css('cursor', 'default');
@@ -2314,11 +2314,11 @@ $('input[name="paid_amount[]"]').on("input", function() {
     if(id == 2){
         var balance = gift_card_amount[$("#gift_card_id").val()] - gift_card_expense[$("#gift_card_id").val()];
         if($(this).val() > balance)
-            alert('Amount exceeds card balance! Gift Card balance: '+ balance);
+            alert(@json(__('db.Amount exceeds card balance! Gift Card balance: '))+ balance);
     }
     else if(id == 6){
         if( $('input[name="paid_amount[]"]').val() > deposit[$('#customer_id').val()] )
-            alert('Amount exceeds customer deposit! Customer deposit : '+ deposit[$('#customer_id').val()]);
+            alert(@json(__('db.Amount exceeds customer deposit! Customer deposit : '))+ deposit[$('#customer_id').val()]);
     }
 });
 
@@ -2356,33 +2356,33 @@ $(document).on('submit', '.payment-form', function(e) {
     var rownumber = $('table.order-list tbody tr:last').index();
     $("table.order-list tbody .qty").each(function(index) {
         if ($(this).val() == '') {
-            alert('One of products has no quantity!');
+            alert(@json(__('db.One of products has no quantity!')));
             e.preventDefault();
         }
     });
 
     if (customer_type === 'walkin' && current_payment_status !== 4) {
-        alert('Payment Status should be Paid for Walk in Customer!');
+        alert(@json(__('db.Payment Status should be Paid for Walk in Customer!')));
         e.preventDefault();
     }
     else if ( rownumber < 0 ) {
-        alert("Please insert product to order table!")
+        alert(@json(__('db.Please insert product to order table!')))
         e.preventDefault();
     }
     else if(parseFloat($('input[name="total_qty"]').val()) <= 0) {
-        alert('Product quantity is 0');
+        alert(@json(__('db.Product quantity is 0')));
         e.preventDefault();
     }
     else if( parseFloat($("#paying-amount").val()) < parseFloat($("#paid-amount").val()) ){
-        alert('Paying amount cannot be bigger than recieved amount');
+        alert(@json(__('db.Paying amount cannot be bigger than recieved amount')));
         e.preventDefault();
     }
     else if( $('select[name="payment_status"]').val() == 3 && parseFloat($("#paid-amount").val()) == parseFloat($('input[name="grand_total"]').val()) ) {
-        alert('Paying amount equals to grand total! Please change payment status.');
+        alert(@json(__('db.Paying amount equals to grand total! Please change payment status.')));
         e.preventDefault();
     }
     else if(!$('#biller_id').val()) {
-        alert('Please select a biller');
+        alert(@json(__('db.Please select a biller')));
         e.preventDefault();
     }
     else {

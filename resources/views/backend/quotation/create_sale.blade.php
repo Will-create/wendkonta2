@@ -38,7 +38,7 @@
                                         <div class="form-group">
                                             <label>{{__('db.customer')}} *</label>
                                             <input type="hidden" name="customer_id_hidden" value="{{ $lims_quotation_data->customer_id }}" />
-                                            <select required name="customer_id" class="selectpicker form-control" data-live-search="true" id="customer_id" title="Select customer...">
+                                            <select required name="customer_id" class="selectpicker form-control" data-live-search="true" id="customer_id" title="{{ __('db.Select customer...') }}">
                                                 @foreach($lims_customer_list as $customer)
                                                 <?php $deposit[$customer->id] = $customer->deposit - $customer->expense; ?>
                                                 <option value="{{$customer->id}}">{{$customer->name . ' (' . $customer->phone_number . ')'}}</option>
@@ -50,7 +50,7 @@
                                         <div class="form-group">
                                             <label>{{__('db.Warehouse')}} *</label>
                                             <input type="hidden" name="warehouse_id_hidden" value="{{$lims_quotation_data->warehouse_id}}" />
-                                            <select required id="warehouse_id" name="warehouse_id" class="selectpicker form-control" data-live-search="true" title="Select warehouse...">
+                                            <select required id="warehouse_id" name="warehouse_id" class="selectpicker form-control" data-live-search="true" title="{{ __('db.Select warehouse...') }}">
                                                 @foreach($lims_warehouse_list as $warehouse)
                                                 <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                                                 @endforeach
@@ -61,7 +61,7 @@
                                         <div class="form-group">
                                             <label>{{__('db.Biller')}} *</label>
                                             <input type="hidden" name="biller_id_hidden" value="{{$lims_quotation_data->biller_id}}" />
-                                            <select required name="biller_id" id="biller_id" class="selectpicker form-control" data-live-search="true" title="Select Biller...">
+                                            <select required name="biller_id" id="biller_id" class="selectpicker form-control" data-live-search="true" title="{{ __('db.Select Biller...') }}">
                                                 @foreach($lims_biller_list as $biller)
                                                 <option value="{{$biller->id}}">{{$biller->name . ' (' . $biller->company_name . ')'}}</option>
                                                 @endforeach
@@ -285,7 +285,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>{{__('db.Attach Document')}}</label>
-                                            <i class="dripicons-question" data-toggle="tooltip" title="Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported"></i>
+                                            <i class="dripicons-question" data-toggle="tooltip" title="{{ __('db.Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported') }}"></i>
                                             <input type="file" name="document" class="form-control" />
                                             @if($errors->has('extension'))
                                                 <span>
@@ -362,7 +362,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label> {{__('db.Gift Card')}} *</label>
-                                                <select id="gift_card_id" name="gift_card_id" class="selectpicker form-control" data-live-search="true" title="Select Gift Card..."></select>
+                                                <select id="gift_card_id" name="gift_card_id" class="selectpicker form-control" data-live-search="true" title="{{ __('db.Select Gift Card...') }}"></select>
                                             </div>
                                         </div>
                                     </div>
@@ -633,11 +633,11 @@
         temp_data = $('#lims_productcodeSearch').val();
         if(!customer_id){
             $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-            alert('Please select Customer!');
+            alert(@json(__('db.Please select Customer!')));
         }
         else if(!warehouse_id){
             $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-            alert('Please select Warehouse!');
+            alert(@json(__('db.Please select Warehouse!')));
         }
     });
 
@@ -723,7 +723,7 @@
         var edit_unit_price = $('input[name="edit_unit_price"]').val();
 
         if (parseFloat(edit_discount) > parseFloat(edit_unit_price)) {
-            alert('Invalid Discount Input!');
+            alert(@json(__('db.Invalid Discount Input!')));
             return;
         }
 
@@ -822,7 +822,7 @@
             $('input[name="cheque_no"]').attr('required', true);
         } else if (id == 6){
             if($('input[name="paid_amount"]').val() > deposit[$('#customer_id').val()]){
-                alert('Amount exceeds customer deposit! Customer deposit : '+ deposit[$('#customer_id').val()]);
+                alert(@json(__('db.Amount exceeds customer deposit! Customer deposit : '))+ deposit[$('#customer_id').val()]);
             }
         }
     });
@@ -830,17 +830,17 @@
     $('select[name="gift_card_id"]').on("change", function() {
         var balance = gift_card_amount[$(this).val()] - gift_card_expense[$(this).val()];
         if($('input[name="paid_amount"]').val() > balance){
-            alert('Amount exceeds card balance! Gift Card balance: '+ balance);
+            alert(@json(__('db.Amount exceeds card balance! Gift Card balance: '))+ balance);
         }
     });
 
     $('input[name="paid_amount"]').on("input", function() {
         if( $(this).val() > parseFloat($('input[name="paying_amount"]').val()) ) {
-            alert('Paying amount cannot be bigger than recieved amount');
+            alert(@json(__('db.Paying amount cannot be bigger than recieved amount')));
             $(this).val('');
         }
         else if( $(this).val() > parseFloat($('#grand_total').text()) ){
-            alert('Paying amount cannot be bigger than grand total');
+            alert(@json(__('db.Paying amount cannot be bigger than grand total')));
             $(this).val('');
         }
 
@@ -849,11 +849,11 @@
         if(id == 2){
             var balance = gift_card_amount[$("#gift_card_id").val()] - gift_card_expense[$("#gift_card_id").val()];
             if($(this).val() > balance)
-                alert('Amount exceeds card balance! Gift Card balance: '+ balance);
+                alert(@json(__('db.Amount exceeds card balance! Gift Card balance: '))+ balance);
         }
         else if(id == 6){
             if( $('input[name="paid_amount"]').val() > deposit[$('#customer_id').val()] )
-                alert('Amount exceeds customer deposit! Customer deposit : '+ deposit[$('#customer_id').val()]);
+                alert(@json(__('db.Amount exceeds customer deposit! Customer deposit : '))+ deposit[$('#customer_id').val()]);
         }
     });
 
@@ -941,7 +941,7 @@
         $(".imei-section").remove();
         var imeiNumbers = $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.imei-number').val();
         if(imeiNumbers || is_imei[rowindex]) {
-            htmlText = '<div class="col-md-12 form-group imei-section"><label>IMEI or Serial Numbers</label><input type="text" name="imei_numbers" value="'+imeiNumbers+'" class="form-control imei_number" placeholder="Type imei or serial numbers and separate them by comma. Example:1001,2001" step="any"></div>';
+            htmlText = '<div class="col-md-12 form-group imei-section"><label>IMEI or Serial Numbers</label><input type="text" name="imei_numbers" value="'+imeiNumbers+'" class="form-control imei_number" placeholder="{{ __('db.Type imei or serial numbers and separate them by comma. Example:1001,2001') }}" step="any"></div>';
             $("#editModal .modal-element").append(htmlText);
         }
 
@@ -993,7 +993,7 @@
                 else if(operator[0] == '/')
                     total_qty = sale_qty / operation_value[0];
                 if (total_qty > parseFloat(product_qty[pos])) {
-                    alert('Quantity exceeds stock quantity!');
+                    alert(@json(__('db.Quantity exceeds stock quantity!')));
                     if (flag) {
                         sale_qty = sale_qty.substring(0, sale_qty.length - 1);
                         $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.qty').val(sale_qty);
@@ -1010,7 +1010,7 @@
                 $(child_id).each(function(index) {
                     var position = product_id.indexOf(parseInt(child_id[index]));
                     if( parseFloat(sale_qty * child_qty[index]) > product_qty[position] ) {
-                        alert('Quantity exceeds stock quantity!');
+                        alert(@json(__('db.Quantity exceeds stock quantity!')));
                         if (flag) {
                             sale_qty = sale_qty.substring(0, sale_qty.length - 1);
                             $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.qty').val(sale_qty);
@@ -1200,23 +1200,23 @@
     $(document).on('submit', '.sale-form', function(e) {
         var rownumber = $('table.order-list tbody tr:last').index();
         if ( rownumber < 0 ) {
-            alert("Please insert product to order table!")
+            alert(@json(__('db.Please insert product to order table!')))
             e.preventDefault();
         }
         else if(parseFloat($('input[name="total_qty"]').val()) <= 0) {
-            alert('Product quantity is 0');
+            alert(@json(__('db.Product quantity is 0')));
             e.preventDefault();
         }
         else if( parseFloat($("#paying-amount").val()) < parseFloat($("#paid-amount").val()) ){
-            alert('Paying amount cannot be bigger than recieved amount');
+            alert(@json(__('db.Paying amount cannot be bigger than recieved amount')));
             e.preventDefault();
         }
         else if( $('select[name="payment_status"]').val() == 3 && parseFloat($("#paid-amount").val()) == parseFloat($('input[name="grand_total"]').val()) ) {
-            alert('Paying amount equals to grand total! Please change payment status.');
+            alert(@json(__('db.Paying amount equals to grand total! Please change payment status.')));
             e.preventDefault();
         }
         else if(!$('#biller_id').val()) {
-            alert('Please select a biller');
+            alert(@json(__('db.Please select a biller')));
             e.preventDefault();
         }
         else {

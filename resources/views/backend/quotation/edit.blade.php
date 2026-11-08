@@ -26,7 +26,7 @@
                                         <div class="form-group">
                                             <label>{{__('db.Biller')}} *</label>
                                             <input type="hidden" name="biller_id_hidden" value="{{$lims_quotation_data->biller_id}}" />
-                                            <select required name="biller_id" class="selectpicker form-control" data-live-search="true" title="Select Biller...">
+                                            <select required name="biller_id" class="selectpicker form-control" data-live-search="true" title="{{ __('db.Select Biller...') }}">
                                                 @foreach($lims_biller_list as $biller)
                                                 <option value="{{$biller->id}}">{{$biller->name . ' (' . $biller->company_name . ')'}}</option>
                                                 @endforeach
@@ -37,7 +37,7 @@
                                         <div class="form-group">
                                             <label>{{__('db.Supplier')}}</label>
                                             <input type="hidden" name="supplier_id_hidden" value="{{ $lims_quotation_data->supplier_id }}" />
-                                            <select name="supplier_id" class="selectpicker form-control" data-live-search="true" id="supplier-id" title="Select supplier...">
+                                            <select name="supplier_id" class="selectpicker form-control" data-live-search="true" id="supplier-id" title="{{ __('db.Select supplier...') }}">
                                                 @foreach($lims_supplier_list as $supplier)
                                                 <option value="{{$supplier->id}}">{{$supplier->name . ' (' . $supplier->company_name . ')'}}</option>
                                                 @endforeach
@@ -50,7 +50,7 @@
                                         <div class="form-group">
                                             <label>{{__('db.customer')}} *</label>
                                             <input type="hidden" name="customer_id_hidden" value="{{ $lims_quotation_data->customer_id }}" />
-                                            <select required id="customer_id" name="customer_id" class="selectpicker form-control" data-live-search="true" id="customer-id" title="Select customer...">
+                                            <select required id="customer_id" name="customer_id" class="selectpicker form-control" data-live-search="true" id="customer-id" title="{{ __('db.Select customer...') }}">
                                                 @foreach($lims_customer_list as $customer)
                                                 <option value="{{$customer->id}}">{{$customer->name . ' (' . $customer->phone_number . ')'}}</option>
                                                 @endforeach
@@ -61,7 +61,7 @@
                                         <div class="form-group">
                                             <label>{{__('db.Warehouse')}} *</label>
                                             <input type="hidden" name="warehouse_id_hidden" value="{{$lims_quotation_data->warehouse_id}}" />
-                                            <select required name="warehouse_id" id="warehouse_id" class="selectpicker form-control" data-live-search="true" title="Select warehouse...">
+                                            <select required name="warehouse_id" id="warehouse_id" class="selectpicker form-control" data-live-search="true" title="{{ __('db.Select warehouse...') }}">
                                                 @foreach($lims_warehouse_list as $warehouse)
                                                 <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                                                 @endforeach
@@ -285,7 +285,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>{{__('db.Attach Document')}}</label>
-                                            <i class="dripicons-question" data-toggle="tooltip" title="Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported"></i>
+                                            <i class="dripicons-question" data-toggle="tooltip" title="{{ __('db.Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported') }}"></i>
                                             <input type="file" name="document" class="form-control" />
                                             @if($errors->has('extension'))
                                                 <span>
@@ -541,11 +541,11 @@ $('#lims_productcodeSearch').on('input', function(){
     temp_data = $('#lims_productcodeSearch').val();
     if(!customer_id){
         $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-        alert('Please select Customer!');
+        alert(@json(__('db.Please select Customer!')));
     }
     else if(!warehouse_id){
         $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-        alert('Please select Warehouse!');
+        alert(@json(__('db.Please select Warehouse!')));
     }
 
 });
@@ -639,7 +639,7 @@ $('button[name="update_btn"]').on("click", function() {
     var edit_unit_price = $('input[name="edit_unit_price"]').val();
 
     if (parseFloat(edit_discount) > parseFloat(edit_unit_price)) {
-        alert('Invalid Discount Input!');
+        alert(@json(__('db.Invalid Discount Input!')));
         return;
     }
 
@@ -709,7 +709,7 @@ $(window).keydown(function(e){
 $('#quotation-form').on('submit',function(e){
     var rownumber = $('table.order-list tbody tr:last').index();
     if (rownumber < 0) {
-        alert("Please insert product to order table!")
+        alert(@json(__('db.Please insert product to order table!')))
         e.preventDefault();
     }
     else {
@@ -732,7 +732,7 @@ function productSearch(data){
                 // console.log('arra '+ rowindex);
 
                 if(imeiNumbersArray.includes(product_info[2])) {
-                    alert('Same imei or serial number is not allowed!');
+                    alert(@json(__('db.Same imei or serial number is not allowed!')));
                     flag = false;
                     $('#lims_productcodeSearch').val('');
                 }
@@ -904,7 +904,7 @@ function checkQuantity(sale_qty, flag) {
             else if(operator[0] == '/')
                 total_qty = sale_qty / operation_value[0];
             if (total_qty > parseFloat(product_qty[pos])) {
-                alert('Quantity exceeds stock quantity!');
+                alert(@json(__('db.Quantity exceeds stock quantity!')));
                 if (flag) {
                     sale_qty = sale_qty.substring(0, sale_qty.length - 1);
                     $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.qty').val(sale_qty);
@@ -921,7 +921,7 @@ function checkQuantity(sale_qty, flag) {
             $(child_id).each(function(index) {
                 var position = product_id.indexOf(parseInt(child_id[index]));
                 if( parseFloat(sale_qty * child_qty[index]) > product_qty[position] ) {
-                    alert('Quantity exceeds stock quantity!');
+                    alert(@json(__('db.Quantity exceeds stock quantity!')));
                     if (flag) {
                         sale_qty = sale_qty.substring(0, sale_qty.length - 1);
                         $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.qty').val(sale_qty);

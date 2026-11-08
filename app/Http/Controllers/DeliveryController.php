@@ -108,7 +108,7 @@ class DeliveryController extends Controller
                             ->select('products.name', 'delivery_products.qty', 'delivery_products.product_id')
                             ->get()
                             ->map(function ($line) {
-                                $name = $line->name ?: ('Removed product #'.$line->product_id);
+                                $name = $line->name ?: __('db.Removed product #:id', ['id' => $line->product_id]);
                                 return $name.' × '.DeliveryProgress::formatQty((float) $line->qty);
                             })
                             ->all();
@@ -186,7 +186,7 @@ class DeliveryController extends Controller
 
         $sale = Sale::find($id);
         if(!$sale) {
-            return response()->json(['error' => 'Sale not found'], 404);
+            return response()->json(['error' => __('db.Sale not found')], 404);
         }
 
         $customer = Customer::find($sale->customer_id);
@@ -220,7 +220,7 @@ class DeliveryController extends Controller
             $delivery = DB::transaction(function () use ($request, $data, $saleId) {
                 $sale = Sale::where('id', $saleId)->lockForUpdate()->first();
                 if(!$sale) {
-                    throw new \InvalidArgumentException('Sale not found.');
+                    throw new \InvalidArgumentException(__('db.Sale not found'));
                 }
                 Product_Sale::where('sale_id', $saleId)->lockForUpdate()->get();
                 $accepted = DeliveryProgress::assertLines($saleId, $this->submittedQuantities($request));
@@ -264,12 +264,18 @@ class DeliveryController extends Controller
         } catch (\InvalidArgumentException $e) {
             return redirect()->back()->with('not_permitted', $e->getMessage());
         } catch (\Throwable $e) {
-            return redirect()->back()->with('not_permitted', 'Delivery could not be saved. '.$e->getMessage());
+            return redirect()->back()->with('not_permitted', __('db.Delivery could not be saved.').' '.$e->getMessage());
         }
 
         $message = $this->notifyCustomer($delivery, $data['status'] ?? '1');
+        $sale = Sale::find($delivery->sale_id);
+        $saleDate = $sale ? $sale->created_at->toDateString() : date('Y-m-d');
 
-        return redirect('delivery')->with('message', $message);
+        return redirect()->to(url('sales').'?'.http_build_query([
+            'open_sale' => $delivery->sale_id,
+            'starting_date' => $saleDate,
+            'ending_date' => $saleDate,
+        ]))->with('message', $message);
     }
 
     public function productDeliveryData($id)
@@ -293,7 +299,7 @@ class DeliveryController extends Controller
             }
             $product = Product::select('name', 'code')->find($product_sale_data->product_id);
             $code = $product->code ?? ('#'.$product_sale_data->product_id);
-            $name = $product->name ?? ('Removed product #'.$product_sale_data->product_id);
+            $name = $product->name ?? __('db.Removed product #:id', ['id' => $product_sale_data->product_id]);
             if($product && $product_sale_data->variant_id) {
                 $lims_product_variant_data = ProductVariant::select('item_code')->FindExactProduct($product_sale_data->product_id, $product_sale_data->variant_id)->first();
                 if($lims_product_variant_data) {
@@ -430,7 +436,7 @@ class DeliveryController extends Controller
         $input = $request->except('file', 'deliver_qty', 'deliver_lines', 'track_lines');
         $lims_delivery_data = Delivery::find($input['delivery_id']);
         if(!$lims_delivery_data) {
-            return redirect()->back()->with('not_permitted', 'Delivery not found');
+            return redirect()->back()->with('not_permitted', __('db.Delivery not found'));
         }
 
         try {
@@ -445,7 +451,8 @@ class DeliveryController extends Controller
                             (int) $lims_delivery_data->id
                         );
                     } catch (\InvalidArgumentException $e) {
-                        if($hasLines || $e->getMessage() !== 'Select at least one product and a quantity that is still remaining.') {
+                        $emptySelection = __('db.Select at least one product and a quantity that is still remaining.');
+                        if($hasLines || $e->getMessage() !== $emptySelection) {
                             throw $e;
                         }
                         $accepted = [];
@@ -477,11 +484,11 @@ class DeliveryController extends Controller
         } catch (\InvalidArgumentException $e) {
             return redirect()->back()->with('not_permitted', $e->getMessage());
         } catch (\Throwable $e) {
-            return redirect()->back()->with('not_permitted', 'Delivery could not be updated. '.$e->getMessage());
+            return redirect()->back()->with('not_permitted', __('db.Delivery could not be updated.').' '.$e->getMessage());
         }
 
         $lims_delivery_data->refresh();
-        $message = 'Delivery updated successfully';
+        $message = __('db.Delivery updated successfully');
         $mailMessage = $this->notifyCustomer($lims_delivery_data, $input['status'] ?? $lims_delivery_data->status, $message);
         return redirect('delivery')->with('message', $mailMessage);
     }
@@ -495,7 +502,7 @@ class DeliveryController extends Controller
         foreach ($delivery_id as $id) {
             $this->removeDelivery((int) $id);
         }
-        return 'Delivery deleted successfully';
+        return __('db.Delivery deleted successfully');
     }
 
     public function delete($id)
@@ -514,15 +521,16 @@ class DeliveryController extends Controller
             return redirect()->back()->with('not_permitted', __('db.Sorry! You are not allowed to access this module'));
         }
 
-        $start_date = $request->input('start_date', date('Y-m-01'));
-        $end_date = $request->input('end_date', date('Y-m-d'));
+        [$start_date, $end_date, $year, $month] = $this->reportPeriod($request);
         $warehouse_id = (int) $request->input('warehouse_id', 0);
         $progress = $request->input('progress', 'all');
 
         $saleQuery = Sale::query()
-            ->whereDate('sales.created_at', '>=', $start_date)
-            ->whereDate('sales.created_at', '<=', $end_date)
             ->whereNotIn('sales.sale_status', [3, 4]);
+        if($start_date && $end_date) {
+            $saleQuery->whereDate('sales.created_at', '>=', $start_date)
+                ->whereDate('sales.created_at', '<=', $end_date);
+        }
         if(Auth::user()->role_id > 2 && config('staff_access') == 'own') {
             $saleQuery->where('sales.user_id', Auth::id());
         } elseif(Auth::user()->role_id > 2 && config('staff_access') == 'warehouse') {
@@ -532,7 +540,7 @@ class DeliveryController extends Controller
             $saleQuery->where('sales.warehouse_id', $warehouse_id);
         }
 
-        $sales = $saleQuery->with('customer')->orderByDesc('sales.id')->limit(500)->get();
+        $sales = $saleQuery->with('customer')->orderByDesc('sales.id')->get();
         $progressMap = DeliveryProgress::forSales($sales->pluck('id'));
 
         $summary = [
@@ -577,9 +585,11 @@ class DeliveryController extends Controller
         $deliveryQuery = Delivery::query()
             ->join('sales', 'sales.id', '=', 'deliveries.sale_id')
             ->leftJoin('customers', 'customers.id', '=', 'sales.customer_id')
-            ->whereDate('deliveries.created_at', '>=', $start_date)
-            ->whereDate('deliveries.created_at', '<=', $end_date)
             ->whereNull('sales.deleted_at');
+        if($start_date && $end_date) {
+            $deliveryQuery->whereDate('deliveries.created_at', '>=', $start_date)
+                ->whereDate('deliveries.created_at', '<=', $end_date);
+        }
         if(Auth::user()->role_id > 2 && config('staff_access') == 'own') {
             $deliveryQuery->where('deliveries.user_id', Auth::id());
         } elseif(Auth::user()->role_id > 2 && config('staff_access') == 'warehouse') {
@@ -590,7 +600,6 @@ class DeliveryController extends Controller
         }
         $deliveries = $deliveryQuery
             ->orderByDesc('deliveries.id')
-            ->limit(500)
             ->get([
                 'deliveries.id',
                 'deliveries.reference_no',
@@ -611,7 +620,7 @@ class DeliveryController extends Controller
             : collect();
         $linesByDelivery = [];
         foreach ($lineRows as $line) {
-            $linesByDelivery[$line->delivery_id][] = ($line->name ?: 'Removed product').' × '.DeliveryProgress::formatQty((float) $line->qty);
+            $linesByDelivery[$line->delivery_id][] = ($line->name ?: __('db.Removed product')).' × '.DeliveryProgress::formatQty((float) $line->qty);
         }
 
         $awaiting = [];
@@ -639,10 +648,19 @@ class DeliveryController extends Controller
         }
 
         $warehouses = Warehouse::where('is_active', true)->get();
+        $years = $this->reportYears();
+        $months = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $months[$i] = __('db.month_'.$i);
+        }
 
         return view('backend.delivery.report', compact(
             'start_date',
             'end_date',
+            'year',
+            'month',
+            'years',
+            'months',
             'warehouse_id',
             'progress',
             'summary',
@@ -652,6 +670,107 @@ class DeliveryController extends Controller
             'awaiting',
             'warehouses'
         ));
+    }
+
+    /**
+     * Year and month define the period when either one is chosen.
+     * A month without a year uses the current year.
+     * All years and all months show the complete report, unless both
+     * date fields are filled and no year or month was posted (legacy date filter).
+     *
+     * @return array{0:?string,1:?string,2:string,3:string}
+     */
+    private function reportPeriod(Request $request): array
+    {
+        $postedYear = $request->has('year');
+        $postedMonth = $request->has('month');
+
+        if(!$postedYear && !$postedMonth) {
+            if($request->filled('start_date') || $request->filled('end_date')) {
+                $start = $request->input('start_date') ?: '2000-01-01';
+                $end = $request->input('end_date') ?: date('Y-m-d');
+                if($start > $end) {
+                    [$start, $end] = [$end, $start];
+                }
+
+                return [$start, $end, 'all', 'all'];
+            }
+
+            $year = (int) date('Y');
+            $month = (int) date('n');
+
+            return $this->monthBounds($year, $month);
+        }
+
+        $yearValue = (string) $request->input('year', 'all');
+        $monthValue = (string) $request->input('month', 'all');
+        $yearAll = ($yearValue === '' || $yearValue === 'all');
+        $monthAll = ($monthValue === '' || $monthValue === 'all' || (int) $monthValue < 1 || (int) $monthValue > 12);
+
+        if(!$monthAll && $yearAll) {
+            $yearValue = date('Y');
+            $yearAll = false;
+        }
+
+        if(!$yearAll) {
+            $year = (int) $yearValue;
+            if(!$monthAll) {
+                return $this->monthBounds($year, (int) $monthValue);
+            }
+
+            return [sprintf('%04d-01-01', $year), sprintf('%04d-12-31', $year), (string) $year, 'all'];
+        }
+
+        if($request->filled('start_date') && $request->filled('end_date')) {
+            $start = $request->input('start_date');
+            $end = $request->input('end_date');
+            if($start > $end) {
+                [$start, $end] = [$end, $start];
+            }
+
+            return [$start, $end, 'all', 'all'];
+        }
+
+        return [null, null, 'all', 'all'];
+    }
+
+    /**
+     * @return array{0:string,1:string,2:string,3:string}
+     */
+    private function monthBounds(int $year, int $month): array
+    {
+        $month = max(1, min(12, $month));
+        $start = sprintf('%04d-%02d-01', $year, $month);
+        $end = date('Y-m-t', strtotime($start.' 12:00:00'));
+
+        return [$start, $end, (string) $year, (string) $month];
+    }
+
+    private function reportYears(): array
+    {
+        $fromDeliveries = DB::table('deliveries')
+            ->whereNotNull('created_at')
+            ->selectRaw('YEAR(created_at) as y')
+            ->distinct()
+            ->pluck('y');
+        $fromSales = DB::table('sales')
+            ->whereNull('deleted_at')
+            ->whereNotNull('created_at')
+            ->selectRaw('YEAR(created_at) as y')
+            ->distinct()
+            ->pluck('y');
+
+        return $fromDeliveries
+            ->merge($fromSales)
+            ->map(fn ($year) => (int) $year)
+            ->filter(fn ($year) => $year >= 2000)
+            ->push((int) date('Y'))
+            ->push((int) date('Y') + 1)
+            ->unique()
+            ->sort()
+            ->reverse()
+            ->values()
+            ->all();
     }
 
     private function submittedQuantities(Request $request): array
@@ -700,8 +819,9 @@ class DeliveryController extends Controller
         return $lines;
     }
 
-    private function notifyCustomer(Delivery $delivery, $status, string $success = 'Delivery created successfully'): string
+    private function notifyCustomer(Delivery $delivery, $status, ?string $success = null): string
     {
+        $success = $success ?? __('db.Delivery created successfully');
         $sale = Sale::find($delivery->sale_id);
         $customer = $sale ? Customer::find($sale->customer_id) : null;
         $message = $success;
@@ -718,7 +838,9 @@ class DeliveryController extends Controller
             try {
                 Mail::to($mail_data['email'])->send(new DeliveryDetails($mail_data));
             } catch (\Exception $e) {
-                $message = $success.'. Please setup your <a href="setting/mail_setting">mail setting</a> to send mail.';
+                $message = $success.'. '.__('db.Please setup your :link to send mail.', [
+                    'link' => '<a href="setting/mail_setting">'.e(__('db.mail setting')).'</a>',
+                ]);
             }
         }
 

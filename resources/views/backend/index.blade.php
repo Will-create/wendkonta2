@@ -104,13 +104,13 @@
             @if($warehouse_report_permission)
             <div class="col-md-4">
               <div class="card">
-                <div class="card-header"><h4>{{__('Warehouse Report')}}</h4></div>
+                <div class="card-header"><h4>{{__('db.Warehouse Report')}}</h4></div>
                 <div class="card-body">
                   {!! Form::open(['route' => 'report.warehouse', 'method' => 'post']) !!}
                   <div class="form-group">
-                    <label>{{__('Warehouse')}}</label>
+                    <label>{{__('db.Warehouse')}}</label>
                     {{-- bootstrap-select hides this control, so a native required attribute blocks submit even when a warehouse is selected --}}
-                    <select name="warehouse_id" class="selectpicker form-control" data-live-search="true" title="Select warehouse...">
+                    <select name="warehouse_id" class="selectpicker form-control" data-live-search="true" title="{{__('db.Select warehouse...')}}">
                       @foreach($lims_warehouse_list as $warehouse)
                         <option value="{{$warehouse->id}}" {{Auth::user()->warehouse_id == $warehouse->id ? 'selected' : ''}}>{{$warehouse->name}}</option>
                       @endforeach
@@ -118,7 +118,7 @@
                   </div>
                   <input type="hidden" name="start_date" value="{{date('Y-m').'-01'}}" />
                   <input type="hidden" name="end_date" value="{{date('Y-m-d')}}" />
-                  <button type="submit" class="btn btn-primary">{{__('Open warehouse report')}}</button>
+                  <button type="submit" class="btn btn-primary">{{__('db.Open warehouse report')}}</button>
                   {!! Form::close() !!}
                 </div>
               </div>
@@ -127,17 +127,21 @@
             @if($sales_index_permission)
             <div class="col-md-5">
               <div class="card">
-                <div class="card-header"><h4>{{__('Invoice search')}}</h4></div>
+                <div class="card-header"><h4>{{__('db.Search invoice')}}</h4></div>
                 <div class="card-body">
                   <div class="form-group">
-                    <label>{{__('db.date')}}</label>
+                    <label>{{__('db.Invoice reference')}}</label>
+                    <input type="text" id="invoice-search-reference" class="form-control" placeholder="{{__('db.Invoice reference')}}">
+                  </div>
+                  <div class="form-group">
+                    <label>{{__('db.Invoice date')}}</label>
                     <input type="date" id="invoice-search-date" class="form-control">
                   </div>
                   <div class="form-group">
-                    <label>{{__('db.reference')}}</label>
-                    <input type="text" id="invoice-search-reference" class="form-control" placeholder="{{__('Invoice reference')}}">
+                    <label>{{__('db.Customer name')}}</label>
+                    <input type="text" id="invoice-search-customer" class="form-control" placeholder="{{__('db.Customer name')}}">
                   </div>
-                  <button type="button" id="invoice-search-btn" class="btn btn-primary">{{__('db.Search')}}</button>
+                  <button type="button" id="invoice-search-btn" class="btn btn-primary">{{__('db.Search invoice')}}</button>
                   <div class="table-responsive mt-3">
                     <table class="table table-bordered" id="invoice-search-results">
                       <thead>
@@ -159,10 +163,10 @@
             @if($delivery_dashboard_permission)
             <div class="col-md-3">
               <div class="card">
-                <div class="card-header"><h4>{{__('Delivery Report')}}</h4></div>
+                <div class="card-header"><h4>{{__('db.Delivery Report')}}</h4></div>
                 <div class="card-body">
-                  <p>{{__('Pending, partial and completed deliveries for the current period.')}}</p>
-                  <a href="{{route('delivery.report')}}" class="btn btn-primary">{{__('Open delivery report')}}</a>
+                  <p>{{__('db.Pending, partial and completed deliveries for the current period.')}}</p>
+                  <a href="{{route('delivery.report')}}" class="btn btn-primary">{{__('db.Open delivery report')}}</a>
                 </div>
               </div>
             </div>
@@ -243,7 +247,7 @@
             <div class="col-md-5 mt-4">
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                  <h4>{{date('F')}} {{date('Y')}}</h4>
+                  <h4>{{ __('db.month_'.date('n')) }} {{ date('Y') }}</h4>
                 </div>
                 <div class="pie-chart mb-2">
                     <canvas id="transactionChart" data-color = "{{$color}}" data-color_rgba = "{{$color_rgba}}" data-revenue={{$revenue}} data-purchase={{$purchase}} data-expense={{$expense}} data-label1="{{__('db.Purchase')}}" data-label2="{{__('db.revenue')}}" data-label3="{{__('db.Expense')}}" width="100" height="95"> </canvas>
@@ -266,7 +270,10 @@
                   <h4>{{__('db.yearly report')}}</h4>
                 </div>
                 <div class="card-body">
-                  <canvas id="saleChart" data-sale_chart_value = "{{json_encode($yearly_sale_amount)}}" data-purchase_chart_value = "{{json_encode($yearly_purchase_amount)}}" data-label1="{{__('db.Purchased Amount')}}" data-label2="{{__('db.Sold Amount')}}"></canvas>
+                  @php
+                    $chartMonths = [__('db.month_1'), __('db.month_2'), __('db.month_3'), __('db.month_4'), __('db.month_5'), __('db.month_6'), __('db.month_7'), __('db.month_8'), __('db.month_9'), __('db.month_10'), __('db.month_11'), __('db.month_12')];
+                  @endphp
+                  <canvas id="saleChart" data-sale_chart_value = "{{json_encode($yearly_sale_amount)}}" data-purchase_chart_value = "{{json_encode($yearly_purchase_amount)}}" data-label1="{{__('db.Purchased Amount')}}" data-label2="{{__('db.Sold Amount')}}" data-months='@json($chartMonths)'></canvas>
                 </div>
               </div>
             </div>
@@ -370,7 +377,7 @@
             <div class="col-md-5">
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                  <h4>{{__('db.Best Seller').' '.date('F')}}</h4>
+                  <h4>{{ __('db.Best Seller').' '.__('db.month_'.date('n')) }}</h4>
                   <div class="right-column">
                     <div class="badge badge-primary">{{__('db.top')}} 5</div>
                   </div>
@@ -448,19 +455,30 @@
     $('#invoice-search-btn').on('click', function() {
         var date = $('#invoice-search-date').val();
         var reference = $('#invoice-search-reference').val();
+        var customer = $('#invoice-search-customer').val();
         var body = $('#invoice-search-results tbody');
+        var emptySearch = @json(__('db.Enter an invoice date, a reference or a customer name.'));
+        var noResult = @json(__('db.No invoice matches this search.'));
+        var openInvoice = @json(__('db.Open invoice'));
         body.empty();
-        if (!date && !reference) {
-            body.append('<tr><td colspan="5">Enter an invoice date or a reference.</td></tr>');
+        if (!date && !$.trim(reference) && !$.trim(customer)) {
+            body.append('<tr><td colspan="5">'+$('<div>').text(emptySearch).html()+'</td></tr>');
             return;
         }
-        $.get('{{ route('sale.invoiceLookup') }}', {date: date, reference: reference}, function(rows) {
-            if (!rows.length) {
-                body.append('<tr><td colspan="5">No invoice matches this search.</td></tr>');
+        $.get('{{ route('sale.invoiceLookup') }}', {date: date, reference: reference, customer: customer}, function(rows) {
+            if (!rows || !rows.length) {
+                body.append('<tr><td colspan="5">'+$('<div>').text(noResult).html()+'</td></tr>');
                 return;
             }
             $.each(rows, function(_, row) {
-                body.append('<tr><td>'+$('<div>').text(row.date).html()+'</td><td>'+$('<div>').text(row.reference_no).html()+'</td><td>'+$('<div>').text(row.customer).html()+'</td><td>'+$('<div>').text(row.grand_total).html()+'</td><td><a class="btn btn-sm btn-primary" href="'+row.invoice_url+'">Invoice</a></td></tr>');
+                var link = $('<a>', {class: 'btn btn-sm btn-primary', href: row.invoice_url, text: openInvoice});
+                var tr = $('<tr>');
+                tr.append($('<td>').text(row.date));
+                tr.append($('<td>').text(row.reference_no));
+                tr.append($('<td>').text(row.customer));
+                tr.append($('<td>').text(row.grand_total));
+                tr.append($('<td>').append(link));
+                body.append(tr);
             });
         });
     });

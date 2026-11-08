@@ -354,7 +354,7 @@ class SaleController extends Controller
                 $total_products = $saleLines->count();
 
                 foreach ($saleLines as $key => $product) {
-                    $label = $product->name ?: ('Removed product #'.$product->product_id);
+                    $label = $product->name ?: __('db.Removed product #:id', ['id' => $product->product_id]);
                     if ($key + 1 < $total_products) {
                         $productNames[] = '<div style="border-bottom: 1px solid #ccc; padding-bottom: 4px; margin-bottom: 4px;">'
                                         . e($label) . '</div>';
@@ -433,7 +433,7 @@ class SaleController extends Controller
                 $nestedData['options'] = '<div class="btn-group">
                             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'.__("db.action").'
                               <span class="caret"></span>
-                              <span class="sr-only">Toggle Dropdown</span>
+                              <span class="sr-only">'.__('db.Toggle Dropdown').'</span>
                             </button>
                             <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default" user="menu">
                                 <li><a href="'.route('sale.invoice', $sale->id).'" class="btn btn-link"><i class="fa fa-copy"></i> '.__('db.Generate Invoice').'</a></li>
@@ -495,7 +495,7 @@ class SaleController extends Controller
                         <button type="button" class="add-delivery btn btn-link" data-id = "'.$sale->id.'"><i class="fa fa-truck"></i> '.__('db.Add Delivery').'</button>
                     </li>
                     <li>
-                        <button type="button" class="btn btn-link view"><i class="fa fa-truck"></i> '.__('Delivery history').'</button>
+                        <button type="button" class="btn btn-link view"><i class="fa fa-truck"></i> '.__('db.Delivery history').'</button>
                     </li>';
                 if(in_array("sales-delete", $request['all_permission']))
                     $nestedData['options'] .= \Form::open(["route" => ["sales.destroy", $sale->id], "method" => "DELETE"] ).'
@@ -3556,7 +3556,7 @@ public function store3(StoreSaleRequest $request)
             $product = Product::find($product_sale_data->product_id);
             if(!$product) {
                 $product = new \stdClass();
-                $product->name = 'Removed product #'.$product_sale_data->product_id;
+                $product->name = __('db.Removed product #:id', ['id' => $product_sale_data->product_id]);
                 $product->code = '';
             }
             if($product_sale_data->variant_id) {
@@ -3661,7 +3661,8 @@ public function store3(StoreSaleRequest $request)
 
         $date = $request->input('date');
         $reference = trim((string) $request->input('reference'));
-        if(!$date && $reference === '') {
+        $customerName = trim((string) $request->input('customer'));
+        if(!$date && $reference === '' && $customerName === '') {
             return response()->json([]);
         }
 
@@ -3679,7 +3680,13 @@ public function store3(StoreSaleRequest $request)
             $q->whereDate('created_at', date('Y-m-d', $parsed));
         }
         if($reference !== '') {
-            $q->where('reference_no', 'LIKE', '%'.$reference.'%');
+            $q->where('reference_no', 'LIKE', '%'.$this->escapeLike($reference).'%');
+        }
+        if($customerName !== '') {
+            $like = '%'.$this->escapeLike($customerName).'%';
+            $q->whereHas('customer', function ($customer) use ($like) {
+                $customer->where('name', 'LIKE', $like);
+            });
         }
 
         $sales = $q->orderByDesc('id')->limit(30)->get();
@@ -3697,6 +3704,84 @@ public function store3(StoreSaleRequest $request)
         }
 
         return response()->json($rows);
+    }
+
+    public function detailCard($id)
+    {
+        $role = Role::find(Auth::user()->role_id);
+        if(!$role || (!$role->hasPermissionTo('sales-index') && !$role->hasPermissionTo('delivery'))) {
+            return response()->json(['error' => __('db.Sorry! You are not allowed to access this module')], 403);
+        }
+
+        $sale = Sale::with(['biller', 'customer', 'warehouse', 'user'])->find($id);
+        if(!$sale) {
+            return response()->json(['error' => __('db.Sale not found')], 404);
+        }
+
+        $status = match ((int) $sale->sale_status) {
+            1 => __('db.Completed'),
+            2 => __('db.Pending'),
+            3 => __('db.Draft'),
+            4 => __('db.Returned'),
+            5 => __('db.Processing'),
+            6 => __('db.Cooked'),
+            7 => __('db.Served'),
+            default => '',
+        };
+        $coupon = $sale->coupon_id ? Coupon::find($sale->coupon_id) : null;
+        $currency = $sale->currency_id ? Currency::find($sale->currency_id) : null;
+        $tableName = '';
+        if(!empty($sale->table_id)) {
+            $table = Table::find($sale->table_id);
+            $tableName = $table->name ?? '';
+        }
+        $biller = $sale->biller;
+        $customer = $sale->customer;
+        $note = function ($value) {
+            return nl2br(e((string) $value));
+        };
+
+        return response()->json([
+            date(config('date_format'), strtotime($sale->created_at)),
+            $sale->reference_no,
+            $status,
+            $biller->name ?? '',
+            $biller->company_name ?? '',
+            $biller->email ?? '',
+            $biller->phone_number ?? '',
+            $biller->address ?? '',
+            $biller->city ?? '',
+            $customer->name ?? '',
+            $customer->phone_number ?? '',
+            $customer->address ?? '',
+            $customer->city ?? '',
+            $sale->id,
+            $sale->total_tax,
+            $sale->total_discount,
+            $sale->total_price,
+            $sale->order_tax,
+            $sale->order_tax_rate,
+            $sale->order_discount,
+            $sale->shipping_cost,
+            $sale->grand_total,
+            $sale->paid_amount,
+            $note($sale->sale_note),
+            $note($sale->staff_note),
+            optional($sale->user)->name ?? '',
+            optional($sale->user)->email ?? '',
+            optional($sale->warehouse)->name ?? '',
+            $coupon->code ?? '',
+            $sale->coupon_discount,
+            $sale->document,
+            $currency->code ?? '',
+            $sale->exchange_rate,
+            $tableName,
+        ]);
+    }
+
+    private function escapeLike(string $value): string
+    {
+        return str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $value);
     }
 
     public function getSale($id)

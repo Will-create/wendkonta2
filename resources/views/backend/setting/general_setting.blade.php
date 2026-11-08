@@ -76,7 +76,7 @@
                                         @if($lims_general_setting_data)
                                         <input type="hidden" name="timezone_hidden" value="{{env('APP_TIMEZONE')}}">
                                         @endif
-                                        <select name="timezone" class="selectpicker form-control" data-live-search="true" title="Select TimeZone...">
+                                        <select name="timezone" class="selectpicker form-control" data-live-search="true" title="{{ __('db.Select TimeZone...') }}">
                                             @foreach($zones_array as $zone)
                                                 <option value="{{ $zone['zone'] }}"
                                                 {{ old('timezone', $lims_general_setting_data->timezone ?? '') == $zone['zone'] ? 'selected' : '' }}>
@@ -216,10 +216,10 @@
                                     <div class="form-group">
                                         <label>{{__('db.Theme')}} *</label>
                                         <div class="row ml-1">
-                                            <div class="col-md-3 theme-option" data-color="default.css" style="background: #7c5cc4; min-height: 40px; max-width: 50px;" title="Purple"></div>&nbsp;&nbsp;
-                                            <div class="col-md-3 theme-option" data-color="green.css" style="background: #1abc9c; min-height: 40px;max-width: 50px;" title="Green"></div>&nbsp;&nbsp;
-                                            <div class="col-md-3 theme-option" data-color="blue.css" style="background: #3498db; min-height: 40px;max-width: 50px;" title="Blue"></div>&nbsp;&nbsp;
-                                            <div class="col-md-3 theme-option" data-color="dark.css" style="background: #34495e; min-height: 40px;max-width: 50px;" title="Dark"></div>
+                                            <div class="col-md-3 theme-option" data-color="default.css" style="background: #7c5cc4; min-height: 40px; max-width: 50px;" title="{{ __('db.Purple') }}"></div>&nbsp;&nbsp;
+                                            <div class="col-md-3 theme-option" data-color="green.css" style="background: #1abc9c; min-height: 40px;max-width: 50px;" title="{{ __('db.Green') }}"></div>&nbsp;&nbsp;
+                                            <div class="col-md-3 theme-option" data-color="blue.css" style="background: #3498db; min-height: 40px;max-width: 50px;" title="{{ __('db.Blue') }}"></div>&nbsp;&nbsp;
+                                            <div class="col-md-3 theme-option" data-color="dark.css" style="background: #34495e; min-height: 40px;max-width: 50px;" title="{{ __('db.Dark') }}"></div>
                                         </div>
                                     </div>
                                 </div>

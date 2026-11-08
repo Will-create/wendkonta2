@@ -162,7 +162,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>{{__('db.Attach Document')}}</label>
-                                            <i class="dripicons-question" data-toggle="tooltip" title="Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported"></i>
+                                            <i class="dripicons-question" data-toggle="tooltip" title="{{ __('db.Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported') }}"></i>
                                             <input type="file" name="document" class="form-control" />
                                             @if($errors->has('extension'))
                                                 <span>
@@ -228,7 +228,7 @@
                 <div class="row">
                   <div class="col-md-6 form-group warehouse-section">
                       <label>{{__('db.Warehouse')}} *</strong> </label>
-                      <select required name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
+                      <select required name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select warehouse...') }}">
                           @foreach($lims_warehouse_list as $warehouse)
                           <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                           @endforeach
@@ -286,7 +286,7 @@
 
         // If no checkboxes are checked, show an alert and prevent form submission
         if (!anyCheckboxChecked) {
-            alert("Please select at least one product.");
+            alert(@json(__('db.Please select at least one product.')));
             e.preventDefault(); // Prevent form submission
         }
     });
@@ -385,7 +385,7 @@
             calculateTotal();
         }
         else
-            alert('Please choose imei or serial number!');
+            alert(@json(__('db.Please choose imei or serial number!')));
 
     });
     //Change quantity
@@ -417,7 +417,7 @@
                     changeSaleStatus = 0;
                 }
                 if(qty > actual_qty) {
-                    alert('Quantity can not be bigger than the actual quantity!');
+                    alert(@json(__('db.Quantity can not be bigger than the actual quantity!')));
                     qty = actual_qty;
                     $('table.order-list tbody tr:nth-child(' + (i + 1) + ') .qty').val(actual_qty);
                 }
@@ -491,7 +491,7 @@
     $('.sale-return-form').on('submit',function(e){
         var rownumber = $('table.order-list tbody tr:last').index();
         if (rownumber < 0) {
-            alert("Please insert product to order table!")
+            alert(@json(__('db.Please insert product to order table!')))
             e.preventDefault();
         }
     });

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html dir="@if( Config::get('app.locale') == 'ar' || $general_setting->is_rtl){{'rtl'}}@endif">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="@if( Config::get('app.locale') == 'ar' || $general_setting->is_rtl){{'rtl'}}@endif">
 
 <head>
   <meta charset="utf-8">
@@ -299,16 +299,16 @@
           @if($sale_add_permission_active)
           <li class="nav-item"><a class="btn-pos btn-sm" href="{{route('sale.pos') }}"><i class="dripicons-shopping-bag"></i><span> POS</span></a></li>
           @endif
-          <li class="nav-item d-none d-lg-block"><a id="switch-theme" data-toggle="tooltip" title="{{ __('Switch Theme') }}"><i class="dripicons-brightness-max"></i></a></li>
+          <li class="nav-item d-none d-lg-block"><a id="switch-theme" data-toggle="tooltip" title="{{ __('db.Switch Theme') }}"><i class="dripicons-brightness-max"></i></a></li>
           @if(config('database.connections.saleprosaas_landlord'))
-          <li class="nav-item"><a target="_blank" href="{{'https://'.env('CENTRAL_DOMAIN').'/contact-for-renewal?id='.$subdomain}}" data-toggle="tooltip" title="{{ __('Renew Subscription') }}"><i class="dripicons-clockwise"></i></a></li>
+          <li class="nav-item"><a target="_blank" href="{{'https://'.env('CENTRAL_DOMAIN').'/contact-for-renewal?id='.$subdomain}}" data-toggle="tooltip" title="{{ __('db.Renew Subscription') }}"><i class="dripicons-clockwise"></i></a></li>
           @endif
-          <li class="nav-item d-none d-lg-block"><a id="btnFullscreen" data-toggle="tooltip" title="{{ __('Full Screen') }}"><i class="dripicons-expand"></i></a></li>
-          @if(\Auth::user()->role_id <= 2) <li class="nav-item"><a href="{{route('cashRegister.index') }}" data-toggle="tooltip" title="{{ __('Cash Register List') }}"><i class="dripicons-archive"></i></a></li>
+          <li class="nav-item d-none d-lg-block"><a id="btnFullscreen" data-toggle="tooltip" title="{{ __('db.Full Screen') }}"><i class="dripicons-expand"></i></a></li>
+          @if(\Auth::user()->role_id <= 2) <li class="nav-item"><a href="{{route('cashRegister.index') }}" data-toggle="tooltip" title="{{ __('db.Cash Register List') }}"><i class="dripicons-archive"></i></a></li>
             @endif
             @if($product_qty_alert_active && ($alert_product + $dso_alert_product_no + \Auth::user()->unreadNotifications->where('data.reminder_date', date('Y-m-d'))->count() ) > 0)
             <li class="nav-item" id="notification-icon">
-              <a rel="nofollow" data-toggle="tooltip" title="{{__('Notifications') }}" class="nav-link dropdown-item"><i class="dripicons-bell"></i><span class="badge badge-danger notification-number">{{$alert_product + $dso_alert_product_no + \Auth::user()->unreadNotifications->where('data.reminder_date', date('Y-m-d'))->count()}}</span>
+              <a rel="nofollow" data-toggle="tooltip" title="{{__('db.Notifications') }}" class="nav-link dropdown-item"><i class="dripicons-bell"></i><span class="badge badge-danger notification-number">{{$alert_product + $dso_alert_product_no + \Auth::user()->unreadNotifications->where('data.reminder_date', date('Y-m-d'))->count()}}</span>
               </a>
               <ul class="right-sidebar">
                 <li class="notifications">
@@ -333,7 +333,7 @@
             @endif
             @if(\Auth::user()->unreadNotifications->where('data.reminder_date', date('Y-m-d'))->count() > 0)
             <li class="nav-item" id="notification-icon">
-              <a rel="nofollow" data-toggle="tooltip" title="{{__('Notifications') }}" class="nav-link dropdown-item"><i class="dripicons-bell"></i><span class="badge badge-danger notification-number">{{\Auth::user()->unreadNotifications->where('data.reminder_date', date('Y-m-d'))->count()}}</span>
+              <a rel="nofollow" data-toggle="tooltip" title="{{__('db.Notifications') }}" class="nav-link dropdown-item"><i class="dripicons-bell"></i><span class="badge badge-danger notification-number">{{\Auth::user()->unreadNotifications->where('data.reminder_date', date('Y-m-d'))->count()}}</span>
               </a>
               <ul class="right-sidebar">
                 @foreach(\Auth::user()->unreadNotifications->where('data.reminder_date', date('Y-m-d')) as $key => $notification)
@@ -388,7 +388,7 @@
                 @endif
                 @if($empty_database_permission_active)
                 <li>
-                  <a onclick="return confirm('Are you sure want to delete? If you do this all of your data will be lost.')" href="{{route('setting.emptyDatabase') }}"><i class="dripicons-stack"></i> {{ __('db.Empty Database') }}</a>
+                  <a onclick="return confirm(@json(__('db.Are you sure want to delete? If you do this all of your data will be lost.')))" href="{{route('setting.emptyDatabase') }}"><i class="dripicons-stack"></i> {{ __('db.Empty Database') }}</a>
                 </li>
                 @endif
                 <li>
@@ -416,7 +416,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-sm-12">
-            <p>&copy; {{$general_setting->site_title}} | {{ __('Developed') }} {{ __('By') }} <span class="external">{{$general_setting->developed_by}}</span> | V {{env('VERSION') }}</p>
+            <p>&copy; {{$general_setting->site_title}} | {{ __('db.Developed') }} {{ __('db.By') }} <span class="external">{{$general_setting->developed_by}}</span> | V {{env('VERSION') }}</p>
           </div>
         </div>
       </div>
@@ -427,11 +427,11 @@
       <div role="document" class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">{{ __('Send Notification') }}</h5>
+            <h5 id="exampleModalLabel" class="modal-title">{{ __('db.Send Notification') }}</h5>
             <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
           </div>
           <div class="modal-body">
-            <p class="italic"><small>{{ __('The field labels marked with * are required input fields') }}.</small></p>
+            <p class="italic"><small>{{ __('db.The field labels marked with * are required input fields') }}.</small></p>
             {!! Form::open(['route' => 'notifications.store', 'method' => 'post', 'files'=> true]) !!}
             <div class="row">
               <?php
@@ -442,28 +442,28 @@
               ?>
               <div class="col-md-4 form-group">
                 <input type="hidden" name="sender_id" value="{{\Auth::id()}}">
-                <label>{{ __('User') }} *</label>
-                <select name="receiver_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="Select user...">
+                <label>{{ __('db.User') }} *</label>
+                <select name="receiver_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select user...') }}">
                   @foreach($lims_user_list as $user)
                   <option value="{{$user->id}}">{{$user->name . ' (' . $user->email. ')'}}</option>
                   @endforeach
                 </select>
               </div>
               <div class="col-md-4 form-group">
-                <label>{{ __('Reminder Date') }}</label>
+                <label>{{ __('db.Reminder Date') }}</label>
                 <input type="text" name="reminder_date" class="form-control date" value="{{date('d-m-Y') }}">
               </div>
               <div class="col-md-4 form-group">
-                <label>{{ __('Attach Document') }}</label>
+                <label>{{ __('db.Attach Document') }}</label>
                 <input type="file" name="document" class="form-control">
               </div>
               <div class="col-md-12 form-group">
-                <label>{{ __('Message') }} *</label>
+                <label>{{ __('db.Message') }} *</label>
                 <textarea rows="5" name="message" class="form-control" required></textarea>
               </div>
             </div>
             <div class="form-group">
-              <button type="submit" class="btn btn-primary ">{{ __('submit') }}</button>
+              <button type="submit" class="btn btn-primary ">{{ __('db.submit') }}</button>
             </div>
             {{ Form::close() }}
           </div>
@@ -478,26 +478,26 @@
         <div class="modal-content">
           {!! Form::open(['route' => 'category.store', 'method' => 'post', 'files' => true, 'id' => 'category-form']) !!}
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">{{ __('Add Category') }}</h5>
+            <h5 id="exampleModalLabel" class="modal-title">{{ __('db.Add Category') }}</h5>
             <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
           </div>
           <div class="modal-body">
-            <p class="italic"><small>{{ __('The field labels marked with * are required input fields') }}.</small></p>
+            <p class="italic"><small>{{ __('db.The field labels marked with * are required input fields') }}.</small></p>
             <div class="row">
               <div class="col-md-6 form-group">
-                <label>{{ __('name') }} *</label>
+                <label>{{ __('db.name') }} *</label>
                 {{Form::text('name',null,array('required' => 'required', 'class' => 'form-control', 'placeholder' => __('db.Type category name')))}}
                 <x-validation-error fieldName="name" />
               </div>
               <div class="col-md-6 form-group">
-                <label>{{ __('Image') }}</label>
+                <label>{{ __('db.Image') }}</label>
                 <input type="file" name="image" class="form-control">
                 <x-validation-error fieldName="image" />
               </div>
               <div class="col-md-6 form-group">
-                <label>{{ __('Parent Category') }}</label>
+                <label>{{ __('db.Parent Category') }}</label>
                 <select name="parent_id" class="form-control selectpicker" id="parent">
-                  <option value="">No {{ __('parent') }}</option>
+                  <option value="">No {{ __('db.parent') }}</option>
                   @foreach($categories_list as $category)
                   <option value="{{$category->id}}">{{$category->name}}</option>
                   @endforeach
@@ -506,23 +506,23 @@
               </div>
               @if (\Schema::hasColumn('categories', 'woocommerce_category_id'))
               <div class="col-md-6 form-group mt-4">
-                <input class="mt-3" name="is_sync_disable" type="checkbox" id="is_sync_disable" value="1">&nbsp; {{ __('Disable Woocommerce Sync') }}
+                <input class="mt-3" name="is_sync_disable" type="checkbox" id="is_sync_disable" value="1">&nbsp; {{ __('db.Disable Woocommerce Sync') }}
                 <x-validation-error fieldName="is_sync_disable" />
               </div>
               @endif
 
               @if(in_array('ecommerce',explode(',',$general_setting->modules)))
               <div class="col-md-12 mt-3">
-                <h6><strong>{{ __('For Website') }}</strong></h6>
+                <h6><strong>{{ __('db.For Website') }}</strong></h6>
                 <hr>
               </div>
 
               <div class="col-md-6 form-group">
-                <label>{{ __('Icon') }}</label>
+                <label>{{ __('db.Icon') }}</label>
                 <input type="file" name="icon" class="form-control">
               </div>
               <div class="col-md-6 form-group">
-                <input class="mt-5" type="checkbox" name="featured" id="featured" value="1"> <label>{{ __('List on category dropdown') }}</label>
+                <input class="mt-5" type="checkbox" name="featured" id="featured" value="1"> <label>{{ __('db.List on category dropdown') }}</label>
               </div>
               @endif
             </div>
@@ -530,15 +530,15 @@
             @if(in_array('ecommerce',explode(',',$general_setting->modules)))
             <div class="row">
               <div class="col-md-12 mt-3">
-                <h6><strong>{{ __('For SEO') }}</strong></h6>
+                <h6><strong>{{ __('db.For SEO') }}</strong></h6>
                 <hr>
               </div>
               <div class="col-md-12 form-group">
-                <label>{{ __('Meta Title') }}</label>
+                <label>{{ __('db.Meta Title') }}</label>
                 {{Form::text('page_title',null,array('class' => 'form-control', 'placeholder' => __('db.Meta Title')))}}
               </div>
               <div class="col-md-12 form-group">
-                <label>{{ __('Meta Description') }}</label>
+                <label>{{ __('db.Meta Description') }}</label>
                 {{Form::text('short_description',null,array('class' => 'form-control', 'placeholder' => __('db.Meta Description')))}}
               </div>
             </div>
@@ -546,7 +546,7 @@
 
             <div class="form-group">
               <input type="hidden" class="category-ajax-check" name="ajax" value="0">
-              <button type="submit" class="btn btn-primary category-submit-btn">{{ __('submit') }}</button>
+              <button type="submit" class="btn btn-primary category-submit-btn">{{ __('db.submit') }}</button>
             </div>
           </div>
           {{ Form::close() }}
@@ -560,11 +560,11 @@
       <div role="document" class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">{{ __('Add Expense') }}</h5>
+            <h5 id="exampleModalLabel" class="modal-title">{{ __('db.Add Expense') }}</h5>
             <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
           </div>
           <div class="modal-body">
-            <p class="italic"><small>{{ __('The field labels marked with * are required input fields') }}.</small></p>
+            <p class="italic"><small>{{ __('db.The field labels marked with * are required input fields') }}.</small></p>
             {!! Form::open(['route' => 'expenses.store', 'method' => 'post']) !!}
             <?php
             $lims_expense_category_list = DB::table('expense_categories')->where('is_active', true)->get();
@@ -579,31 +579,31 @@
             ?>
             <div class="row">
               <div class="col-md-6 form-group">
-                <label>{{ __('Date') }}</label>
+                <label>{{ __('db.Date') }}</label>
                 <input type="text" name="created_at" class="form-control date" placeholder="{{__('db.Choose date')}}" value="{{date($general_setting->date_format,strtotime('now'))}}"/>
               </div>
               <div class="col-md-6 form-group">
-                <label>{{ __('Expense Category') }} *</label>
-                <select name="expense_category_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="Select Expense Category...">
+                <label>{{ __('db.Expense Category') }} *</label>
+                <select name="expense_category_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Expense Category...') }}">
                   @foreach($lims_expense_category_list as $expense_category)
                   <option value="{{$expense_category->id}}">{{$expense_category->name . ' (' . $expense_category->code. ')'}}</option>
                   @endforeach
                 </select>
               </div>
               <div class="col-md-6 form-group">
-                <label>{{ __('Warehouse') }} *</label>
-                <select name="warehouse_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="Select Warehouse...">
+                <label>{{ __('db.Warehouse') }} *</label>
+                <select name="warehouse_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Warehouse...') }}">
                   @foreach($lims_warehouse_list as $warehouse)
                   <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                   @endforeach
                 </select>
               </div>
               <div class="col-md-6 form-group">
-                <label>{{ __('Amount') }} *</label>
+                <label>{{ __('db.Amount') }} *</label>
                 <input type="number" name="amount" step="any" required class="form-control">
               </div>
               <div class="col-md-6 form-group">
-                <label> {{ __('Account') }}</label>
+                <label> {{ __('db.Account') }}</label>
                 <select class="form-control selectpicker" name="account_id">
                   @foreach($lims_account_list as $account)
                   @if($account->is_default)
@@ -616,11 +616,11 @@
               </div>
             </div>
             <div class="form-group">
-              <label>{{ __('Note') }}</label>
+              <label>{{ __('db.Note') }}</label>
               <textarea name="note" rows="3" class="form-control"></textarea>
             </div>
             <div class="form-group">
-              <button type="submit" class="btn btn-primary">{{ __('submit') }}</button>
+              <button type="submit" class="btn btn-primary">{{ __('db.submit') }}</button>
             </div>
             {{ Form::close() }}
           </div>
@@ -633,11 +633,11 @@
       <div role="document" class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">{{ __('Add Income') }}</h5>
+            <h5 id="exampleModalLabel" class="modal-title">{{ __('db.Add Income') }}</h5>
             <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
           </div>
           <div class="modal-body">
-            <p class="italic"><small>{{ __('The field labels marked with * are required input fields') }}.</small></p>
+            <p class="italic"><small>{{ __('db.The field labels marked with * are required input fields') }}.</small></p>
             {!! Form::open(['route' => 'incomes.store', 'method' => 'post']) !!}
             <?php
             $lims_income_category_list = DB::table('income_categories')->where('is_active', true)->get();
@@ -652,31 +652,31 @@
             ?>
             <div class="row">
               <div class="col-md-6 form-group">
-                <label>{{ __('Date') }}</label>
+                <label>{{ __('db.Date') }}</label>
                 <input type="text" name="created_at" class="form-control date" placeholder="{{__('db.Choose date')}}" value="{{date($general_setting->date_format,strtotime('now'))}}"/>
               </div>
               <div class="col-md-6 form-group">
-                <label>{{ __('Income Category') }} *</label>
-                <select name="income_category_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="Select Income Category...">
+                <label>{{ __('db.Income Category') }} *</label>
+                <select name="income_category_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Income Category...') }}">
                   @foreach($lims_income_category_list as $income_category)
                   <option value="{{$income_category->id}}">{{$income_category->name . ' (' . $income_category->code. ')'}}</option>
                   @endforeach
                 </select>
               </div>
               <div class="col-md-6 form-group">
-                <label>{{ __('Warehouse') }} *</label>
-                <select name="warehouse_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="Select Warehouse...">
+                <label>{{ __('db.Warehouse') }} *</label>
+                <select name="warehouse_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Warehouse...') }}">
                   @foreach($lims_warehouse_list as $warehouse)
                   <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                   @endforeach
                 </select>
               </div>
               <div class="col-md-6 form-group">
-                <label>{{ __('Amount') }} *</label>
+                <label>{{ __('db.Amount') }} *</label>
                 <input type="number" name="amount" step="any" required class="form-control">
               </div>
               <div class="col-md-6 form-group">
-                <label> {{ __('Account') }}</label>
+                <label> {{ __('db.Account') }}</label>
                 <select class="form-control selectpicker" name="account_id">
                   @foreach($lims_account_list as $account)
                   @if($account->is_default)
@@ -689,11 +689,11 @@
               </div>
             </div>
             <div class="form-group">
-              <label>{{ __('Note') }}</label>
+              <label>{{ __('db.Note') }}</label>
               <textarea name="note" rows="3" class="form-control"></textarea>
             </div>
             <div class="form-group">
-              <button type="submit" class="btn btn-primary">{{ __('submit') }}</button>
+              <button type="submit" class="btn btn-primary">{{ __('db.submit') }}</button>
             </div>
             {{ Form::close() }}
           </div>
@@ -708,20 +708,20 @@
         <div class="modal-content">
           {!! Form::open(['route' => 'return-sale.create', 'method' => 'get']) !!}
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">Add Sale Return</h5>
+            <h5 id="exampleModalLabel" class="modal-title">{{__('db.Add Sale Return')}}</h5>
             <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
           </div>
           <div class="modal-body">
-            <p class="italic"><small>{{ __('The field labels marked with * are required input fields') }}.</small></p>
+            <p class="italic"><small>{{ __('db.The field labels marked with * are required input fields') }}.</small></p>
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>{{ __('Sale Reference') }} *</label>
+                  <label>{{ __('db.Sale Reference') }} *</label>
                   <input type="text" name="reference_no" class="form-control">
                 </div>
               </div>
             </div>
-            {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
+            {{Form::submit(__('db.submit'), ['class' => 'btn btn-primary'])}}
           </div>
           {!! Form::close() !!}
         </div>
@@ -735,20 +735,20 @@
         <div class="modal-content">
           {!! Form::open(['route' => 'return-purchase.create', 'method' => 'get']) !!}
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">Add Purchase Return</h5>
+            <h5 id="exampleModalLabel" class="modal-title">{{__('db.Add Purchase Return')}}</h5>
             <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
           </div>
           <div class="modal-body">
-            <p class="italic"><small>{{ __('The field labels marked with * are required input fields') }}.</small></p>
+            <p class="italic"><small>{{ __('db.The field labels marked with * are required input fields') }}.</small></p>
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>{{ __('Purchase Reference') }} *</label>
+                  <label>{{ __('db.Purchase Reference') }} *</label>
                   <input type="text" name="reference_no" class="form-control">
                 </div>
               </div>
             </div>
-            {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
+            {{Form::submit(__('db.submit'), ['class' => 'btn btn-primary'])}}
           </div>
           {!! Form::close() !!}
         </div>
@@ -761,30 +761,30 @@
       <div role="document" class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">{{ __('Add Account') }}</h5>
+            <h5 id="exampleModalLabel" class="modal-title">{{ __('db.Add Account') }}</h5>
             <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
           </div>
           <div class="modal-body">
-            <p class="italic"><small>{{ __('The field labels marked with * are required input fields') }}.</small></p>
+            <p class="italic"><small>{{ __('db.The field labels marked with * are required input fields') }}.</small></p>
             {!! Form::open(['route' => 'accounts.store', 'method' => 'post']) !!}
             <div class="form-group">
-              <label>{{ __('Account No') }} *</label>
+              <label>{{ __('db.Account No') }} *</label>
               <input type="text" name="account_no" required class="form-control">
             </div>
             <div class="form-group">
-              <label>{{ __('name') }} *</label>
+              <label>{{ __('db.name') }} *</label>
               <input type="text" name="name" required class="form-control">
             </div>
             <div class="form-group">
-              <label>{{ __('Initial Balance') }}</label>
+              <label>{{ __('db.Initial Balance') }}</label>
               <input type="number" name="initial_balance" step="any" class="form-control">
             </div>
             <div class="form-group">
-              <label>{{ __('Note') }}</label>
+              <label>{{ __('db.Note') }}</label>
               <textarea name="note" rows="3" class="form-control"></textarea>
             </div>
             <div class="form-group">
-              <button type="submit" class="btn btn-primary">{{ __('submit') }}</button>
+              <button type="submit" class="btn btn-primary">{{ __('db.submit') }}</button>
             </div>
             {{ Form::close() }}
           </div>
@@ -798,15 +798,15 @@
       <div role="document" class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">{{ __('Account Statement') }}</h5>
+            <h5 id="exampleModalLabel" class="modal-title">{{ __('db.Account Statement') }}</h5>
             <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
           </div>
           <div class="modal-body">
-            <p class="italic"><small>{{ __('The field labels marked with * are required input fields') }}.</small></p>
+            <p class="italic"><small>{{ __('db.The field labels marked with * are required input fields') }}.</small></p>
             {!! Form::open(['route' => 'accounts.statement', 'method' => 'post']) !!}
             <div class="row">
               <div class="col-md-6 form-group">
-                <label> {{ __('Account') }}</label>
+                <label> {{ __('db.Account') }}</label>
                 <select class="form-control selectpicker" name="account_id">
                   @foreach($lims_account_list as $account)
                   <option value="{{$account->id}}">{{$account->name}} [{{$account->account_no}}]</option>
@@ -814,15 +814,15 @@
                 </select>
               </div>
               <div class="col-md-6 form-group">
-                <label> {{ __('Type') }}</label>
+                <label> {{ __('db.Type') }}</label>
                 <select class="form-control selectpicker" name="type">
-                  <option value="0">{{ __('All') }}</option>
-                  <option value="1">{{ __('Debit') }}</option>
-                  <option value="2">{{ __('Credit') }}</option>
+                  <option value="0">{{ __('db.All') }}</option>
+                  <option value="1">{{ __('db.Debit') }}</option>
+                  <option value="2">{{ __('db.Credit') }}</option>
                 </select>
               </div>
               <div class="col-md-12 form-group">
-                <label>{{ __('Choose Your Date') }}</label>
+                <label>{{ __('db.Choose Your Date') }}</label>
                 <div class="input-group">
                   <input type="text" class="account-statement-daterangepicker-field form-control" required />
                   <input type="hidden" name="start_date" />
@@ -831,7 +831,7 @@
               </div>
             </div>
             <div class="form-group">
-              <button type="submit" class="btn btn-primary">{{ __('submit') }}</button>
+              <button type="submit" class="btn btn-primary">{{ __('db.submit') }}</button>
             </div>
             {{ Form::close() }}
           </div>
@@ -845,16 +845,16 @@
       <div role="document" class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">{{ __('Warehouse Report') }}</h5>
+            <h5 id="exampleModalLabel" class="modal-title">{{ __('db.Warehouse Report') }}</h5>
             <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
           </div>
           <div class="modal-body">
-            <p class="italic"><small>{{ __('The field labels marked with * are required input fields') }}.</small></p>
+            <p class="italic"><small>{{ __('db.The field labels marked with * are required input fields') }}.</small></p>
             {!! Form::open(['route' => 'report.warehouse', 'method' => 'post']) !!}
 
             <div class="form-group">
-              <label>{{ __('Warehouse') }} *</label>
-              <select name="warehouse_id" class="selectpicker form-control" required data-live-search="true" id="warehouse-id" data-live-search-style="begins" title="Select warehouse...">
+              <label>{{ __('db.Warehouse') }} *</label>
+              <select name="warehouse_id" class="selectpicker form-control" required data-live-search="true" id="warehouse-id" data-live-search-style="begins" title="{{ __('db.Select warehouse...') }}">
                 @foreach($lims_warehouse_list as $warehouse)
                 <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                 @endforeach
@@ -865,7 +865,7 @@
             <input type="hidden" name="end_date" value="{{date('Y-m-d') }}" />
 
             <div class="form-group">
-              <button type="submit" class="btn btn-primary">{{ __('submit') }}</button>
+              <button type="submit" class="btn btn-primary">{{ __('db.submit') }}</button>
             </div>
             {{ Form::close() }}
           </div>
@@ -879,18 +879,18 @@
       <div role="document" class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">{{ __('User Report') }}</h5>
+            <h5 id="exampleModalLabel" class="modal-title">{{ __('db.User Report') }}</h5>
             <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
           </div>
           <div class="modal-body">
-            <p class="italic"><small>{{ __('The field labels marked with * are required input fields') }}.</small></p>
+            <p class="italic"><small>{{ __('db.The field labels marked with * are required input fields') }}.</small></p>
             {!! Form::open(['route' => 'report.user', 'method' => 'post']) !!}
             <?php
             $lims_user_list = DB::table('users')->where('is_active', true)->get();
             ?>
             <div class="form-group">
-              <label>{{ __('User') }} *</label>
-              <select name="user_id" class="selectpicker form-control" required data-live-search="true" id="user-id" data-live-search-style="begins" title="Select user...">
+              <label>{{ __('db.User') }} *</label>
+              <select name="user_id" class="selectpicker form-control" required data-live-search="true" id="user-id" data-live-search-style="begins" title="{{ __('db.Select user...') }}">
                 @foreach($lims_user_list as $user)
                 <option value="{{$user->id}}">{{$user->name . ' (' . $user->phone. ')'}}</option>
                 @endforeach
@@ -901,7 +901,7 @@
             <input type="hidden" name="end_date" value="{{date('Y-m-d') }}" />
 
             <div class="form-group">
-              <button type="submit" class="btn btn-primary">{{ __('submit') }}</button>
+              <button type="submit" class="btn btn-primary">{{ __('db.submit') }}</button>
             </div>
             {{ Form::close() }}
           </div>
@@ -915,18 +915,18 @@
       <div role="document" class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">{{ __('Biller Report') }}</h5>
+            <h5 id="exampleModalLabel" class="modal-title">{{ __('db.Biller Report') }}</h5>
             <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
           </div>
           <div class="modal-body">
-            <p class="italic"><small>{{ __('The field labels marked with * are required input fields') }}.</small></p>
+            <p class="italic"><small>{{ __('db.The field labels marked with * are required input fields') }}.</small></p>
             {!! Form::open(['route' => 'report.biller', 'method' => 'post']) !!}
             <?php
             $lims_biller_list = DB::table('billers')->where('is_active', true)->get();
             ?>
             <div class="form-group">
-              <label>{{ __('Biller') }} *</label>
-              <select name="biller_id" class="selectpicker form-control" required data-live-search="true" id="user-id" data-live-search-style="begins" title="Select biller...">
+              <label>{{ __('db.Biller') }} *</label>
+              <select name="biller_id" class="selectpicker form-control" required data-live-search="true" id="user-id" data-live-search-style="begins" title="{{ __('db.Select biller...') }}">
                 @foreach($lims_biller_list as $biller)
                 <option value="{{$biller->id}}">{{$biller->name . ' (' . $biller->phone_number. ')'}}</option>
                 @endforeach
@@ -937,7 +937,7 @@
             <input type="hidden" name="end_date" value="{{date('Y-m-d') }}" />
 
             <div class="form-group">
-              <button type="submit" class="btn btn-primary">{{ __('submit') }}</button>
+              <button type="submit" class="btn btn-primary">{{ __('db.submit') }}</button>
             </div>
             {{ Form::close() }}
           </div>
@@ -951,18 +951,18 @@
       <div role="document" class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">{{ __('Customer Report') }}</h5>
+            <h5 id="exampleModalLabel" class="modal-title">{{ __('db.Customer Report') }}</h5>
             <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
           </div>
           <div class="modal-body">
-            <p class="italic"><small>{{ __('The field labels marked with * are required input fields') }}.</small></p>
+            <p class="italic"><small>{{ __('db.The field labels marked with * are required input fields') }}.</small></p>
             {!! Form::open(['route' => 'report.customer', 'method' => 'post']) !!}
             <?php
             $lims_customer_list = DB::table('customers')->where('is_active', true)->get();
             ?>
             <div class="form-group">
-              <label>{{ __('customer') }} *</label>
-              <select name="customer_id" class="selectpicker form-control" required data-live-search="true" id="customer-id" data-live-search-style="begins" title="Select customer...">
+              <label>{{ __('db.customer') }} *</label>
+              <select name="customer_id" class="selectpicker form-control" required data-live-search="true" id="customer-id" data-live-search-style="begins" title="{{ __('db.Select customer...') }}">
                 @foreach($lims_customer_list as $customer)
                 <option value="{{$customer->id}}">{{$customer->name . ' (' . $customer->phone_number. ')'}}</option>
                 @endforeach
@@ -973,7 +973,7 @@
             <input type="hidden" name="end_date" value="{{date('Y-m-d') }}" />
 
             <div class="form-group">
-              <button type="submit" class="btn btn-primary">{{ __('submit') }}</button>
+              <button type="submit" class="btn btn-primary">{{ __('db.submit') }}</button>
             </div>
             {{ Form::close() }}
           </div>
@@ -987,18 +987,18 @@
       <div role="document" class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">{{ __('Customer Group Report') }}</h5>
+            <h5 id="exampleModalLabel" class="modal-title">{{ __('db.Customer Group Report') }}</h5>
             <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
           </div>
           <div class="modal-body">
-            <p class="italic"><small>{{ __('The field labels marked with * are required input fields') }}.</small></p>
+            <p class="italic"><small>{{ __('db.The field labels marked with * are required input fields') }}.</small></p>
             {!! Form::open(['route' => 'report.customer_group', 'method' => 'post']) !!}
             <?php
             $lims_customer_group_list = DB::table('customer_groups')->where('is_active', true)->get();
             ?>
             <div class="form-group">
-              <label>{{ __('Customer Group') }} *</label>
-              <select name="customer_group_id" class="selectpicker form-control" required data-live-search="true" id="customer-group-id" data-live-search-style="begins" title="Select customer group...">
+              <label>{{ __('db.Customer Group') }} *</label>
+              <select name="customer_group_id" class="selectpicker form-control" required data-live-search="true" id="customer-group-id" data-live-search-style="begins" title="{{ __('db.Select customer group...') }}">
                 @foreach($lims_customer_group_list as $customer_group)
                 <option value="{{$customer_group->id}}">{{$customer_group->name}}</option>
                 @endforeach
@@ -1009,7 +1009,7 @@
             <input type="hidden" name="end_date" value="{{date('Y-m-d') }}" />
 
             <div class="form-group">
-              <button type="submit" class="btn btn-primary">{{ __('submit') }}</button>
+              <button type="submit" class="btn btn-primary">{{ __('db.submit') }}</button>
             </div>
             {{ Form::close() }}
           </div>
@@ -1023,18 +1023,18 @@
       <div role="document" class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 id="exampleModalLabel" class="modal-title">{{ __('Supplier Report') }}</h5>
+            <h5 id="exampleModalLabel" class="modal-title">{{ __('db.Supplier Report') }}</h5>
             <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
           </div>
           <div class="modal-body">
-            <p class="italic"><small>{{ __('The field labels marked with * are required input fields') }}.</small></p>
+            <p class="italic"><small>{{ __('db.The field labels marked with * are required input fields') }}.</small></p>
             {!! Form::open(['route' => 'report.supplier', 'method' => 'post']) !!}
             <?php
             $lims_supplier_list = DB::table('suppliers')->where('is_active', true)->get();
             ?>
             <div class="form-group">
-              <label>{{ __('Supplier') }} *</label>
-              <select name="supplier_id" class="selectpicker form-control" required data-live-search="true" id="supplier-id" data-live-search-style="begins" title="Select Supplier...">
+              <label>{{ __('db.Supplier') }} *</label>
+              <select name="supplier_id" class="selectpicker form-control" required data-live-search="true" id="supplier-id" data-live-search-style="begins" title="{{ __('db.Select Supplier...') }}">
                 @foreach($lims_supplier_list as $supplier)
                 <option value="{{$supplier->id}}">{{$supplier->name . ' (' . $supplier->phone_number. ')'}}</option>
                 @endforeach
@@ -1045,7 +1045,7 @@
             <input type="hidden" name="end_date" value="{{date('Y-m-d') }}" />
 
             <div class="form-group">
-              <button type="submit" class="btn btn-primary">{{ __('submit') }}</button>
+              <button type="submit" class="btn btn-primary">{{ __('db.submit') }}</button>
             </div>
             {{ Form::close() }}
           </div>
@@ -1173,6 +1173,7 @@
   
   @endif
   @endif
+  @include('backend.layout.locale_js')
   @stack('scripts')
 
   <script type="text/javascript">
@@ -1225,7 +1226,7 @@
     $("div.alert").delay(4000);
 
     function confirmDelete() {
-      if (confirm("Are you sure want to delete?")) {
+      if (confirm(@json(__('db.Are you sure want to delete?')))) {
         return true;
       }
       return false;
@@ -1335,7 +1336,7 @@
       callback: function(startDate, endDate, period) {
         var start_date = startDate.format('YYYY-MM-DD');
         var end_date = endDate.format('YYYY-MM-DD');
-        var title = start_date + ' To ' + end_date;
+        var title = start_date + ' ' + @json(__('db.To')) + ' ' + end_date;
         $(this).val(title);
         $('#account-statement-modal input[name="start_date"]').val(start_date);
         $('#account-statement-modal input[name="end_date"]').val(end_date);

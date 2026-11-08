@@ -15,7 +15,7 @@
         @if(in_array("purchases-add", $all_permission))
             <a href="{{route('purchases.create')}}" class="btn btn-info btn-icon"><i class="dripicons-plus"></i> {{__('db.Add Purchase')}}</a>&nbsp;
             <a href="{{url('purchases/purchase_by_csv')}}" class="btn btn-primary btn-icon"><i class="dripicons-copy"></i> {{__('db.Import Purchase')}}</a>
-            <a href="{{url('purchases/deleted_data')}}" class="btn btn-secondary btn-icon"><i class="dripicons-trash"></i> {{__('Deleted Purchases')}}</a>
+            <a href="{{url('purchases/deleted_data')}}" class="btn btn-secondary btn-icon"><i class="dripicons-trash"></i> {{__('db.Deleted Purchases')}}</a>
         @endif
         <button type="button" class="btn btn-warning btn-icon" id="toggle-filter">
             <i class="dripicons-experiment"></i> {{ __('db.Filter Purchases') }}
@@ -27,7 +27,7 @@
                     <div class="col-md-3">
                         <div class="form-group top-fields">
                             <label>{{__('db.date')}}</label>
-                            <input type="text" class="daterangepicker-field form-control" value="{{$starting_date}} To {{$ending_date}}" required />
+                            <input type="text" class="daterangepicker-field form-control" value="{{$starting_date}} {{__('db.To')}} {{$ending_date}}" required />
                             <input type="hidden" name="starting_date" value="{{$starting_date}}" />
                             <input type="hidden" name="ending_date" value="{{$ending_date}}" />
                         </div>
@@ -150,7 +150,7 @@
                     <th>#</th>
                     <th>{{__('db.product')}}</th>
                     <th>{{__('db.Batch No')}}</th>
-                    <th>Qty</th>
+                    <th>{{__('db.Qty')}}</th>
                     <th>{{__('db.Returned')}}</th>
                     <th>{{__('db.Unit Cost')}}</th>
                     <th>{{__('db.Tax')}}</th>
@@ -338,7 +338,7 @@
       callback: function(startDate, endDate, period){
         var starting_date = startDate.format('YYYY-MM-DD');
         var ending_date = endDate.format('YYYY-MM-DD');
-        var title = starting_date + ' To ' + ending_date;
+        var title = starting_date + ' ' + @json(__('db.To')) + ' ' + ending_date;
         $(this).val(title);
         $('input[name="starting_date"]').val(starting_date);
         $('input[name="ending_date"]').val(ending_date);
@@ -412,14 +412,14 @@
     $('.selectpicker').selectpicker('refresh');
 
     function confirmDelete() {
-        if (confirm("Are you sure want to delete?")) {
+        if (confirm(@json(__('db.Are you sure want to delete?')))) {
             return true;
         }
         return false;
     }
 
     function confirmDeletePayment() {
-        if (confirm("Are you sure want to delete? If you delete this money will be refunded")) {
+        if (confirm(@json(__('db.Are you sure want to delete? If you delete this money will be refunded')))) {
             return true;
         }
         return false;
@@ -570,11 +570,11 @@
 
     $('input[name="amount"]').on("input", function() {
         if( $(this).val() > parseFloat($('input[name="paying_amount"]').val()) ) {
-            alert('Paying amount cannot be bigger than recieved amount');
+            alert(@json(__('db.Paying amount cannot be bigger than recieved amount')));
             $(this).val('');
         }
         else if( $(this).val() > parseFloat($('input[name="balance"]').val()) ) {
-            alert('Paying amount cannot be bigger than due amount');
+            alert(@json(__('db.Paying amount cannot be bigger than due amount')));
             $(this).val('');
         }
         $(".change").text(parseFloat($('input[name="paying_amount"]').val() - $(this).val()).toFixed({{$general_setting->decimal}}));
@@ -601,7 +601,7 @@
 
     $('input[name="edit_amount"]').on("input", function() {
         if( $(this).val() > parseFloat($('input[name="edit_paying_amount"]').val()) ) {
-            alert('Paying amount cannot be bigger than recieved amount');
+            alert(@json(__('db.Paying amount cannot be bigger than recieved amount')));
             $(this).val('');
         }
         $(".change").text(parseFloat($('input[name="edit_paying_amount"]').val() - $(this).val()).toFixed({{$general_setting->decimal}}));
@@ -675,12 +675,12 @@
             }
         ],
         'select': { style: 'multi',  selector: 'td:first-child'},
-        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "{{ __('db.All') }}"]],
         dom: '<"row"lfB>rtip',
         buttons: [
             {
                 extend: 'pdf',
-                text: '<i title="export to pdf" class="fa fa-file-pdf-o"></i>',
+                text: '<i title="{{ __('db.export to pdf') }}" class="fa fa-file-pdf-o"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -694,7 +694,7 @@
             },
             {
                 extend: 'excel',
-                text: '<i title="export to excel" class="dripicons-document-new"></i>',
+                text: '<i title="{{ __('db.export to excel') }}" class="dripicons-document-new"></i>',
                 exportOptions: {
                     columns: ':visible:not(.not-exported)',
                     rows: ':visible'
@@ -708,7 +708,7 @@
             },
             {
                 extend: 'csv',
-                text: '<i title="export to csv" class="fa fa-file-text-o"></i>',
+                text: '<i title="{{ __('db.export to csv') }}" class="fa fa-file-text-o"></i>',
                 exportOptions: {
                     columns: ':visible:not(.not-exported)',
                     rows: ':visible'
@@ -722,7 +722,7 @@
             },
             {
                 extend: 'print',
-                text: '<i title="print" class="fa fa-print"></i>',
+                text: '<i title="{{ __('db.print') }}" class="fa fa-print"></i>',
                 exportOptions: {
                     columns: ':visible:not(.not-exported)',
                     rows: ':visible'
@@ -735,7 +735,7 @@
                 footer:true
             },
             {
-                text: '<i title="delete" class="dripicons-cross"></i>',
+                text: '<i title="{{ __('db.delete') }}" class="dripicons-cross"></i>',
                 className: 'buttons-delete',
                 action: function ( e, dt, node, config ) {
                     if(user_verified == '1') {
@@ -747,7 +747,7 @@
                                     purchase_id[i-1] = purchase[3];
                             }
                         });
-                        if(purchase_id.length && confirm("Are you sure want to delete?")) {
+                        if(purchase_id.length && confirm(@json(__('db.Are you sure want to delete?')))) {
                             $.ajax({
                                 type:'POST',
                                 url:'purchases/deletebyselection',
@@ -762,15 +762,15 @@
                             });
                         }
                         else if(!purchase_id.length)
-                            alert('Nothing is selected!');
+                            alert(@json(__('db.Nothing is selected!')));
                     }
                     else
-                        alert('This feature is disable for demo!');
+                        alert(@json(__('db.This feature is disable for demo!')));
                 }
             },
             {
                 extend: 'colvis',
-                text: '<i title="column visibility" class="fa fa-eye"></i>',
+                text: '<i title="{{ __('db.column visibility') }}" class="fa fa-eye"></i>',
                 columns: ':gt(0)'
             },
         ],
@@ -925,13 +925,13 @@
 
     $(document).on('submit', '.payment-form', function(e) {
         if( $('input[name="paying_amount"]').val() < parseFloat($('#amount').val()) ) {
-            alert('Paying amount cannot be bigger than recieved amount');
+            alert(@json(__('db.Paying amount cannot be bigger than recieved amount')));
             $('input[name="amount"]').val('');
             $(".change").text(parseFloat( $('input[name="paying_amount"]').val() - $('#amount').val() ).toFixed({{$general_setting->decimal}}));
             e.preventDefault();
         }
         else if( $('input[name="edit_paying_amount"]').val() < parseFloat($('input[name="edit_amount"]').val()) ) {
-            alert('Paying amount cannot be bigger than recieved amount');
+            alert(@json(__('db.Paying amount cannot be bigger than recieved amount')));
             $('input[name="edit_amount"]').val('');
             $(".change").text(parseFloat( $('input[name="edit_paying_amount"]').val() - $('input[name="edit_amount"]').val() ).toFixed({{$general_setting->decimal}}));
             e.preventDefault();

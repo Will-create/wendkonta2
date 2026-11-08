@@ -45,7 +45,7 @@
                                         <div class="form-group">
                                             <label>{{__('db.From Warehouse')}} *</label>
                                             <input type="hidden" name="from_warehouse_id_hidden" value="{{ $lims_transfer_data->from_warehouse_id }}" />
-                                            <select id="from-warehouse-id" required name="from_warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
+                                            <select id="from-warehouse-id" required name="from_warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select warehouse...') }}">
                                                 @foreach($lims_warehouse_list as $warehouse)
                                                 <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                                                 @endforeach
@@ -56,7 +56,7 @@
                                         <div class="form-group">
                                             <label>{{__('db.To Warehouse')}} *</label>
                                             <input type="hidden" name="to_warehouse_id_hidden" value="{{ $lims_transfer_data->to_warehouse_id }}" />
-                                            <select required name="to_warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
+                                            <select required name="to_warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select warehouse...') }}">
                                                 @foreach($lims_warehouse_list as $warehouse)
                                                 <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                                                 @endforeach
@@ -238,7 +238,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>{{__('db.Attach Document')}}</label>
-                                            <i class="dripicons-question" data-toggle="tooltip" title="Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported"></i>
+                                            <i class="dripicons-question" data-toggle="tooltip" title="{{ __('db.Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported') }}"></i>
                                             <input type="file" name="document" class="form-control" />
                                             @if($errors->has('extension'))
                                                 <span>
@@ -422,7 +422,7 @@ $('#lims_productcodeSearch').on('input', function(){
 
     if(!warehouse_id){
         $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-        alert('Please select Warehouse!');
+        alert(@json(__('db.Please select Warehouse!')));
     }
 });
 
@@ -553,7 +553,7 @@ function productSearch(data){
                 // console.log('arra '+ rowindex);
 
                 if(imeiNumbersArray.includes(product_info[2])) {
-                    alert('Same imei or serial number is not allowed!');
+                    alert(@json(__('db.Same imei or serial number is not allowed!')));
                     flag = false;
                     $('#lims_productcodeSearch').val('');
                 }
@@ -706,7 +706,7 @@ function checkQuantity(purchase_qty, flag) {
     else if(operator[0] == '/')
         total_qty = purchase_qty / operation_value[0];
     if (total_qty > parseFloat(product_qty[pos])) {
-        alert('Quantity exceeds stock quantity!');
+        alert(@json(__('db.Quantity exceeds stock quantity!')));
         if (flag) {
             purchase_qty = purchase_qty.substring(0, purchase_qty.length - 1);
             $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.qty').val(purchase_qty);
@@ -849,13 +849,13 @@ $('#transfer-form').on('submit',function(e){
     $('select[name="from_warehouse_id"]').prop('disabled', false);
     var rownumber = $('table.order-list tbody tr:last').index();
     if (rownumber < 0) {
-        alert("Please insert product to order table!")
+        alert(@json(__('db.Please insert product to order table!')))
         e.preventDefault();
         $('select[name="from_warehouse_id"]').prop('disabled', true);
     }
 
     else if($('select[name="from_warehouse_id"]').val() == $('select[name="to_warehouse_id"]').val()){
-        alert('Both Warehouse can not be same!');
+        alert(@json(__('db.Both Warehouse can not be same!')));
         e.preventDefault();
         $('select[name="from_warehouse_id"]').prop('disabled', true);
     }

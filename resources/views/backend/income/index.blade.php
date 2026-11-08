@@ -16,7 +16,7 @@
                         <label class="d-tc mt-2"><strong>{{__('db.Choose Your Date')}}</strong> &nbsp;</label>
                         <div class="d-tc">
                             <div class="input-group">
-                                <input type="text" class="daterangepicker-field form-control" value="{{$starting_date}} To {{$ending_date}}" required />
+                                <input type="text" class="daterangepicker-field form-control" value="{{$starting_date}} {{__('db.To')}} {{$ending_date}}" required />
                                 <input type="hidden" name="starting_date" value="{{$starting_date}}" />
                                 <input type="hidden" name="ending_date" value="{{$ending_date}}" />
                             </div>
@@ -112,7 +112,7 @@
                         </div>
                         <div class="col-md-6 form-group">
                             <label>{{__('db.Income Category')}} *</label>
-                            <select name="income_category_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="Select Income Category...">
+                            <select name="income_category_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Income Category...') }}">
                                 @foreach($lims_income_category_list as $income_category)
                                 <option value="{{$income_category->id}}">{{$income_category->name . ' (' . $income_category->code. ')'}}</option>
                                 @endforeach
@@ -120,7 +120,7 @@
                         </div>
                         <div class="col-md-6 form-group">
                             <label>{{__('db.Warehouse')}} *</label>
-                            <select name="warehouse_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="Select Warehouse...">
+                            <select name="warehouse_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Warehouse...') }}">
                                 @foreach($lims_warehouse_list as $warehouse)
                                 <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                                 @endforeach
@@ -180,7 +180,7 @@
       callback: function(startDate, endDate, period){
         var starting_date = startDate.format('YYYY-MM-DD');
         var ending_date = endDate.format('YYYY-MM-DD');
-        var title = starting_date + ' To ' + ending_date;
+        var title = starting_date + ' ' + @json(__('db.To')) + ' ' + ending_date;
         $(this).val(title);
         $('input[name="starting_date"]').val(starting_date);
         $('input[name="ending_date"]').val(ending_date);
@@ -207,7 +207,7 @@
     });
 
     function confirmDelete() {
-    if (confirm("Are you sure want to delete?")) {
+    if (confirm(@json(__('db.Are you sure want to delete?')))) {
         return true;
     }
     return false;
@@ -275,13 +275,13 @@
             }
         ],
         'select': { style: 'multi',  selector: 'td:first-child'},
-        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "{{ __('db.All') }}"]],
         dom: '<"row"lfB>rtip',
         rowId: 'ObjectID',
         buttons: [
             {
                 extend: 'pdf',
-                text: '<i title="export to pdf" class="fa fa-file-pdf-o"></i>',
+                text: '<i title="{{ __('db.export to pdf') }}" class="fa fa-file-pdf-o"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -295,7 +295,7 @@
             },
             {
                 extend: 'excel',
-                text: '<i title="export to excel" class="dripicons-document-new"></i>',
+                text: '<i title="{{ __('db.export to excel') }}" class="dripicons-document-new"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -309,7 +309,7 @@
             },
             {
                 extend: 'csv',
-                text: '<i title="export to csv" class="fa fa-file-text-o"></i>',
+                text: '<i title="{{ __('db.export to csv') }}" class="fa fa-file-text-o"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -323,7 +323,7 @@
             },
             {
                 extend: 'print',
-                text: '<i title="print" class="fa fa-print"></i>',
+                text: '<i title="{{ __('db.print') }}" class="fa fa-print"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -336,7 +336,7 @@
                 footer:true
             },
             {
-                text: '<i title="delete" class="dripicons-cross"></i>',
+                text: '<i title="{{ __('db.delete') }}" class="dripicons-cross"></i>',
                 className: 'buttons-delete',
                 action: function ( e, dt, node, config ) {
                     if(user_verified == '1') {
@@ -346,7 +346,7 @@
                                 income_id[i-1] = $(this).closest('tr').data('income_id');
                             }
                         });
-                        if(income_id.length && confirm("Are you sure want to delete?")) {
+                        if(income_id.length && confirm(@json(__('db.Are you sure want to delete?')))) {
                             $.ajax({
                                 type:'POST',
                                 url:'incomes/deletebyselection',
@@ -364,15 +364,15 @@
                             });
                         }
                         else if(!income_id.length)
-                            alert('Nothing is selected!');
+                            alert(@json(__('db.Nothing is selected!')));
                     }
                     else
-                        alert('This feature is disable for demo!');
+                        alert(@json(__('db.This feature is disable for demo!')));
                 }
             },
             {
                 extend: 'colvis',
-                text: '<i title="column visibility" class="fa fa-eye"></i>',
+                text: '<i title="{{ __('db.column visibility') }}" class="fa fa-eye"></i>',
                 columns: ':gt(0)'
             },
         ],

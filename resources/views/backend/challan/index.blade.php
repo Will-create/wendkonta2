@@ -13,7 +13,7 @@
                 <div class="row mb-3 offset-1">
                     <div class="col-md-3 mt-3">
                         <label class="">Courier</label>
-                        <select name="courier_id" id="courier-id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select courier...">
+                        <select name="courier_id" id="courier-id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select courier...') }}">
                             <option value="All Courier">All Courier</option>
                             @foreach($courier_list as $courier)
                                 @if($courier_id == $courier->id)
@@ -25,24 +25,24 @@
                         </select>
                     </div>
                     <div class="col-md-3 mt-3">
-                        <label class="">Status</label>
+                        <label class="">{{__('db.status')}}</label>
                         <select id="status" name="status" class="selectpicker form-control">
-                            <option value="0">All</option>
+                            <option value="0">{{__('db.All')}}</option>
                             @if($status === 'Active')
-                                <option value="Active" selected>Active</option>
-                                <option value="Close">Close</option>
+                                <option value="Active" selected>{{__('db.Active')}}</option>
+                                <option value="Close">{{__('db.Close')}}</option>
                             @elseif($status === 'Close')
-                                <option value="Active">Active</option>
-                                <option value="Close" selected>Close</option>
+                                <option value="Active">{{__('db.Active')}}</option>
+                                <option value="Close" selected>{{__('db.Close')}}</option>
                             @else
-                                <option value="Active">Active</option>
-                                <option value="Close">Close</option>
+                                <option value="Active">{{__('db.Active')}}</option>
+                                <option value="Close">{{__('db.Close')}}</option>
                             @endif
                         </select>
                     </div>
                     <div class="col-md-2 mt-5">
                         <div class="form-group">
-                            <button class="btn btn-primary" id="filter-btn" type="submit">Submit</button>
+                            <button class="btn btn-primary" id="filter-btn" type="submit">{{__('db.submit')}}</button>
                         </div>
                     </div>
                 </div>
@@ -54,16 +54,16 @@
             <thead>
                 <tr>
                     <th class="not-exported"></th>
-                    <th>Date</th>
-                    <th>Reference No</th>
-                    <th>Order No</th>
-                    <th>Courier</th>
-                    <th>Status</th>
-                    <th>Closing Date</th>
-                    <th>Total Amount</th>
-                    <th>Created By</th>
-                    <th>Closed By</th>
-                    <th class="not-exported">Action</th>
+                    <th>{{__('db.date')}}</th>
+                    <th>{{__('db.Reference No')}}</th>
+                    <th>{{__('db.Order No')}}</th>
+                    <th>{{__('db.Courier')}}</th>
+                    <th>{{__('db.status')}}</th>
+                    <th>{{__('db.Closing Date')}}</th>
+                    <th>{{__('db.Total Amount')}}</th>
+                    <th>{{__('db.Created By')}}</th>
+                    <th>{{__('db.Closed By')}}</th>
+                    <th class="not-exported">{{__('db.action')}}</th>
                 </tr>
             </thead>
 
@@ -94,7 +94,7 @@
         $("ul#sale #challan-list-menu").addClass("active");
 
         function confirmDelete() {
-            if (confirm("Are you sure want to delete?")) {
+            if (confirm(@json(__('db.Are you sure want to delete?')))) {
                 return true;
             }
             return false;
@@ -172,7 +172,7 @@
                 }
             ],
             'select': { style: 'multi', selector: 'td:first-child'},
-            'lengthMenu': [[50, 100, 150, -1], [50, 100, 150, "All"]],
+            'lengthMenu': [[50, 100, 150, -1], [50, 100, 150, "{{ __('db.All') }}"]],
             dom: '<"row"lfB>rtip',
             buttons: [
                 {

@@ -151,7 +151,7 @@
                   </div>
                   <div class="form-group user_list">
                       <label>{{__('db.User')}} *</label>
-                      <select name="user_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="Select User...">
+                      <select name="user_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select User...') }}">
                           @foreach($lims_user_list as $user)
                           <option value="{{$user->id}}">{{$user->name .' ('.$user->email.')'}}</option>
                           @endforeach
@@ -159,7 +159,7 @@
                   </div>
                   <div class="form-group customer_list">
                       <label>{{__('db.customer')}} *</label>
-                      <select name="customer_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="Select Customer...">
+                      <select name="customer_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Customer...') }}">
                           @foreach($lims_customer_list as $customer)
                           <option value="{{$customer->id}}">{{$customer->name .' ('.$customer->phone_number.')'}}</option>
                           @endforeach
@@ -211,7 +211,7 @@
                 </div>
                 <div class="form-group user_list_edit">
                     <label>{{__('db.User')}} *</label>
-                    <select name="user_id_edit" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="Select User...">
+                    <select name="user_id_edit" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select User...') }}">
                         @foreach($lims_user_list as $user)
                         <option value="{{$user->id}}">{{$user->name .' ('.$user->email.')'}}</option>
                         @endforeach
@@ -219,7 +219,7 @@
                 </div>
                 <div class="form-group customer_list_edit">
                     <label>{{__('db.customer')}} *</label>
-                    <select name="customer_id_edit" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="Select Customer...">
+                    <select name="customer_id_edit" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Customer...') }}">
                         @foreach($lims_customer_list as $customer)
                         <option value="{{$customer->id}}">{{$customer->name .' ('.$customer->phone_number.')'}}</option>
                         @endforeach
@@ -403,7 +403,7 @@
     })
 
     function confirmDelete() {
-    if (confirm("Are you sure want to delete?")) {
+    if (confirm(@json(__('db.Are you sure want to delete?')))) {
         return true;
     }
     return false;
@@ -441,12 +441,12 @@
             }
         ],
         'select': { style: 'multi',  selector: 'td:first-child'},
-        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "{{ __('db.All') }}"]],
         dom: '<"row"lfB>rtip',
         buttons: [
             {
                 extend: 'pdf',
-                text: '<i title="export to pdf" class="fa fa-file-pdf-o"></i>',
+                text: '<i title="{{ __('db.export to pdf') }}" class="fa fa-file-pdf-o"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -460,7 +460,7 @@
             },
             {
                 extend: 'excel',
-                text: '<i title="export to excel" class="dripicons-document-new"></i>',
+                text: '<i title="{{ __('db.export to excel') }}" class="dripicons-document-new"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -474,7 +474,7 @@
             },
             {
                 extend: 'csv',
-                text: '<i title="export to csv" class="fa fa-file-text-o"></i>',
+                text: '<i title="{{ __('db.export to csv') }}" class="fa fa-file-text-o"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -488,7 +488,7 @@
             },
             {
                 extend: 'print',
-                text: '<i title="print" class="fa fa-print"></i>',
+                text: '<i title="{{ __('db.print') }}" class="fa fa-print"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -501,7 +501,7 @@
                 footer:true
             },
             {
-                text: '<i title="delete" class="dripicons-cross"></i>',
+                text: '<i title="{{ __('db.delete') }}" class="dripicons-cross"></i>',
                 className: 'buttons-delete',
                 action: function ( e, dt, node, config ) {
                     if(user_verified == '1') {
@@ -511,7 +511,7 @@
                                 gift_card_id[i-1] = $(this).closest('tr').data('id');
                             }
                         });
-                        if(gift_card_id.length && confirm("Are you sure want to delete?")) {
+                        if(gift_card_id.length && confirm(@json(__('db.Are you sure want to delete?')))) {
                             $.ajax({
                                 type:'POST',
                                 url:'gift_cards/deletebyselection',
@@ -525,15 +525,15 @@
                             dt.rows({ page: 'current', selected: true }).remove().draw(false);
                         }
                         else if(!gift_card_id.length)
-                            alert('No gift card is selected!');
+                            alert(@json(__('db.No gift card is selected!')));
                     }
                     else
-                        alert('This feature is disable for demo!');
+                        alert(@json(__('db.This feature is disable for demo!')));
                 }
             },
             {
                 extend: 'colvis',
-                text: '<i title="column visibility" class="fa fa-eye"></i>',
+                text: '<i title="{{ __('db.column visibility') }}" class="fa fa-eye"></i>',
                 columns: ':gt(0)'
             },
         ],

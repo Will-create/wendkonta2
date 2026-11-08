@@ -43,7 +43,7 @@
 
         var packing_slip_id = [];
         function confirmDelete() {
-            if (confirm("Are you sure want to delete?")) {
+            if (confirm(@json(__('db.Are you sure want to delete?')))) {
                 return true;
             }
             return false;

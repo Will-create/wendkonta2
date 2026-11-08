@@ -211,7 +211,7 @@
     });
 
   function confirmDelete() {
-      if (confirm("Are you sure want to delete?")) {
+      if (confirm(@json(__('db.Are you sure want to delete?')))) {
           return true;
       }
       return false;
@@ -267,7 +267,7 @@
             }
         ],
         'select': { style: 'multi',  selector: 'td:first-child'},
-        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "{{ __('db.All') }}"]],
         dom: '<"row"lfB>rtip',
         buttons: [
             {
@@ -299,7 +299,7 @@
                 },
             },
             {
-                text: '<i title="delete" class="dripicons-cross"></i>',
+                text: '<i title="{{ __('db.delete') }}" class="dripicons-cross"></i>',
                 className: 'buttons-delete',
                 action: function ( e, dt, node, config ) {
                     if(user_verified == '1') {
@@ -309,7 +309,7 @@
                                 warehouse_id[i-1] = $(this).closest('tr').data('id');
                             }
                         });
-                        if(warehouse_id.length && confirm("Are you sure want to delete?")) {
+                        if(warehouse_id.length && confirm(@json(__('db.Are you sure want to delete?')))) {
                             $.ajax({
                                 type:'POST',
                                 url:'warehouse/deletebyselection',
@@ -329,10 +329,10 @@
                             // dt.rows({ page: 'current', selected: true }).remove().draw(false);
                         }
                         else if(!warehouse_id.length)
-                            alert('No warehouse is selected!');
+                            alert(@json(__('db.No warehouse is selected!')));
                     }
                     else
-                        alert('This feature is disable for demo!');
+                        alert(@json(__('db.This feature is disable for demo!')));
                 }
             },
             {
@@ -372,7 +372,7 @@ $("#export").on("click", function(e){
             warehouseArray: warehouse
         },
        success:function(data){
-        alert('Exported to CSV file successfully! Click Ok to download file');
+        alert(@json(__('db.Exported to CSV file successfully! Click Ok to download file')));
         window.location.href = data;
        }
     });

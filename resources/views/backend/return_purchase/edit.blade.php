@@ -26,7 +26,7 @@
                                         <div class="form-group">
                                             <label>{{__('db.Warehouse')}} *</label>
                                             <input type="hidden" name="warehouse_id_hidden" value="{{$lims_return_data->warehouse_id}}">
-                                            <select required id="warehouse_id" name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
+                                            <select required id="warehouse_id" name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select warehouse...') }}">
                                                 @foreach($lims_warehouse_list as $warehouse)
                                                 <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                                                 @endforeach
@@ -37,7 +37,7 @@
                                         <div class="form-group">
                                             <label>{{__('db.Supplier')}}</label>
                                             <input type="hidden" name="supplier_id_hidden" value="{{$lims_return_data->supplier_id}}">
-                                            <select name="supplier_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select supplier...">
+                                            <select name="supplier_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select supplier...') }}">
                                                 @foreach($lims_supplier_list as $supplier)
                                                 <option value="{{$supplier->id}}">{{$supplier->name . ' (' . $supplier->company_name . ')'}}</option>
                                                 @endforeach
@@ -47,7 +47,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>{{__('db.Account')}} *</label>
-                                            <select required id="account_id" name="account_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select account...">
+                                            <select required id="account_id" name="account_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select account...') }}">
                                                 @foreach($lims_account_list as $account)
                                                     @if($account->id == $lims_return_data->account_id)
                                                     <option selected value="{{$account->id}}">{{$account->name}}</option>
@@ -251,7 +251,7 @@
                                 	<div class="col-md-4">
                                         <div class="form-group">
                                             <label>{{__('db.Attach Document')}}</label>
-                                            <i class="dripicons-question" data-toggle="tooltip" title="Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported"></i>
+                                            <i class="dripicons-question" data-toggle="tooltip" title="{{ __('db.Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported') }}"></i>
                                             <input type="file" name="document" class="form-control" />
                                             @if($errors->has('extension'))
                                                 <span>
@@ -538,7 +538,7 @@ $('button[name="update_btn"]').on("click", function() {
     var edit_unit_cost = $('input[name="edit_unit_cost"]').val();
 
     if (parseFloat(edit_discount) > parseFloat(edit_unit_cost)) {
-        alert('Invalid Discount Input!');
+        alert(@json(__('db.Invalid Discount Input!')));
         return;
     }
 
@@ -663,7 +663,7 @@ function edit(){
     $(".imei-section").remove();
     var imeiNumbers = $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.imei-number').val();
     if(imeiNumbers || is_imei[rowindex]) {
-        htmlText = '<div class="col-md-12 form-group imei-section"><label>IMEI or Serial Numbers</label><input type="text" name="imei_numbers" value="'+imeiNumbers+'" class="form-control imei_number" placeholder="Type imei or serial numbers and separate them by comma. Example:1001,2001" step="any"></div>';
+        htmlText = '<div class="col-md-12 form-group imei-section"><label>IMEI or Serial Numbers</label><input type="text" name="imei_numbers" value="'+imeiNumbers+'" class="form-control imei_number" placeholder="{{ __('db.Type imei or serial numbers and separate them by comma. Example:1001,2001') }}" step="any"></div>';
         $("#editModal .modal-element").append(htmlText);
     }
 
@@ -706,7 +706,7 @@ function checkQuantity(purchase_qty, flag) {
     else if(operator[0] == '/')
         total_qty = purchase_qty / operation_value[0];
     if (total_qty > parseFloat(product_qty[pos])) {
-        alert('Quantity exceeds stock quantity!');
+        alert(@json(__('db.Quantity exceeds stock quantity!')));
         if (flag) {
             purchase_qty = purchase_qty.substring(0, purchase_qty.length - 1);
             $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.qty').val(purchase_qty);
@@ -862,7 +862,7 @@ $(window).keydown(function(e){
 $('.payment-form').on('submit',function(e){
     var rownumber = $('table.order-list tbody tr:last').index();
     if (rownumber < 0) {
-        alert("Please insert product to order table!")
+        alert(@json(__('db.Please insert product to order table!')))
         e.preventDefault();
     }
     else {

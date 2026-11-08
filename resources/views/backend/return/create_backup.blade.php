@@ -19,7 +19,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>{{__('db.customer')}} *</label>
-                                            <select required name="customer_id" id="customer_id" class="selectpicker form-control" data-live-search="true" id="customer-id" data-live-search-style="begins" title="Select customer...">
+                                            <select required name="customer_id" id="customer_id" class="selectpicker form-control" data-live-search="true" id="customer-id" data-live-search-style="begins" title="{{ __('db.Select customer...') }}">
                                                 @foreach($lims_customer_list as $customer)
                                                 <option value="{{$customer->id}}">{{$customer->name . ' (' . $customer->phone_number . ')'}}</option>
                                                 @endforeach
@@ -29,7 +29,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>{{__('db.Warehouse')}} *</label>
-                                            <select required id="warehouse_id" name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
+                                            <select required id="warehouse_id" name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select warehouse...') }}">
                                                 @foreach($lims_warehouse_list as $warehouse)
                                                 <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                                                 @endforeach
@@ -39,7 +39,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>{{__('db.Biller')}} *</label>
-                                            <select required name="biller_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Biller...">
+                                            <select required name="biller_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Biller...') }}">
                                                 @foreach($lims_biller_list as $biller)
                                                 <option value="{{$biller->id}}">{{$biller->name . ' (' . $biller->company_name . ')'}}</option>
                                                 @endforeach
@@ -138,7 +138,7 @@
                                 	<div class="col-md-4">
                                         <div class="form-group">
                                             <label>{{__('db.Attach Document')}}</label>
-                                            <i class="dripicons-question" data-toggle="tooltip" title="Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported"></i>
+                                            <i class="dripicons-question" data-toggle="tooltip" title="{{ __('db.Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported') }}"></i>
                                             <input type="file" name="document" class="form-control" />
                                             @if($errors->has('extension'))
                                                 <span>
@@ -253,7 +253,7 @@
             <div class="row">
               <div class="col-md-6 form-group warehouse-section">
                   <label>{{__('db.Warehouse')}} *</strong> </label>
-                  <select required name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
+                  <select required name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select warehouse...') }}">
                       @foreach($lims_warehouse_list as $warehouse)
                       <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                       @endforeach
@@ -338,11 +338,11 @@ var currency = <?php echo json_encode($currency) ?>;
         temp_data = $('#lims_productcodeSearch').val();
         if(!customer_id){
             $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-            alert('Please select Customer!');
+            alert(@json(__('db.Please select Customer!')));
         }
         else if(!warehouse_id){
             $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-            alert('Please select Warehouse!');
+            alert(@json(__('db.Please select Warehouse!')));
         }
     });
 
@@ -402,7 +402,7 @@ $("table.order-list").on("click", ".edit-product", function() {
     if(is_imei[rowindex]) {
         var imeiNumbers = $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.imei-number').val();
 
-        htmlText = '<div class="col-md-12 form-group imei-section"><label>IMEI or Serial Numbers</label><input type="text" name="imei_numbers" value="'+imeiNumbers+'" class="form-control imei_number" placeholder="Type imei or serial numbers and separate them by comma. Example:1001,2001" step="any"></div>';
+        htmlText = '<div class="col-md-12 form-group imei-section"><label>IMEI or Serial Numbers</label><input type="text" name="imei_numbers" value="'+imeiNumbers+'" class="form-control imei_number" placeholder="{{ __('db.Type imei or serial numbers and separate them by comma. Example:1001,2001') }}" step="any"></div>';
         $("#editModal .modal-element").append(htmlText);
     }
 
@@ -454,7 +454,7 @@ $('button[name="update_btn"]').on("click", function() {
     var edit_unit_price = $('input[name="edit_unit_price"]').val();
 
     if (parseFloat(edit_discount) > parseFloat(edit_unit_price)) {
-        alert('Invalid Discount Input!');
+        alert(@json(__('db.Invalid Discount Input!')));
         return;
     }
 
@@ -745,7 +745,7 @@ $(window).keydown(function(e){
 $('.payment-form').on('submit',function(e){
     var rownumber = $('table.order-list tbody tr:last').index();
     if (rownumber < 0) {
-        alert("Please insert product to order table!")
+        alert(@json(__('db.Please insert product to order table!')))
         e.preventDefault();
     }
     else {

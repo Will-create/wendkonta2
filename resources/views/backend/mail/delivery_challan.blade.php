@@ -69,7 +69,7 @@
 												<th style="border: 1px solid #000; padding: 5px">No</th>
 												<th style="border: 1px solid #000; padding: 5px">Code</th>
 												<th style="border: 1px solid #000; padding: 5px">Description</th>
-												<th style="border: 1px solid #000; padding: 5px">Qty</th>
+												<th style="border: 1px solid #000; padding: 5px">{{__('db.Qty')}}</th>
 											</thead>
 											<tbody>
 												@foreach($delivery_data['codes'] as $key => $code)

@@ -175,7 +175,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="nav-item ml-4 d-none d-lg-block"><a id="btnFullscreen" data-toggle="tooltip" title="Full Screen"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" /></svg></a></li>
+                            <li class="nav-item ml-4 d-none d-lg-block"><a id="btnFullscreen" data-toggle="tooltip" title="{{ __('db.Full Screen') }}"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" /></svg></a></li>
                             <?php
                             $general_setting_permission = $permission_list->where('name', 'general_setting')->first();
                             $general_setting_permission_active = DB::table('role_has_permissions')->where([
@@ -227,7 +227,7 @@
                             @endif
                             @if(($alert_product + count(\Auth::user()->unreadNotifications)) > 0)
                             <li class="nav-item d-none d-lg-block" id="notification-icon">
-                                <a rel="nofollow" data-toggle="tooltip" title="{{__('Notifications')}}" class="nav-link dropdown-item"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" /></svg><span class="badge badge-danger notification-number">{{$alert_product + count(\Auth::user()->unreadNotifications)}}</span>
+                                <a rel="nofollow" data-toggle="tooltip" title="{{__('db.Notifications')}}" class="nav-link dropdown-item"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" /></svg><span class="badge badge-danger notification-number">{{$alert_product + count(\Auth::user()->unreadNotifications)}}</span>
                                     <span class="caret"></span>
                                     <span class="sr-only">Toggle Dropdown</span>
                                 </a>
@@ -439,7 +439,7 @@
                                         $warehouse_id = $lims_warehouse_list[0]->id;
                                     }
                                     @endphp
-                                    <select required id="warehouse_id" name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
+                                    <select required id="warehouse_id" name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select warehouse...') }}">
                                         @foreach($lims_warehouse_list as $warehouse)
                                         <option value="{{$warehouse->id}}" @if($warehouse->id == $warehouse_id) selected @endif>{{$warehouse->name}}</option>
                                         @endforeach
@@ -465,7 +465,7 @@
                                         $biller_id = $lims_biller_list[0]->id;
                                     }
                                     @endphp
-                                    <select required id="biller_id" name="biller_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Biller...">
+                                    <select required id="biller_id" name="biller_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Biller...') }}">
                                         @foreach($lims_biller_list as $biller)
                                         <option value="{{$biller->id}}" @if($biller->id == $biller_id) selected @endif>{{$biller->name . ' (' . $biller->company_name . ')'}}</option>
                                         @endforeach
@@ -490,7 +490,7 @@
                                         $customer_id = $lims_customer_list[0]->id;
                                         }
                                         @endphp
-                                        <select required name="customer_id" id="customer_id" class="selectpicker form-control" data-live-search="true" title="Select customer..." style="width: 100px">
+                                        <select required name="customer_id" id="customer_id" class="selectpicker form-control" data-live-search="true" title="{{ __('db.Select customer...') }}" style="width: 100px">
                                             @foreach($lims_customer_list as $customer)
                                                 @php
                                                 $deposit[$customer->id] = $customer->deposit - $customer->expense;
@@ -518,7 +518,7 @@
                                     @endphp
                                     @if(!empty($service_id))
                                     <div class="input-group pos">
-                                        <select required id="service_id" name="service_id" class="selectpicker form-control" title="Select service...">
+                                        <select required id="service_id" name="service_id" class="selectpicker form-control" title="{{ __('db.Select service...') }}">
                                             <option value="1" @if($service_id == 1) selected @endif>{{__('db.Dine In')}}</option>
                                             <option value="2" @if($service_id == 2) selected @endif>{{__('db.Take Away')}}</option>
                                             <option value="3" @if($service_id == 3) selected @endif>{{__('db.Delivery')}}</option>
@@ -526,7 +526,7 @@
                                     </div>
                                     @else
                                     <div class="input-group pos">
-                                        <select required id="service_id" name="service_id" class="selectpicker form-control" title="Select service...">
+                                        <select required id="service_id" name="service_id" class="selectpicker form-control" title="{{ __('db.Select service...') }}">
                                             <option value="1" selected>{{__('db.Dine In')}}</option>
                                             <option value="2">{{__('db.Take Away')}}</option>
                                             <option value="3">{{__('db.Delivery')}}</option>
@@ -544,7 +544,7 @@
                                             $table_id = $lims_sale_data->table_id;
                                         }
                                         @endphp
-                                        <select required id="table_id" name="table_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select table...">
+                                        <select required id="table_id" name="table_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select table...') }}">
                                             @foreach($lims_table_list as $table)
                                             <option value="{{$table->id}}" @if(!empty($table_id) && $table->id == $table_id) selected @endif>
                                                 {{$table->name}} at {{$table->floor}} ( ðŸ‘¤ {{$table->number_of_person}})
@@ -564,7 +564,7 @@
                                             $waiter_id = $lims_sale_data->waiter_id;
                                         }
                                         @endphp
-                                        <select required id="waiter_id" name="waiter_id" class="selectpicker form-control" title="Select waiter...">
+                                        <select required id="waiter_id" name="waiter_id" class="selectpicker form-control" title="{{ __('db.Select waiter...') }}">
                                             @if(auth()->user()->service_staff == 1)
                                             <option value="{{auth()->user()->id}}" selected >{{auth()->user()->name}}</option>
                                             @else
@@ -609,7 +609,7 @@
                                 <div class="col-md-3">
                                     <label>{{__('db.Sale Reference No')}}</label>
                                     <div class="form-group">
-                                        <input type="text" id="reference-no" name="reference_no" class="form-control" placeholder="Type reference number"  />
+                                        <input type="text" id="reference-no" name="reference_no" class="form-control" placeholder="{{ __('db.Type reference number') }}"  />
                                     </div>
                                     <x-validation-error fieldName="reference_no" />
                                 </div>
@@ -617,7 +617,7 @@
                                     <label>{{__('db.Currency')}} & {{__('db.Exchange Rate')}}</label>
                                     <div class="form-group d-flex">
                                         <div class="input-group-prepend">
-                                            <select name="currency_id" id="currency" class="form-control selectpicker" data-toggle="tooltip" title="" data-original-title="Sale currency">
+                                            <select name="currency_id" id="currency" class="form-control selectpicker" data-toggle="tooltip" title="" data-original-title="{{ __('db.Sale currency') }}">
                                                 @foreach($currency_list as $currency_data)
                                                 <option value="{{$currency_data->id}}" data-rate="{{$currency_data->exchange_rate}}">{{$currency_data->code}}</option>
                                                 @endforeach
@@ -685,7 +685,7 @@
                     @if($lims_pos_setting_data->is_table && !in_array('restaurant',explode(',',$general_setting->modules)))
                     <div class="col-12 pl-0 pr-0">
                         <div class="form-group">
-                            <select required id="table_id" name="table_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select table...">
+                            <select required id="table_id" name="table_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select table...') }}">
                                 @foreach($lims_table_list as $table)
                                 <option value="{{$table->id}}">{{$table->name}}</option>
                                 @endforeach
@@ -696,7 +696,7 @@
                     <div class="col-12 pl-0 pr-0">
                         <div class="search-box form-group mb-2">
                             <div class="input-group pos">
-                                <input style="border: 1px solid #7c5cc4;" type="text" name="product_code_name" id="product-search-input" placeholder="Scan/Search product by name/code/IMEI" class="form-control" autofocus />
+                                <input style="border: 1px solid #7c5cc4;" type="text" name="product_code_name" id="product-search-input" placeholder="{{ __('db.Scan/Search product by name/code/IMEI') }}" class="form-control" autofocus />
                                 <button type="button" class="btn btn-primary" onclick="barcode()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upc" viewBox="0 0 16 16"><path d="M3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0z"/></svg></button>
                             </div>
                             <div id="product-results-container">
@@ -987,7 +987,7 @@
                                             <div class="form-check d-inline-block ml-3">
                                                 <input class="form-check-input" type="checkbox" name="not_print_invoice" id="not_print_invoice">
                                                 <label style="color:rgb(136, 136, 136);" class="form-check-label" for="not_print_invoice">
-                                                    {{ __('Do not print Invoice') }}
+                                                    {{ __('db.Do not print Invoice') }}
                                                 </label>
                                             </div>
                                         </div>
@@ -1052,7 +1052,7 @@
                             @endphp
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <input type="text" id="coupon-code" class="form-control" placeholder="Type Coupon Code..." value="{{ $coupon_code }}">
+                                    <input type="text" id="coupon-code" class="form-control" placeholder="{{ __('db.Type Coupon Code...') }}" value="{{ $coupon_code }}">
                                 </div>
                                 <button type="button" class="btn btn-primary coupon-check" data-dismiss="modal">{{__('db.submit')}}</button>
                             </div>
@@ -1359,7 +1359,7 @@
                                 <div class="row">
                                     <div class="col-md-6 form-group warehouse-section">
                                         <label>{{__('db.Warehouse')}} *</strong> </label>
-                                        <select required name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
+                                        <select required name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select warehouse...') }}">
                                             @foreach($lims_warehouse_list as $warehouse)
                                             <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                                             @endforeach
@@ -1603,11 +1603,11 @@
     <div role="document" class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 id="exampleModalLabel" class="modal-title">{{ __('Add Expense') }}</h5>
+        <h5 id="exampleModalLabel" class="modal-title">{{ __('db.Add Expense') }}</h5>
         <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true"><i class="dripicons-cross"></i></span></button>
         </div>
         <div class="modal-body">
-        <p class="italic"><small>{{ __('The field labels marked with * are required input fields') }}.</small></p>
+        <p class="italic"><small>{{ __('db.The field labels marked with * are required input fields') }}.</small></p>
         {!! Form::open(['route' => 'expenses.store', 'method' => 'post']) !!}
         <?php
         $lims_expense_category_list = DB::table('expense_categories')->where('is_active', true)->get();
@@ -1622,31 +1622,31 @@
         ?>
         <div class="row">
             <div class="col-md-6 form-group">
-            <label>{{ __('Date') }}</label>
+            <label>{{ __('db.Date') }}</label>
             <input type="text" name="created_at" class="form-control date" placeholder="{{__('db.Choose date')}}" value="{{date($general_setting->date_format,strtotime('now'))}}"/>
             </div>
             <div class="col-md-6 form-group">
-            <label>{{ __('Expense Category') }} *</label>
-            <select name="expense_category_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="Select Expense Category...">
+            <label>{{ __('db.Expense Category') }} *</label>
+            <select name="expense_category_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Expense Category...') }}">
                 @foreach($lims_expense_category_list as $expense_category)
                 <option value="{{$expense_category->id}}">{{$expense_category->name . ' (' . $expense_category->code. ')'}}</option>
                 @endforeach
             </select>
             </div>
             <div class="col-md-6 form-group">
-            <label>{{ __('Warehouse') }} *</label>
-            <select name="warehouse_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="Select Warehouse...">
+            <label>{{ __('db.Warehouse') }} *</label>
+            <select name="warehouse_id" class="selectpicker form-control" required data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Warehouse...') }}">
                 @foreach($lims_warehouse_list as $warehouse)
                 <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                 @endforeach
             </select>
             </div>
             <div class="col-md-6 form-group">
-            <label>{{ __('Amount') }} *</label>
+            <label>{{ __('db.Amount') }} *</label>
             <input type="number" name="amount" step="any" required class="form-control">
             </div>
             <div class="col-md-6 form-group">
-            <label> {{ __('Account') }}</label>
+            <label> {{ __('db.Account') }}</label>
             <select class="form-control selectpicker" name="account_id">
                 @foreach($lims_account_list as $account)
                 @if($account->is_default)
@@ -1659,12 +1659,12 @@
             </div>
         </div>
         <div class="form-group">
-            <label>{{ __('Note') }}</label>
+            <label>{{ __('db.Note') }}</label>
             <textarea name="note" rows="3" class="form-control"></textarea>
         </div>
         <div class="form-group">
             <input type="hidden" name="cash_register" value="" />
-            <button type="submit" class="btn btn-primary">{{ __('submit') }}</button>
+            <button type="submit" class="btn btn-primary">{{ __('db.submit') }}</button>
         </div>
         {{ Form::close() }}
         </div>
@@ -1686,7 +1686,7 @@
                     <div class="row">
                         <div class="col-md-6 mt-1">
                             <label>{{__('db.Supplier')}}</label>
-                            <select name="supplier_id" id="supplier_list" class="form-control" data-live-search="true" data-live-search-style="begins" title="Select Supplier...">
+                            <select name="supplier_id" id="supplier_list" class="form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Supplier...') }}">
                                 <option value=""></option>
                             </select>
                         </div>
@@ -2166,7 +2166,7 @@
                 image = response.data['image'][index];
             else
                 image = 'zummXD2dvAtI.png';
-            tableData += '<div class="product-img sound-btn" title="'+response.data['name'][index]+'" data-code = "'+response.data['code'][index]+'" data-qty="'+response.data['qty'][index]+'" data-imei="'+response.data['is_imei'][index]+'" data-embedded="'+response.data['is_embeded'][index]+'" data-batch="" data-price="'+response.data['price'][index]+'"><img  src="{{url("/images/product")}}/'+image+'" width="100%" /><p>'+response.data['name'][index]+'</p><span>['+response.data['code'][index]+']</span> <span class="d-block">Qty: '+response.data['qty'][index]+'</span></div>';
+            tableData += '<div class="product-img sound-btn" title="'+response.data['name'][index]+'" data-code = "'+response.data['code'][index]+'" data-qty="'+response.data['qty'][index]+'" data-imei="'+response.data['is_imei'][index]+'" data-embedded="'+response.data['is_embeded'][index]+'" data-batch="" data-price="'+response.data['price'][index]+'"><img  src="{{url("/images/product")}}/'+image+'" width="100%" /><p>'+response.data['name'][index]+'</p><span>['+response.data['code'][index]+']</span> <span class="d-block">' + @json(__('db.Qty')) + ': '+response.data['qty'][index]+'</span></div>';
         });
 
         tableData += '</div>';
@@ -2194,7 +2194,7 @@
                 image = response.data['image'][index];
             else
                 image = 'zummXD2dvAtI.png';
-            tableData += '<div class="product-img sound-btn" title="'+response.data['name'][index]+'" data-code = "'+response.data['code'][index]+'" data-qty="'+response.data['qty'][index]+'" data-imei="'+response.data['is_imei'][index]+'" data-embedded="'+response.data['is_embeded'][index]+'" data-batch="" data-price="'+response.data['price'][index]+'"><img  src="{{url("/images/product")}}/'+image+'" width="100%" /><p>'+response.data['name'][index]+'</p><span>'+response.data['code'][index]+'</span> <span class="d-block">Qty: '+response.data['qty'][index]+'</span></div>';
+            tableData += '<div class="product-img sound-btn" title="'+response.data['name'][index]+'" data-code = "'+response.data['code'][index]+'" data-qty="'+response.data['qty'][index]+'" data-imei="'+response.data['is_imei'][index]+'" data-embedded="'+response.data['is_embeded'][index]+'" data-batch="" data-price="'+response.data['price'][index]+'"><img  src="{{url("/images/product")}}/'+image+'" width="100%" /><p>'+response.data['name'][index]+'</p><span>'+response.data['code'][index]+'</span> <span class="d-block">' + @json(__('db.Qty')) + ': '+response.data['qty'][index]+'</span></div>';
         });
         $(".table-container .product-grid").append(tableData);
 
@@ -2206,7 +2206,7 @@
 
     $(document).on('click', '.expired', function() {
         playSound();
-        alert('Product is expired!');
+        alert(@json(__('db.Product is expired!')));
         return false;
     });
 
@@ -2227,17 +2227,17 @@
             $('.filter-window').hide('slide', {direction: 'right'}, 'fast');
         }
         if(!customer_id)
-            alert('Please select Customer!');
+            alert(@json(__('db.Please select Customer!')));
         else if(!warehouse_id)
-            alert('Please select Warehouse!');
+            alert(@json(__('db.Please select Warehouse!')));
         else if(!biller_id)
-            alert('Please select Biller!');
+            alert(@json(__('db.Please select Biller!')));
         @if(in_array('restaurant',explode(',',$general_setting->modules)))
         else if(!table_id && service_id == 1){
-            alert('Please select Table!');
+            alert(@json(__('db.Please select Table!')));
         }
         else if(!waiter_id && service_id == 1){
-            alert('Please select Waiter!');
+            alert(@json(__('db.Please select Waiter!')));
         }
         @endif
         else{
@@ -2271,7 +2271,7 @@
                     imeiNumbersArray = imeiNumbers.split(",");
 
                     if(imeiNumbersArray.includes(data.imei)) {
-                        alert('Same imei or serial number is not allowed!');
+                        alert(@json(__('db.Same imei or serial number is not allowed!')));
                         flag = false;
                         $('#product-search-input').val('');
                         return;
@@ -2549,7 +2549,7 @@
                                     </div>
                                     <div class="modal-body">${modalContent}</div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('db.Cancel')}}</button>
                                         <button type="button" class="btn btn-primary" id="confirmSelection">Confirm</button>
                                     </div>
                                 </div>
@@ -2965,24 +2965,24 @@
             temp_data = $('#lims_productcodeSearch').val();
             if(!customer_id){
                 $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-                alert('Please select Customer!');
+                alert(@json(__('db.Please select Customer!')));
             }
             else if(!warehouse_id){
                 $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-                alert('Please select Warehouse!');
+                alert(@json(__('db.Please select Warehouse!')));
             }
             else if(!biller_id){
                 $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-                alert('Please select Biller!');
+                alert(@json(__('db.Please select Biller!')));
             }
             @if(in_array('restaurant',explode(',',$general_setting->modules)))
             else if(!table_id && service_id == 1){
                 $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-                alert('Please select Table!');
+                alert(@json(__('db.Please select Table!')));
             }
             else if(!waiter_id && service_id == 1){
                 $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-                alert('Please select Waiter!');
+                alert(@json(__('db.Please select Waiter!')));
             }
             @endif
         });
@@ -3002,24 +3002,24 @@
             temp_data = $('#lims_productcodeSearch').val();
             if(!customer_id){
                 $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-                alert('Please select Customer!');
+                alert(@json(__('db.Please select Customer!')));
             }
             else if(!warehouse_id){
                 $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-                alert('Please select Warehouse!');
+                alert(@json(__('db.Please select Warehouse!')));
             }
             else if(!biller_id){
                 $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-                alert('Please select Warehouse!');
+                alert(@json(__('db.Please select Warehouse!')));
             }
             @if(in_array('restaurant',explode(',',$general_setting->modules)))
             else if(!table_id && service_id == 1){
                 $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-                alert('Please select Table!');
+                alert(@json(__('db.Please select Table!')));
             }
             else if(!waiter_id && service_id == 1){
                 $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-                alert('Please select Waiter!');
+                alert(@json(__('db.Please select Waiter!')));
             }
             @endif
         });
@@ -3262,14 +3262,14 @@
             tableData += '<td>'
 
             // if (all_permission.includes("sales-edit")) {
-                tableData += '<button  type="button" class="btn btn-success btn-sm view-sale" title="View" data-toggle="modal" data-target="#get-sale-details" value="' + sale.id + '"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg></button>&nbsp';
+                tableData += '<button  type="button" class="btn btn-success btn-sm view-sale" title="{{ __('db.View') }}" data-toggle="modal" data-target="#get-sale-details" value="' + sale.id + '"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg></button>&nbsp';
             // }
             if (all_permission.includes("sales-edit")) {
-                tableData += '<a href="sales/' + sale.id + '/edit" class="btn btn-warning btn-sm" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" /></svg></a>&nbsp';
+                tableData += '<a href="sales/' + sale.id + '/edit" class="btn btn-warning btn-sm" title="{{ __('db.Edit') }}"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" /></svg></a>&nbsp';
             }
             if (all_permission.includes("sales-delete")) {
                 tableData += '<form class="d-inline" action="{{ url("/sales")}}/'+ sale.id +'" method ="POST"><input name="_method" type="hidden" value="DELETE">@csrf';
-                tableData += '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirmDelete()" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg></button>';
+                tableData += '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirmDelete()" title="{{ __('db.Delete') }}"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg></button>';
                 tableData += '</form>';
             }
             tableData += '</td>'
@@ -3293,12 +3293,12 @@
             tableData += '<td>'
 
             if (all_permission.includes("sales-edit")) {
-                tableData += '<a href="{{url('/pos')}}/' + draft.id + '" class="btn btn-warning btn-sm" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" /></svg></a>&nbsp';
+                tableData += '<a href="{{url('/pos')}}/' + draft.id + '" class="btn btn-warning btn-sm" title="{{ __('db.Edit') }}"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" /></svg></a>&nbsp';
             }
 
             if (all_permission.includes("sales-delete")) {
                 tableData += '<form class="d-inline" action="{{ url("/sales")}}/'+ draft.id +'" method ="POST"><input name="_method" type="hidden" value="DELETE">@csrf';
-                tableData += '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirmDelete()" title="Delete"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg></button>';
+                tableData += '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirmDelete()" title="{{ __('db.Delete') }}"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg></button>';
                 tableData += '</form>';
             }
             tableData += '</td>'
@@ -3316,7 +3316,7 @@
         if(!qty)
             qty = 1;
         // if(max_qty && parseFloat(qty) >= parseFloat(max_qty)) {
-        //     alert("Maximum quantity reached!");
+        //     alert(@json(__('db.Maximum quantity reached!')));
         //     return;
         // }
         else
@@ -3436,7 +3436,7 @@ $("#myTable").on('input', '.qty', function() {
         var edit_unit_price = $('input[name="edit_unit_price"]').val();
 
         if (parseFloat(edit_discount) > parseFloat(edit_unit_price)) {
-            alert('Invalid Discount Input!');
+            alert(@json(__('db.Invalid Discount Input!')));
             return;
         }
 
@@ -3517,7 +3517,7 @@ $("#myTable").on('input', '.qty', function() {
         $('input[name="paid_amount"]').prop('required',false);
         var rownumber = $('table.order-list tbody tr:last').index();
         if (rownumber < 0) {
-            alert("Please insert product to order table!");
+            alert(@json(__('db.Please insert product to order table!')));
         }
         else
             $('.payment-form').submit();
@@ -3607,7 +3607,7 @@ $("#myTable").on('input', '.qty', function() {
             appendElement = `<div class="form-group col-md-12 gift-card remove-element">
                                 <label> {{__('db.Gift Card')}} *</label>
                                 <input type="hidden" name="gift_card_id">
-                                <select id="gift_card_id_select" name="gift_card_id_select" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Gift Card..."></select>
+                                <select id="gift_card_id_select" name="gift_card_id_select" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Gift Card...') }}"></select>
                             </div>`;
             $.ajax({
                 url: '{{url("sales/get_gift_card")}}',
@@ -3659,7 +3659,7 @@ $("#myTable").on('input', '.qty', function() {
         else if (className == 'deposit') {
             $('select[name="paid_by_id_select[]"]').val(6);
             if($('input[name="paid_amount[]"]').val() > deposit[$('#customer_id').val()]){
-                alert('Amount exceeds customer deposit! Customer deposit : '+ deposit[$('#customer_id').val()]);
+                alert(@json(__('db.Amount exceeds customer deposit! Customer deposit : '))+ deposit[$('#customer_id').val()]);
 
             }
             else {
@@ -3687,7 +3687,7 @@ $("#myTable").on('input', '.qty', function() {
         paid_amount = $('input[name="paid_amount[]"]').val();
         required_point = Math.ceil(paid_amount / reward_point_setting['per_point_amount']);
         if(required_point > points[$('#customer_id').val()]) {
-            alert('Customer does not have sufficient points. Available points: '+points[$('#customer_id').val()]);
+            alert(@json(__('db.Customer does not have sufficient points. Available points: '))+points[$('#customer_id').val()]);
         }
         else {
             $("input[name='used_points']").val(required_point);
@@ -3712,7 +3712,7 @@ $("#myTable").on('input', '.qty', function() {
             appendElement = `<div class="form-group col-md-10 gift-card remove-element">
                                 <label> {{__('db.Gift Card')}} *</label>
                                 <input type="hidden" name="gift_card_id">
-                                <select id="gift_card_id_select" name="gift_card_id_select" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Gift Card..."></select>
+                                <select id="gift_card_id_select" name="gift_card_id_select" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Gift Card...') }}"></select>
                             </div>`;
             $(this).closest('.col-md-3').after(appendElement);
 
@@ -3780,7 +3780,7 @@ $("#myTable").on('input', '.qty', function() {
         if (ismultiplepayment == 0) {
             if($('input[name="paid_amount[]"]').val() > balance){
                 $('#submit-btn').prop('disabled',true);
-                alert('Amount exceeds card balance! Gift Card balance: '+ balance);
+                alert(@json(__('db.Amount exceeds card balance! Gift Card balance: '))+ balance);
             }else{
                 $('#submit-btn').prop('disabled',false);
             }
@@ -3880,7 +3880,7 @@ $("#myTable").on('input', '.qty', function() {
     }
 
     function confirmDelete() {
-        if (confirm("Are you sure want to delete?")) {
+        if (confirm(@json(__('db.Are you sure want to delete?')))) {
             return true;
         }
         return false;
@@ -3922,7 +3922,7 @@ $("#myTable").on('input', '.qty', function() {
     });
 
     function confirmDelete() {
-        if (confirm("Are you sure want to delete?")) {
+        if (confirm(@json(__('db.Are you sure want to delete?')))) {
             return true;
         }
 
@@ -4041,7 +4041,7 @@ $("#myTable").on('input', '.qty', function() {
     function couponDiscount() {
         var rownumber = $('table.order-list tbody tr:last').index();
         if (rownumber < 0) {
-            alert("Please insert product to order table!")
+            alert(@json(__('db.Please insert product to order table!')))
         }
         else if($("#coupon-code").val() != ''){
             valid = 0;
@@ -4050,9 +4050,9 @@ $("#myTable").on('input', '.qty', function() {
                     valid = 1;
                     todyDate = <?php echo json_encode(date('Y-m-d'))?>;
                     if(parseFloat(value['quantity']) <= parseFloat(value['used']))
-                        alert('This Coupon is no longer available');
+                        alert(@json(__('db.This Coupon is no longer available')));
                     else if(todyDate > value['expired_date'])
-                        alert('This Coupon has expired!');
+                        alert(@json(__('db.This Coupon has expired!')));
                     else if(value['type'] == 'fixed'){
                         if(parseFloat($('input[name="grand_total"]').val()) >= value['minimum_amount']) {
                             $('input[name="grand_total"]').val($('input[name="grand_total"]').val() - (value['amount'] * currency['exchange_rate']));
@@ -4093,7 +4093,7 @@ $("#myTable").on('input', '.qty', function() {
                 }
             });
             if(!valid)
-                alert('Invalid coupon code!');
+                alert(@json(__('db.Invalid coupon code!')));
         }
     }
 
@@ -4144,7 +4144,7 @@ $("#myTable").on('input', '.qty', function() {
                 else if(operator[0] == '/')
                     total_qty = sale_qty / operation_value[0];
                 if (total_qty > parseFloat(qty)) {
-                    alert('Quantity exceeds stock quantity!');
+                    alert(@json(__('db.Quantity exceeds stock quantity!')));
                     if (flag) {
                         sale_qty = (sale_qty - 1);
                         checkQuantity(sale_qty, true);
@@ -4358,7 +4358,7 @@ $("#myTable").on('input', '.qty', function() {
 
     function confirmCancel() {
         playSound();
-        if (confirm("Are you sure want to cancel?")) {
+        if (confirm(@json(__('db.Are you sure want to cancel?')))) {
             cancel($('table.order-list tbody tr:last').index());
         }
         return false;
@@ -4367,21 +4367,21 @@ $("#myTable").on('input', '.qty', function() {
     $(document).on('submit', '.payment-form', function(e) {
         $("table.order-list tbody .qty").each(function(index) {
             if ($(this).val() == '') {
-                alert('One of products has no quantity!');
+                alert(@json(__('db.One of products has no quantity!')));
                 e.preventDefault();
             }
         });
         var rownumber = $('table.order-list tbody tr:last').index();
         if (rownumber < 0) {
-            alert("Please insert product to order table!")
+            alert(@json(__('db.Please insert product to order table!')))
             e.preventDefault();
         }
         else if(parseFloat($('input[name="total_qty"]').val()) <= 0) {
-            alert('Product quantity is 0');
+            alert(@json(__('db.Product quantity is 0')));
             e.preventDefault();
         }
         else if( parseFloat( $('input[name="paying_amount[]"]').val() ) < parseFloat( $('input[name="paid_amount[]"]').val() ) ){
-            alert('Paying amount cannot be bigger than recieved amount');
+            alert(@json(__('db.Paying amount cannot be bigger than recieved amount')));
             e.preventDefault();
         }
         else {

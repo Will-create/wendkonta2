@@ -8880,6 +8880,1922 @@ return array (
     'locale' => 'en',
     'key' => 'Adjust Quantity',
     'value' => 'Adjust Quantity',
-  )
+  ),
 
+  100000 => 
+  array (
+    'locale' => 'en',
+    'key' => '            Please try again',
+    'value' => '            Please try again',
+  ),
+  100001 => 
+  array (
+    'locale' => 'en',
+    'key' => '. Required points: ',
+    'value' => '. Required points: ',
+  ),
+  100002 => 
+  array (
+    'locale' => 'en',
+    'key' => ':name exceeds the remaining quantity of :qty.',
+    'value' => ':name exceeds the remaining quantity of :qty.',
+  ),
+  100003 => 
+  array (
+    'locale' => 'en',
+    'key' => ':name is already fully delivered.',
+    'value' => ':name is already fully delivered.',
+  ),
+  100004 => 
+  array (
+    'locale' => 'en',
+    'key' => 'A fresh verification link has been sent to your email address.',
+    'value' => 'A fresh verification link has been sent to your email address.',
+  ),
+  100005 => 
+  array (
+    'locale' => 'en',
+    'key' => 'A selected product does not belong to this sale.',
+    'value' => 'A selected product does not belong to this sale.',
+  ),
+  100006 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Account Selection',
+    'value' => 'Account Selection',
+  ),
+  100007 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Add Invoice Setting',
+    'value' => 'Add Invoice Setting',
+  ),
+  100008 => 
+  array (
+    'locale' => 'en',
+    'key' => 'All Points',
+    'value' => 'All Points',
+  ),
+  100009 => 
+  array (
+    'locale' => 'en',
+    'key' => 'All Time',
+    'value' => 'All Time',
+  ),
+  100010 => 
+  array (
+    'locale' => 'en',
+    'key' => 'All months',
+    'value' => 'All months',
+  ),
+  100011 => 
+  array (
+    'locale' => 'en',
+    'key' => 'All years',
+    'value' => 'All years',
+  ),
+  100012 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Amount exceeds card balance! Gift Card balance: ',
+    'value' => 'Amount exceeds card balance! Gift Card balance: ',
+  ),
+  100013 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Amount exceeds customer deposit! Customer deposit : ',
+    'value' => 'Amount exceeds customer deposit! Customer deposit : ',
+  ),
+  100014 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Apply',
+    'value' => 'Apply',
+  ),
+  100015 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Are you sure want to cancel?',
+    'value' => 'Are you sure want to cancel?',
+  ),
+  100016 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Are you sure want to close?',
+    'value' => 'Are you sure want to close?',
+  ),
+  100017 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Are you sure want to delete?',
+    'value' => 'Are you sure want to delete?',
+  ),
+  100018 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Are you sure want to delete? If you delete this money will be refunded',
+    'value' => 'Are you sure want to delete? If you delete this money will be refunded',
+  ),
+  100019 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Are you sure want to delete? If you delete this money will be refunded.',
+    'value' => 'Are you sure want to delete? If you delete this money will be refunded.',
+  ),
+  100020 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Are you sure want to delete? If you do this all of your data will be lost.',
+    'value' => 'Are you sure want to delete? If you do this all of your data will be lost.',
+  ),
+  100021 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Are you sure you want to change the status?',
+    'value' => 'Are you sure you want to change the status?',
+  ),
+  100022 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Are you sure you want to delete this invoice setting?',
+    'value' => 'Are you sure you want to delete this invoice setting?',
+  ),
+  100023 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Are you sure you want to permanently delete the selected records? This action cannot be undone!',
+    'value' => 'Are you sure you want to permanently delete the selected records? This action cannot be undone!',
+  ),
+  100024 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Barcode added successfully',
+    'value' => 'Barcode added successfully',
+  ),
+  100025 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Barcode label error',
+    'value' => 'Barcode label error',
+  ),
+  100026 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Barcode updated successfully',
+    'value' => 'Barcode updated successfully',
+  ),
+  100027 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Before proceeding, please check your email for a verification link.',
+    'value' => 'Before proceeding, please check your email for a verification link.',
+  ),
+  100028 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Blue',
+    'value' => 'Blue',
+  ),
+  100029 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Both Warehouse can not be same!',
+    'value' => 'Both Warehouse can not be same!',
+  ),
+  100030 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Can not delete purchase has sale!',
+    'value' => 'Can not delete purchase has sale!',
+  ),
+  100031 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Can not delete, purchase has sale!',
+    'value' => 'Can not delete, purchase has sale!',
+  ),
+  100032 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Choose at least one product and a quantity that does not exceed the remaining quantity.',
+    'value' => 'Choose at least one product and a quantity that does not exceed the remaining quantity.',
+  ),
+  100033 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Cooked',
+    'value' => 'Cooked',
+  ),
+  100034 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Custom Range',
+    'value' => 'Custom Range',
+  ),
+  100035 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Customer does not have sufficient points. Available points: ',
+    'value' => 'Customer does not have sufficient points. Available points: ',
+  ),
+  100036 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Customer name',
+    'value' => 'Customer name',
+  ),
+  100037 => 
+  array (
+    'locale' => 'en',
+    'key' => 'D.Status',
+    'value' => 'D.Status',
+  ),
+  100038 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Dark',
+    'value' => 'Dark',
+  ),
+  100039 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Data deleted Successfully',
+    'value' => 'Data deleted Successfully',
+  ),
+  100040 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Date',
+    'value' => 'Date',
+  ),
+  100041 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Default invoice cannot be deleted',
+    'value' => 'Default invoice cannot be deleted',
+  ),
+  100042 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Delete',
+    'value' => 'Delete',
+  ),
+  100043 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Deleted Purchases',
+    'value' => 'Deleted Purchases',
+  ),
+  100044 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Deleted Sales',
+    'value' => 'Deleted Sales',
+  ),
+  100045 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Deliveries in the period',
+    'value' => 'Deliveries in the period',
+  ),
+  100046 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Delivery Report',
+    'value' => 'Delivery Report',
+  ),
+  100047 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Delivery could not be saved.',
+    'value' => 'Delivery could not be saved.',
+  ),
+  100048 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Delivery could not be updated.',
+    'value' => 'Delivery could not be updated.',
+  ),
+  100049 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Delivery created successfully',
+    'value' => 'Delivery created successfully',
+  ),
+  100050 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Delivery history',
+    'value' => 'Delivery history',
+  ),
+  100051 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Delivery not found',
+    'value' => 'Delivery not found',
+  ),
+  100052 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Delivery progress',
+    'value' => 'Delivery progress',
+  ),
+  100053 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Delivery quantity must be a number.',
+    'value' => 'Delivery quantity must be a number.',
+  ),
+  100054 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Delivery report filter help',
+    'value' => 'Delivery report filter help',
+  ),
+  100055 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Delivery updated successfully',
+    'value' => 'Delivery updated successfully',
+  ),
+  100056 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Do not print Invoice',
+    'value' => 'Do not print Invoice',
+  ),
+  100057 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Duplicate input is not allowed!',
+    'value' => 'Duplicate input is not allowed!',
+  ),
+  100058 => 
+  array (
+    'locale' => 'en',
+    'key' => 'E-Mail Address',
+    'value' => 'E-Mail Address',
+  ),
+  100059 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Each product can be included only once on the same delivery.',
+    'value' => 'Each product can be included only once on the same delivery.',
+  ),
+  100060 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Edit',
+    'value' => 'Edit',
+  ),
+  100061 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Enter an invoice date, a reference or a customer name.',
+    'value' => 'Enter an invoice date, a reference or a customer name.',
+  ),
+  100062 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Enter production',
+    'value' => 'Enter production',
+  ),
+  100063 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Error deleting invoice.',
+    'value' => 'Error deleting invoice.',
+  ),
+  100064 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Exported to CSV file successfully! Click Ok to download file',
+    'value' => 'Exported to CSV file successfully! Click Ok to download file',
+  ),
+  100065 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Failed to update status.',
+    'value' => 'Failed to update status.',
+  ),
+  100066 => 
+  array (
+    'locale' => 'en',
+    'key' => 'First',
+    'value' => 'First',
+  ),
+  100067 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Footer Title',
+    'value' => 'Footer Title',
+  ),
+  100068 => 
+  array (
+    'locale' => 'en',
+    'key' => 'For Digital product sale_unit will be n/a',
+    'value' => 'For Digital product sale_unit will be n/a',
+  ),
+  100069 => 
+  array (
+    'locale' => 'en',
+    'key' => 'For Website',
+    'value' => 'For Website',
+  ),
+  100070 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Fr',
+    'value' => 'Fr',
+  ),
+  100071 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Fully delivered',
+    'value' => 'Fully delivered',
+  ),
+  100072 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Go Back',
+    'value' => 'Go Back',
+  ),
+  100073 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Green',
+    'value' => 'Green',
+  ),
+  100074 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Handle Discount',
+    'value' => 'Handle Discount',
+  ),
+  100075 => 
+  array (
+    'locale' => 'en',
+    'key' => 'If you delete category all products under this category will also be deleted. Are you sure want to delete?',
+    'value' => 'If you delete category all products under this category will also be deleted. Are you sure want to delete?',
+  ),
+  100076 => 
+  array (
+    'locale' => 'en',
+    'key' => 'If you did not receive the email',
+    'value' => 'If you did not receive the email',
+  ),
+  100077 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Import Product',
+    'value' => 'Import Product',
+  ),
+  100078 => 
+  array (
+    'locale' => 'en',
+    'key' => 'In progress',
+    'value' => 'In progress',
+  ),
+  100079 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Initial Deposit',
+    'value' => 'Initial Deposit',
+  ),
+  100080 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Invalid Discount Input!',
+    'value' => 'Invalid Discount Input!',
+  ),
+  100081 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Invalid coupon code!',
+    'value' => 'Invalid coupon code!',
+  ),
+  100082 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Invoice date',
+    'value' => 'Invoice date',
+  ),
+  100083 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Invoice reference',
+    'value' => 'Invoice reference',
+  ),
+  100084 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Invoice search',
+    'value' => 'Invoice search',
+  ),
+  100085 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Last',
+    'value' => 'Last',
+  ),
+  100086 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Last 30 Days',
+    'value' => 'Last 30 Days',
+  ),
+  100087 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Last 90 Days',
+    'value' => 'Last 90 Days',
+  ),
+  100088 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Last Year',
+    'value' => 'Last Year',
+  ),
+  100089 => 
+  array (
+    'locale' => 'en',
+    'key' => 'List on category dropdown',
+    'value' => 'List on category dropdown',
+  ),
+  100090 => 
+  array (
+    'locale' => 'en',
+    'key' => 'List on website',
+    'value' => 'List on website',
+  ),
+  100091 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Loading delivery history...',
+    'value' => 'Loading delivery history...',
+  ),
+  100092 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Loading...',
+    'value' => 'Loading...',
+  ),
+  100093 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Logout',
+    'value' => 'Logout',
+  ),
+  100094 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Mail settings are not configured. Please contact the administrator.',
+    'value' => 'Mail settings are not configured. Please contact the administrator.',
+  ),
+  100095 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Maximum quantity reached!',
+    'value' => 'Maximum quantity reached!',
+  ),
+  100096 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Mo',
+    'value' => 'Mo',
+  ),
+  100097 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Month',
+    'value' => 'Month',
+  ),
+  100098 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Name',
+    'value' => 'Name',
+  ),
+  100099 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No biller is selected!',
+    'value' => 'No biller is selected!',
+  ),
+  100100 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No brand is selected!',
+    'value' => 'No brand is selected!',
+  ),
+  100101 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No category is selected!',
+    'value' => 'No category is selected!',
+  ),
+  100102 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No coupon is selected!',
+    'value' => 'No coupon is selected!',
+  ),
+  100103 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No courier is selected!',
+    'value' => 'No courier is selected!',
+  ),
+  100104 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No customer group is selected!',
+    'value' => 'No customer group is selected!',
+  ),
+  100105 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No customer is selected!',
+    'value' => 'No customer is selected!',
+  ),
+  100106 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No data available in table',
+    'value' => 'No data available in table',
+  ),
+  100107 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No delivery has been recorded for this sale.',
+    'value' => 'No delivery has been recorded for this sale.',
+  ),
+  100108 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No delivery was recorded in this period.',
+    'value' => 'No delivery was recorded in this period.',
+  ),
+  100109 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No department is selected!',
+    'value' => 'No department is selected!',
+  ),
+  100110 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No employee is selected!',
+    'value' => 'No employee is selected!',
+  ),
+  100111 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No expense category is selected!',
+    'value' => 'No expense category is selected!',
+  ),
+  100112 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No gift card is selected!',
+    'value' => 'No gift card is selected!',
+  ),
+  100113 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No income category is selected!',
+    'value' => 'No income category is selected!',
+  ),
+  100114 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No invoice matches this search.',
+    'value' => 'No result found.',
+  ),
+  100115 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No matching records found',
+    'value' => 'No matching records found',
+  ),
+  100116 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No money_transfer is selected!',
+    'value' => 'No money_transfer is selected!',
+  ),
+  100117 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No payroll is selected!',
+    'value' => 'No payroll is selected!',
+  ),
+  100118 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No product is selected!',
+    'value' => 'No product is selected!',
+  ),
+  100119 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No product is waiting for delivery in this selection.',
+    'value' => 'No product is waiting for delivery in this selection.',
+  ),
+  100120 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No product quantities were recorded on this delivery.',
+    'value' => 'No product quantities were recorded on this delivery.',
+  ),
+  100121 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No sales match these filters.',
+    'value' => 'No sales match these filters.',
+  ),
+  100122 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No supplier is selected!',
+    'value' => 'No supplier is selected!',
+  ),
+  100123 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No tax is selected!',
+    'value' => 'No tax is selected!',
+  ),
+  100124 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No unit is selected!',
+    'value' => 'No unit is selected!',
+  ),
+  100125 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No user is selected!',
+    'value' => 'No user is selected!',
+  ),
+  100126 => 
+  array (
+    'locale' => 'en',
+    'key' => 'No warehouse is selected!',
+    'value' => 'No warehouse is selected!',
+  ),
+  100127 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Not yet delivered',
+    'value' => 'Not yet delivered',
+  ),
+  100128 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Nothing is selected!',
+    'value' => 'Nothing is selected!',
+  ),
+  100129 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Notifications',
+    'value' => 'Notifications',
+  ),
+  100130 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Number Of Digit',
+    'value' => 'Number Of Digit',
+  ),
+  100131 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Number Of Digit (min-6, max-12)',
+    'value' => 'Number Of Digit (min-6, max-12)',
+  ),
+  100132 => 
+  array (
+    'locale' => 'en',
+    'key' => 'One of products has no quantity!',
+    'value' => 'One of products has no quantity!',
+  ),
+  100133 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported',
+    'value' => 'Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported',
+  ),
+  100134 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Open delivery report',
+    'value' => 'Open delivery report',
+  ),
+  100135 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Open invoice',
+    'value' => 'Open invoice',
+  ),
+  100136 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Open warehouse report',
+    'value' => 'Open warehouse report',
+  ),
+  100137 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Orders to serve',
+    'value' => 'Orders to serve',
+  ),
+  100138 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Partially delivered',
+    'value' => 'Partially delivered',
+  ),
+  100139 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Paying amount cannot be bigger than due amount',
+    'value' => 'Paying amount cannot be bigger than due amount',
+  ),
+  100140 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Paying amount cannot be bigger than grand total',
+    'value' => 'Paying amount cannot be bigger than grand total',
+  ),
+  100141 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Paying amount cannot be bigger than received amount',
+    'value' => 'Paying amount cannot be bigger than received amount',
+  ),
+  100142 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Paying amount cannot be bigger than recieved amount',
+    'value' => 'Paying amount cannot be bigger than recieved amount',
+  ),
+  100143 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Paying amount equals to grand total! Please change payment status.',
+    'value' => 'Paying amount equals to grand total! Please change payment status.',
+  ),
+  100144 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Paying amount must be greater than 0',
+    'value' => 'Paying amount must be greater than 0',
+  ),
+  100145 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Payment Proof',
+    'value' => 'Payment Proof',
+  ),
+  100146 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Payment Status should be Paid for Walk in Customer!',
+    'value' => 'Payment Status should be Paid for Walk in Customer!',
+  ),
+  100147 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Paypal',
+    'value' => 'Paypal',
+  ),
+  100148 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Pending, partial and completed deliveries for the current period.',
+    'value' => 'Pending, partial and completed deliveries for the current period.',
+  ),
+  100149 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please choose imei or serial number!',
+    'value' => 'Please choose imei or serial number!',
+  ),
+  100150 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please create warehouse first before adding stock!',
+    'value' => 'Please create warehouse first before adding stock!',
+  ),
+  100151 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please enter a valid URL.',
+    'value' => 'Please enter a valid URL.',
+  ),
+  100152 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please enter a valid date.',
+    'value' => 'Please enter a valid date.',
+  ),
+  100153 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please enter a valid email address.',
+    'value' => 'Please enter a valid email address.',
+  ),
+  100154 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please enter a valid number.',
+    'value' => 'Please enter a valid number.',
+  ),
+  100155 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please enter a value greater than or equal to {0}.',
+    'value' => 'Please enter a value greater than or equal to {0}.',
+  ),
+  100156 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please enter a value less than or equal to {0}.',
+    'value' => 'Please enter a value less than or equal to {0}.',
+  ),
+  100157 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please enter at least {0} characters.',
+    'value' => 'Please enter at least {0} characters.',
+  ),
+  100158 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please enter no more than {0} characters.',
+    'value' => 'Please enter no more than {0} characters.',
+  ),
+  100159 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please enter only digits.',
+    'value' => 'Please enter only digits.',
+  ),
+  100160 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please enter the same value again.',
+    'value' => 'Please enter the same value again.',
+  ),
+  100161 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please fix this field.',
+    'value' => 'Please fix this field.',
+  ),
+  100162 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please insert product to order table!',
+    'value' => 'Please insert product to order table!',
+  ),
+  100163 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please insert product to table!',
+    'value' => 'Please insert product to table!',
+  ),
+  100164 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please select Biller!',
+    'value' => 'Please select Biller!',
+  ),
+  100165 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please select Customer!',
+    'value' => 'Please select Customer!',
+  ),
+  100166 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please select Table!',
+    'value' => 'Please select Table!',
+  ),
+  100167 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please select Waiter!',
+    'value' => 'Please select Waiter!',
+  ),
+  100168 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please select Warehouse!',
+    'value' => 'Please select Warehouse!',
+  ),
+  100169 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please select a biller',
+    'value' => 'Please select a biller',
+  ),
+  100170 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please select at least one product.',
+    'value' => 'Please select at least one product.',
+  ),
+  100171 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please select paper size',
+    'value' => 'Please select paper size',
+  ),
+  100172 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Please setup your :link to send mail.',
+    'value' => 'Please setup your :link to send mail.',
+  ),
+  100173 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Prepared By',
+    'value' => 'Prepared By',
+  ),
+  100174 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Preview Image',
+    'value' => 'Preview Image',
+  ),
+  100175 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Processing...',
+    'value' => 'Processing...',
+  ),
+  100176 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Prodcut Price',
+    'value' => 'Prodcut Price',
+  ),
+  100177 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Product code length must be less than 12',
+    'value' => 'Product code length must be less than 12',
+  ),
+  100178 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Product code length must be less than 13',
+    'value' => 'Product code length must be less than 13',
+  ),
+  100179 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Product code length must be less than 8',
+    'value' => 'Product code length must be less than 8',
+  ),
+  100180 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Product code must be numeric.',
+    'value' => 'Product code must be numeric.',
+  ),
+  100181 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Product is expired!',
+    'value' => 'Product is expired!',
+  ),
+  100182 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Product quantity is 0',
+    'value' => 'Product quantity is 0',
+  ),
+  100183 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Production created successfully',
+    'value' => 'Production created successfully',
+  ),
+  100184 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Production deleted successfully',
+    'value' => 'Production deleted successfully',
+  ),
+  100185 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Products awaiting delivery',
+    'value' => 'Products awaiting delivery',
+  ),
+  100186 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Profit',
+    'value' => 'Profit',
+  ),
+  100187 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Progress',
+    'value' => 'Progress',
+  ),
+  100188 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Purple',
+    'value' => 'Purple',
+  ),
+  100189 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Qty',
+    'value' => 'Qty',
+  ),
+  100190 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Qty delivered',
+    'value' => 'Qty delivered',
+  ),
+  100191 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Qty remaining',
+    'value' => 'Qty remaining',
+  ),
+  100192 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Qty sold',
+    'value' => 'Qty sold',
+  ),
+  100193 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Quantity and Recieved value is same! Please Change Purchase Status or Recieved value',
+    'value' => 'Quantity and Recieved value is same! Please Change Purchase Status or Recieved value',
+  ),
+  100194 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Quantity can not be bigger than the actual quantity!',
+    'value' => 'Quantity can not be bigger than the actual quantity!',
+  ),
+  100195 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Quantity can\'t be less than 0',
+    'value' => 'Quantity can\'t be less than 0',
+  ),
+  100196 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Quantity can\'t be less than 1',
+    'value' => 'Quantity can\'t be less than 1',
+  ),
+  100197 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Quantity exceeds sales quantity!',
+    'value' => 'Quantity exceeds sales quantity!',
+  ),
+  100198 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Quantity exceeds stock quantity!',
+    'value' => 'Quantity exceeds stock quantity!',
+  ),
+  100199 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Quantity not available',
+    'value' => 'Quantity not available',
+  ),
+  100200 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Remaining',
+    'value' => 'Remaining',
+  ),
+  100201 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Removed product',
+    'value' => 'Removed product',
+  ),
+  100202 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Removed product #:id',
+    'value' => 'Removed product #:id',
+  ),
+  100203 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Reset Password',
+    'value' => 'Reset Password',
+  ),
+  100204 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Sa',
+    'value' => 'Sa',
+  ),
+  100205 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Sale currency',
+    'value' => 'Sale currency',
+  ),
+  100206 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Sale not found',
+    'value' => 'Sale not found',
+  ),
+  100207 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Sales and delivery progress',
+    'value' => 'Sales and delivery progress',
+  ),
+  100208 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Sales in period',
+    'value' => 'Sales in period',
+  ),
+  100209 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Same imei or serial number is not allowed!',
+    'value' => 'Same imei or serial number is not allowed!',
+  ),
+  100210 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Scan/Search product by name/code/IMEI',
+    'value' => 'Scan/Search product by name/code/IMEI',
+  ),
+  100211 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Search invoice',
+    'value' => 'Search for an invoice',
+  ),
+  100212 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select Additional Products',
+    'value' => 'Select Additional Products',
+  ),
+  100213 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select Biller...',
+    'value' => 'Select Biller...',
+  ),
+  100214 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select Brand...',
+    'value' => 'Select Brand...',
+  ),
+  100215 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select Category...',
+    'value' => 'Select Category...',
+  ),
+  100216 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select Company...',
+    'value' => 'Select Company...',
+  ),
+  100217 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select Customer...',
+    'value' => 'Select Customer...',
+  ),
+  100218 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select Employee...',
+    'value' => 'Select Employee...',
+  ),
+  100219 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select Expense Category...',
+    'value' => 'Select Expense Category...',
+  ),
+  100220 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select Gift Card...',
+    'value' => 'Select Gift Card...',
+  ),
+  100221 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select Income Category...',
+    'value' => 'Select Income Category...',
+  ),
+  100222 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select Role...',
+    'value' => 'Select Role...',
+  ),
+  100223 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select Supplier...',
+    'value' => 'Select Supplier...',
+  ),
+  100224 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select Template',
+    'value' => 'Select Template',
+  ),
+  100225 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select TimeZone...',
+    'value' => 'Select TimeZone...',
+  ),
+  100226 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select User...',
+    'value' => 'Select User...',
+  ),
+  100227 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select Warehouse...',
+    'value' => 'Select Warehouse...',
+  ),
+  100228 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select account...',
+    'value' => 'Select account...',
+  ),
+  100229 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select an operator',
+    'value' => 'Select an operator',
+  ),
+  100230 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select at least one product and a quantity that is still remaining.',
+    'value' => 'Select at least one product and a quantity that is still remaining.',
+  ),
+  100231 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select biller...',
+    'value' => 'Select biller...',
+  ),
+  100232 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select courier...',
+    'value' => 'Select courier...',
+  ),
+  100233 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select customer group...',
+    'value' => 'Select customer group...',
+  ),
+  100234 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select customer...',
+    'value' => 'Select customer...',
+  ),
+  100235 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select customer_group...',
+    'value' => 'Select customer_group...',
+  ),
+  100236 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select discount plan...',
+    'value' => 'Select discount plan...',
+  ),
+  100237 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select from account...',
+    'value' => 'Select from account...',
+  ),
+  100238 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select kitchen...',
+    'value' => 'Select kitchen...',
+  ),
+  100239 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select service...',
+    'value' => 'Select service...',
+  ),
+  100240 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select supplier...',
+    'value' => 'Select supplier...',
+  ),
+  100241 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select table...',
+    'value' => 'Select table...',
+  ),
+  100242 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select the products on this delivery. The quantity cannot exceed what is still remaining.',
+    'value' => 'Select the products on this delivery. The quantity cannot exceed what is still remaining.',
+  ),
+  100243 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select to account...',
+    'value' => 'Select to account...',
+  ),
+  100244 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select unit...',
+    'value' => 'Select unit...',
+  ),
+  100245 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select user...',
+    'value' => 'Select user...',
+  ),
+  100246 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select waiter...',
+    'value' => 'Select waiter...',
+  ),
+  100247 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Select warehouse...',
+    'value' => 'Select warehouse...',
+  ),
+  100248 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Served',
+    'value' => 'Served',
+  ),
+  100249 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Show Description ',
+    'value' => 'Show Description ',
+  ),
+  100250 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Show Description[58mm,80mm]',
+    'value' => 'Show Description[58mm,80mm]',
+  ),
+  100251 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Show _MENU_ entries',
+    'value' => 'Show _MENU_ entries',
+  ),
+  100252 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Show complete report',
+    'value' => 'Show the complete report',
+  ),
+  100253 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Showing 0 to 0 of 0 entries',
+    'value' => 'Showing 0 to 0 of 0 entries',
+  ),
+  100254 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Showing _START_ to _END_ of _TOTAL_ entries',
+    'value' => 'Showing _START_ to _END_ of _TOTAL_ entries',
+  ),
+  100255 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Size, Color etc...',
+    'value' => 'Size, Color etc...',
+  ),
+  100256 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Something error please try again',
+    'value' => 'Something error please try again',
+  ),
+  100257 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Someting Error',
+    'value' => 'Someting Error',
+  ),
+  100258 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Someting Error
+            Please try again',
+    'value' => 'Someting Error
+            Please try again',
+  ),
+  100259 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Someting Error Please try again',
+    'value' => 'Someting Error Please try again',
+  ),
+  100260 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Still remaining',
+    'value' => 'Still remaining',
+  ),
+  100261 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Su',
+    'value' => 'Su',
+  ),
+  100262 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Th',
+    'value' => 'Th',
+  ),
+  100263 => 
+  array (
+    'locale' => 'en',
+    'key' => 'The specified table does not exist.',
+    'value' => 'The specified table does not exist.',
+  ),
+  100264 => 
+  array (
+    'locale' => 'en',
+    'key' => 'This Coupon has expired!',
+    'value' => 'This Coupon has expired!',
+  ),
+  100265 => 
+  array (
+    'locale' => 'en',
+    'key' => 'This Coupon is no longer available',
+    'value' => 'This Coupon is no longer available',
+  ),
+  100266 => 
+  array (
+    'locale' => 'en',
+    'key' => 'This card is expired!',
+    'value' => 'This card is expired!',
+  ),
+  100267 => 
+  array (
+    'locale' => 'en',
+    'key' => 'This delivery',
+    'value' => 'This delivery',
+  ),
+  100268 => 
+  array (
+    'locale' => 'en',
+    'key' => 'This field is required.',
+    'value' => 'This field is required.',
+  ),
+  100269 => 
+  array (
+    'locale' => 'en',
+    'key' => 'This product already exists in the list.',
+    'value' => 'This product already exists in the list.',
+  ),
+  100270 => 
+  array (
+    'locale' => 'en',
+    'key' => 'This product has been added using the weight scale machine.',
+    'value' => 'This product has been added using the weight scale machine.',
+  ),
+  100271 => 
+  array (
+    'locale' => 'en',
+    'key' => 'This product has variant. Please insert variant to table',
+    'value' => 'This product has variant. Please insert variant to table',
+  ),
+  100272 => 
+  array (
+    'locale' => 'en',
+    'key' => 'This sale has no products left to deliver.',
+    'value' => 'This sale has no products left to deliver.',
+  ),
+  100273 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Toggle Dropdown',
+    'value' => 'Toggle Dropdown',
+  ),
+  100274 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Total Supplier Payment',
+    'value' => 'Total Supplier Payment',
+  ),
+  100275 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Tu',
+    'value' => 'Tu',
+  ),
+  100276 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Type Coupon Code...',
+    'value' => 'Type Coupon Code...',
+  ),
+  100277 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Type imei or serial numbers and separate them by comma. Example:1001,2001',
+    'value' => 'Type imei or serial numbers and separate them by comma. Example:1001,2001',
+  ),
+  100278 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Update Point',
+    'value' => 'Update Point',
+  ),
+  100279 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Username',
+    'value' => 'Username',
+  ),
+  100280 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Verify Your Email Address',
+    'value' => 'Verify Your Email Address',
+  ),
+  100281 => 
+  array (
+    'locale' => 'en',
+    'key' => 'View Points',
+    'value' => 'View Points',
+  ),
+  100282 => 
+  array (
+    'locale' => 'en',
+    'key' => 'Year',
+    'value' => 'Year',
+  ),
+  100283 => 
+  array (
+    'locale' => 'en',
+    'key' => 'barcode_stickers_in_one_sheet',
+    'value' => 'barcode_stickers_in_one_sheet',
+  ),
+  100284 => 
+  array (
+    'locale' => 'en',
+    'key' => 'cannot exceed the remaining quantity of',
+    'value' => 'cannot exceed the remaining quantity of',
+  ),
+  100285 => 
+  array (
+    'locale' => 'en',
+    'key' => 'click here to request another',
+    'value' => 'click here to request another',
+  ),
+  100286 => 
+  array (
+    'locale' => 'en',
+    'key' => 'column visibility',
+    'value' => 'column visibility',
+  ),
+  100287 => 
+  array (
+    'locale' => 'en',
+    'key' => 'duplicate input is not allowed!',
+    'value' => 'duplicate input is not allowed!',
+  ),
+  100288 => 
+  array (
+    'locale' => 'en',
+    'key' => 'export to csv',
+    'value' => 'export to csv',
+  ),
+  100289 => 
+  array (
+    'locale' => 'en',
+    'key' => 'export to excel',
+    'value' => 'export to excel',
+  ),
+  100290 => 
+  array (
+    'locale' => 'en',
+    'key' => 'export to pdf',
+    'value' => 'export to pdf',
+  ),
+  100291 => 
+  array (
+    'locale' => 'en',
+    'key' => 'filtered from _MAX_ total entries',
+    'value' => 'filtered from _MAX_ total entries',
+  ),
+  100292 => 
+  array (
+    'locale' => 'en',
+    'key' => 'fully delivered',
+    'value' => 'fully delivered',
+  ),
+  100293 => 
+  array (
+    'locale' => 'en',
+    'key' => 'mail setting',
+    'value' => 'mail setting',
+  ),
+  100294 => 
+  array (
+    'locale' => 'en',
+    'key' => 'month_1',
+    'value' => 'January',
+  ),
+  100295 => 
+  array (
+    'locale' => 'en',
+    'key' => 'month_10',
+    'value' => 'October',
+  ),
+  100296 => 
+  array (
+    'locale' => 'en',
+    'key' => 'month_11',
+    'value' => 'November',
+  ),
+  100297 => 
+  array (
+    'locale' => 'en',
+    'key' => 'month_12',
+    'value' => 'December',
+  ),
+  100298 => 
+  array (
+    'locale' => 'en',
+    'key' => 'month_2',
+    'value' => 'February',
+  ),
+  100299 => 
+  array (
+    'locale' => 'en',
+    'key' => 'month_3',
+    'value' => 'March',
+  ),
+  100300 => 
+  array (
+    'locale' => 'en',
+    'key' => 'month_4',
+    'value' => 'April',
+  ),
+  100301 => 
+  array (
+    'locale' => 'en',
+    'key' => 'month_5',
+    'value' => 'May',
+  ),
+  100302 => 
+  array (
+    'locale' => 'en',
+    'key' => 'month_6',
+    'value' => 'June',
+  ),
+  100303 => 
+  array (
+    'locale' => 'en',
+    'key' => 'month_7',
+    'value' => 'July',
+  ),
+  100304 => 
+  array (
+    'locale' => 'en',
+    'key' => 'month_8',
+    'value' => 'August',
+  ),
+  100305 => 
+  array (
+    'locale' => 'en',
+    'key' => 'month_9',
+    'value' => 'September',
+  ),
+  100306 => 
+  array (
+    'locale' => 'en',
+    'key' => 'print',
+    'value' => 'print',
+  ),
+  100307 => 
+  array (
+    'locale' => 'en',
+    'key' => 'remaining',
+    'value' => 'remaining',
+  ),
+  100308 => 
+  array (
+    'locale' => 'en',
+    'key' => 'save',
+    'value' => 'save',
+  ),
+  100309 => 
+  array (
+    'locale' => 'en',
+    'key' => 'table',
+    'value' => 'table',
+  ),
+  100310 =>
+  array (
+    'locale' => 'en',
+    'key' => 'Day',
+    'value' => 'Day',
+  ),
+  100311 =>
+  array (
+    'locale' => 'en',
+    'key' => 'Week',
+    'value' => 'Week',
+  ),
+  100312 =>
+  array (
+    'locale' => 'en',
+    'key' => 'Quarter',
+    'value' => 'Quarter',
+  ),
+  100313 =>
+  array (
+    'locale' => 'en',
+    'key' => 'Product List',
+    'value' => 'Product List',
+  ),
+  100314 =>
+  array (
+    'locale' => 'en',
+    'key' => 'Order No',
+    'value' => 'Order No',
+  ),
+  100315 =>
+  array (
+    'locale' => 'en',
+    'key' => 'Closing Date',
+    'value' => 'Closing Date',
+  ),
+  100316 =>
+  array (
+    'locale' => 'en',
+    'key' => 'Total Amount',
+    'value' => 'Total Amount',
+  ),
+  100317 =>
+  array (
+    'locale' => 'en',
+    'key' => 'Closed By',
+    'value' => 'Closed By',
+  ),
+  100318 =>
+  array (
+    'locale' => 'en',
+    'key' => 'Close',
+    'value' => 'Close',
+  ),
 );

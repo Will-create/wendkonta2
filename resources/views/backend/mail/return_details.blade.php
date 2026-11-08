@@ -54,7 +54,7 @@
 											<thead>
 												<th style="border: 1px solid #000; padding: 5px">#</th>
 												<th style="border: 1px solid #000; padding: 5px">Product</th>
-												<th style="border: 1px solid #000; padding: 5px">Qty</th>
+												<th style="border: 1px solid #000; padding: 5px">{{__('db.Qty')}}</th>
 												<th style="border: 1px solid #000; padding: 5px">Unit Price</th>
 												<th style="border: 1px solid #000; padding: 5px">SubTotal</th>
 											</thead>

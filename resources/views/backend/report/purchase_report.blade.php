@@ -15,7 +15,7 @@
                         <label class="d-tc mt-2"><strong>{{__('db.Choose Your Date')}}</strong> &nbsp;</label>
                         <div class="d-tc">
                             <div class="input-group">
-                                <input type="text" class="daterangepicker-field form-control" value="{{$start_date}} To {{$end_date}}" required />
+                                <input type="text" class="daterangepicker-field form-control" value="{{$start_date}} {{__('db.To')}} {{$end_date}}" required />
                                 <input type="hidden" name="start_date" value="{{$start_date}}" />
                                 <input type="hidden" name="end_date" value="{{$end_date}}" />
                             </div>
@@ -87,7 +87,7 @@
       callback: function(startDate, endDate, period){
         var start_date = startDate.format('YYYY-MM-DD');
         var end_date = endDate.format('YYYY-MM-DD');
-        var title = start_date + ' To ' + end_date;
+        var title = start_date + ' ' + @json(__('db.To')) + ' ' + end_date;
         $(this).val(title);
         $(".product-report-filter input[name=start_date]").val(start_date);
         $(".product-report-filter input[name=end_date]").val(end_date);
@@ -162,7 +162,7 @@
         buttons: [
             {
                 extend: 'pdf',
-                text: '<i title="export to pdf" class="fa fa-file-pdf-o"></i>',
+                text: '<i title="{{ __('db.export to pdf') }}" class="fa fa-file-pdf-o"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -176,7 +176,7 @@
             },
             {
                 extend: 'excel',
-                text: '<i title="export to excel" class="dripicons-document-new"></i>',
+                text: '<i title="{{ __('db.export to excel') }}" class="dripicons-document-new"></i>',
                 exportOptions: {
                     columns: ':visible:not(.not-exported)',
                     rows: ':visible'
@@ -190,7 +190,7 @@
             },
             {
                 extend: 'csv',
-                text: '<i title="export to csv" class="fa fa-file-text-o"></i>',
+                text: '<i title="{{ __('db.export to csv') }}" class="fa fa-file-text-o"></i>',
                 exportOptions: {
                     columns: ':visible:not(.not-exported)',
                     rows: ':visible'
@@ -204,7 +204,7 @@
             },
             {
                 extend: 'print',
-                text: '<i title="print" class="fa fa-print"></i>',
+                text: '<i title="{{ __('db.print') }}" class="fa fa-print"></i>',
                 exportOptions: {
                     columns: ':visible:not(.not-exported)',
                     rows: ':visible'
@@ -218,7 +218,7 @@
             },
             {
                 extend: 'colvis',
-                text: '<i title="column visibility" class="fa fa-eye"></i>',
+                text: '<i title="{{ __('db.column visibility') }}" class="fa fa-eye"></i>',
                 columns: ':gt(0)'
             },
         ],

@@ -215,7 +215,7 @@
                     </div>
                     <div class="form-group">
                       <label for="inlineFormInputGroup" class="sr-only">Username</label>
-                      <input id="inlineFormInputGroup" type="text" placeholder="Username" class="mr-3 form-control form-control">
+                      <input id="inlineFormInputGroup" type="text" placeholder="{{ __('db.Username') }}" class="mr-3 form-control form-control">
                     </div>
                     <div class="form-group">
                       <input type="submit" value="Submit" class="mr-3 btn btn-primary">

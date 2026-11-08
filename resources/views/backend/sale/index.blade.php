@@ -18,7 +18,7 @@
             <a href="{{url('sales/sale_by_csv')}}" class="btn btn-primary add-sale-btn btn-icon"><i class="dripicons-copy"></i> {{__('db.Import Sale')}}</a>
             <a href="{{ url('sales/deleted_data') }}" class="btn btn-secondary add-sale-btn btn-icon">
                 <i class="dripicons-trash"></i>
-                 {{ __('Deleted Sales') }}
+                 {{ __('db.Deleted Sales') }}
             </a>
         @endif
         <button type="button" class="btn btn-warning btn-icon" id="toggle-filter">
@@ -31,7 +31,7 @@
                     <div class="col-md-3">
                         <div class="form-group top-fields">
                             <label>{{__('db.date')}}</label>
-                            <input type="text" class="daterangepicker-field form-control" value="{{$starting_date}} To {{$ending_date}}" required />
+                            <input type="text" class="daterangepicker-field form-control" value="{{$starting_date}} {{__('db.To')}} {{$ending_date}}" required />
                             <input type="hidden" name="starting_date" value="{{$starting_date}}" />
                             <input type="hidden" name="ending_date" value="{{$ending_date}}" />
                         </div>
@@ -79,13 +79,13 @@
                         <div class="form-group top-fields">
                             <label>{{__('db.Payment Method')}}</label>
                             <select id="payment-method" class="form-control" name="payment_method">
-                                <option value="0">All</option>
-                                <option value="Cash">Cash</option>
-                                <option value="Gift Card">Gift Card</option>
-                                <option value="Credit Card">Credit Card</option>
-                                <option value="Cheque">Cheque</option>
-                                <option value="Deposit">Deposit</option>
-                                <option value="Points">Points</option>
+                                <option value="0">{{__('db.All')}}</option>
+                                <option value="Cash">{{__('db.Cash')}}</option>
+                                <option value="Gift Card">{{__('db.Gift Card')}}</option>
+                                <option value="Credit Card">{{__('db.Credit Card')}}</option>
+                                <option value="Cheque">{{__('db.Cheque')}}</option>
+                                <option value="Deposit">{{__('db.Deposit')}}</option>
+                                <option value="Points">{{__('db.Points')}}</option>
                                 <option value="Pesapal">Pesapal</option>
                                 @foreach($options as $option)
                                     @if($option !== 'cash' && $option !== 'card' && $option !== 'card' && $option !== 'cheque' && $option !== 'gift_card' && $option !== 'deposit' && $option !== 'paypal' && $option !== 'pesapal')
@@ -229,7 +229,7 @@
     <div role="document" class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 id="exampleModalLabel" class="modal-title">Create Packing Slip</h5>
+                <h5 id="exampleModalLabel" class="modal-title">{{__('db.Create Packing Slip')}}</h5>
                 <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
@@ -239,13 +239,13 @@
                         <input type="hidden" name="sale_id">
                         <input type="hidden" name="amount">
                         <div class="col-md-12 form-group">
-                            <h5>Product List</h5>
+                            <h5>{{__('db.Product List')}}</h5>
                             <table class="table table-bordered table-hover product-list mt-3">
                                 <thead>
                                     <tr>
                                         <th>{{ __('db.name') }}</th>
                                         <th>{{ __('db.Code') }}</th>
-                                        <th>Qty</th>
+                                        <th>{{__('db.Qty')}}</th>
                                         <th>{{ __('db.Unit Price') }}</th>
                                         <th>{{ __('db.Total Price') }}</th>
                                         <th>{{ __('db.Packed') }}</th>
@@ -257,7 +257,7 @@
                         </div>
                   </div>
                   <div class="form-group">
-                      <button type="submit" class="btn btn-primary packing-slip-submit-btn">Submit</button>
+                      <button type="submit" class="btn btn-primary packing-slip-submit-btn">{{__('db.submit')}}</button>
                   </div>
                 </form>
             </div>
@@ -357,7 +357,7 @@
                     </div>
                     <div class="gift-card form-group">
                         <label> {{__('db.Gift Card')}} *</label>
-                        <select id="gift_card_id" name="gift_card_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Gift Card...">
+                        <select id="gift_card_id" name="gift_card_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Gift Card...') }}">
                             @php
                                 $balance = [];
                                 $expired_date = [];
@@ -471,7 +471,7 @@
                     </div>
                     <div class="gift-card form-group">
                         <label> {{__('db.Gift Card')}} *</label>
-                        <select id="gift_card_id" name="gift_card_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Gift Card...">
+                        <select id="gift_card_id" name="gift_card_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Gift Card...') }}">
                             @foreach($lims_gift_card_list as $gift_card)
                                 <option value="{{$gift_card->id}}">{{$gift_card->card_no}}</option>
                             @endforeach
@@ -538,7 +538,7 @@
                     </div>
                     <div class="col-md-6 form-group">
                         <label>{{__('db.Courier')}}</label>
-                        <select name="courier_id" id="courier_id" class="selectpicker form-control" data-live-search="true" title="Select courier...">
+                        <select name="courier_id" id="courier_id" class="selectpicker form-control" data-live-search="true" title="{{__('db.Select courier...')}}">
                             @foreach($lims_courier_list as $courier)
                             <option value="{{$courier->id}}">{{$courier->name}}</option>
                             @endforeach
@@ -577,15 +577,15 @@
                                         <th></th>
                                         <th>{{__('db.product')}}</th>
                                         <th>{{__('db.Qty')}}</th>
-                                        <th>{{__('Delivered')}}</th>
-                                        <th>{{__('Remaining')}}</th>
-                                        <th>{{__('This delivery')}}</th>
+                                        <th>{{__('db.Delivered')}}</th>
+                                        <th>{{__('db.Remaining')}}</th>
+                                        <th>{{__('db.This delivery')}}</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
                             </table>
                         </div>
-                        <p class="text-muted"><small>{{__('Select the products on this delivery. The quantity cannot exceed what is still remaining.')}}</small></p>
+                        <p class="text-muted"><small>{{__('db.Select the products on this delivery. The quantity cannot exceed what is still remaining.')}}</small></p>
                     </div>
                 </div>
                 <input type="hidden" name="reference_no">
@@ -616,7 +616,7 @@
                         <div class="col-md-6 mt-1">
                             <label>{{__('db.SMS Template')}}</label>
                             <select name="template_id" class="form-control">
-                                <option value="">Select Template</option>
+                                <option value="">{{__('db.Select Template')}}</option>
                                 @foreach($smsTemplates as $template)
                                 <option value="{{ $template->id }}">{{ $template->name }}</option>
                                 @endforeach
@@ -740,25 +740,36 @@ columns.push(
     $("#sale-type").val(sale_type);
     $("#payment-method").val(payment_method);
 
+    @php
+        $rangeWeekdays = [__('db.Su'), __('db.Mo'), __('db.Tu'), __('db.We'), __('db.Th'), __('db.Fr'), __('db.Sa')];
+        $rangeMonths = [__('db.month_1'), __('db.month_2'), __('db.month_3'), __('db.month_4'), __('db.month_5'), __('db.month_6'), __('db.month_7'), __('db.month_8'), __('db.month_9'), __('db.month_10'), __('db.month_11'), __('db.month_12')];
+    @endphp
+    var rangeWeekdays = @json($rangeWeekdays);
+    var rangeMonths = @json($rangeMonths);
     $('.daterangepicker-field').daterangepicker({
         autoUpdateInput: true,
         locale: {
             format: 'YYYY-MM-DD',
-            cancelLabel: 'Clear'
+            cancelLabel: @json(__('db.Clear')),
+            applyLabel: @json(__('db.Apply')),
+            customRangeLabel: @json(__('db.Custom Range')),
+            daysOfWeek: rangeWeekdays,
+            monthNames: rangeMonths,
+            firstDay: 1
         },
         showDropdowns: true,
         ranges: {
-            'Today': [moment(), moment()],
-            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            'Last 90 Days': [moment().subtract(89, 'days'), moment()],
-            'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
-            'All Time': [moment('2000-01-01'), moment()]
+            @json(__('db.Today')): [moment(), moment()],
+            @json(__('db.Last 7 Days')): [moment().subtract(6, 'days'), moment()],
+            @json(__('db.Last 30 Days')): [moment().subtract(29, 'days'), moment()],
+            @json(__('db.Last 90 Days')): [moment().subtract(89, 'days'), moment()],
+            @json(__('db.Last Year')): [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
+            @json(__('db.All Time')): [moment('2000-01-01'), moment()]
         }
     }, function (start, end, label) {
         let starting_date = start.format('YYYY-MM-DD');
         let ending_date = end.format('YYYY-MM-DD');
-        let title = starting_date + ' To ' + ending_date;
+        let title = starting_date + ' ' + @json(__('db.To')) + ' ' + ending_date;
 
         $('.daterangepicker-field').val(title);
         $('input[name="starting_date"]').val(starting_date);
@@ -1021,7 +1032,7 @@ columns.push(
             if(id == 6){
                 // console.log('paid_by_id', deposit, $('#add-payment input[name="amount"]').val());
                 if($('#add-payment input[name="amount"]').val() > parseFloat(deposit))
-                    alert('Amount exceeds customer deposit! Customer deposit : ' + deposit);
+                    alert(@json(__('db.Amount exceeds customer deposit! Customer deposit : ')) + deposit);
             }
             else if(id==7) {
                 pointCalculation($('#add-payment input[name="amount"]').val());
@@ -1032,9 +1043,9 @@ columns.push(
     $('#add-payment select[name="gift_card_id"]').on("change", function() {
         var id = $(this).val();
         if(expired_date[id] < current_date)
-            alert('This card is expired!');
+            alert(@json(__('db.This card is expired!')));
         else if($('#add-payment input[name="amount"]').val() > balance[id]){
-            alert('Amount exceeds card balance! Gift Card balance: '+ balance[id]);
+            alert(@json(__('db.Amount exceeds card balance! Gift Card balance: '))+ balance[id]);
         }
     });
 
@@ -1044,11 +1055,11 @@ columns.push(
 
     $('input[name="amount"]').on("input", function() {
         if( $(this).val() > parseFloat($('input[name="paying_amount"]').val()) ) {
-            alert('Paying amount cannot be bigger than recieved amount');
+            alert(@json(__('db.Paying amount cannot be bigger than recieved amount')));
             $(this).val('');
         }
         else if( $(this).val() > parseFloat($('input[name="balance"]').val()) ) {
-            alert('Paying amount cannot be bigger than due amount');
+            alert(@json(__('db.Paying amount cannot be bigger than due amount')));
             $(this).val('');
         }
         $(".change").text(parseFloat($('input[name="paying_amount"]').val() - $(this).val()).toFixed({{$general_setting->decimal}}));
@@ -1057,11 +1068,11 @@ columns.push(
         if(id == 2){
             id = $('#add-payment select[name="gift_card_id"]').val();
             if(amount > balance[id])
-                alert('Amount exceeds card balance! Gift Card balance: '+ balance[id]);
+                alert(@json(__('db.Amount exceeds card balance! Gift Card balance: '))+ balance[id]);
         }
         else if(id == 6){
             if(amount > parseFloat(deposit))
-                alert('Amount exceeds customer deposit! Customer deposit : ' + deposit);
+                alert(@json(__('db.Amount exceeds customer deposit! Customer deposit : ')) + deposit);
         }
         else if(id==7) {
             pointCalculation(amount);
@@ -1098,7 +1109,7 @@ columns.push(
             $('.gift-card').hide();
             if(id == 6) {
                 if($('input[name="edit_amount"]').val() > parseFloat(deposit))
-                    alert('Amount exceeds customer deposit! Customer deposit : ' + deposit);
+                    alert(@json(__('db.Amount exceeds customer deposit! Customer deposit : ')) + deposit);
             }
             else if(id==7) {
                 pointCalculation($('input[name="edit_amount"]').val());
@@ -1109,9 +1120,9 @@ columns.push(
     $('#edit-payment select[name="gift_card_id"]').on("change", function() {
         var id = $(this).val();
         if(expired_date[id] < current_date)
-            alert('This card is expired!');
+            alert(@json(__('db.This card is expired!')));
         else if($('#edit-payment input[name="edit_amount"]').val() > balance[id])
-            alert('Amount exceeds card balance! Gift Card balance: '+ balance[id]);
+            alert(@json(__('db.Amount exceeds card balance! Gift Card balance: '))+ balance[id]);
     });
 
     $('input[name="edit_paying_amount"]').on("input", function() {
@@ -1120,19 +1131,19 @@ columns.push(
 
     $('input[name="edit_amount"]').on("input", function() {
         if( $(this).val() > parseFloat($('input[name="edit_paying_amount"]').val()) ) {
-            alert('Paying amount cannot be bigger than recieved amount');
+            alert(@json(__('db.Paying amount cannot be bigger than recieved amount')));
             $(this).val('');
         }
         $(".change").text(parseFloat($('input[name="edit_paying_amount"]').val() - $(this).val()).toFixed({{$general_setting->decimal}}));
         var amount = $(this).val();
         var id = $('#edit-payment select[name="gift_card_id"]').val();
         if(amount > balance[id]){
-            alert('Amount exceeds card balance! Gift Card balance: '+ balance[id]);
+            alert(@json(__('db.Amount exceeds card balance! Gift Card balance: '))+ balance[id]);
         }
         var id = $('#edit-payment select[name="edit_paid_by_id"]').val();
         if(id == 6){
             if(amount > parseFloat(deposit))
-                alert('Amount exceeds customer deposit! Customer deposit : ' + deposit);
+                alert(@json(__('db.Amount exceeds customer deposit! Customer deposit : ')) + deposit);
         }
         else if(id==7) {
             pointCalculation(amount);
@@ -1172,11 +1183,11 @@ columns.push(
                 var value = parseFloat($(this).val());
                 if (value > remaining) {
                     $(this).val(remaining);
-                    alert(line.name + ' cannot exceed the remaining quantity of ' + line.remaining_label + '.');
+                    alert(line.name + ' ' + @json(__('db.cannot exceed the remaining quantity of')) + ' ' + line.remaining_label + '.');
                 }
             });
             row.append($('<td>').append(check));
-            row.append($('<td>').text((line.name || '') + (line.code ? ' [' + line.code + ']' : '') + (disabled ? ' (fully delivered)' : '')));
+            row.append($('<td>').text((line.name || '') + (line.code ? ' [' + line.code + ']' : '') + (disabled ? ' (' + @json(__('db.fully delivered')) + ')' : '')));
             row.append($('<td>').text(line.sold_label));
             row.append($('<td>').text(line.delivered_label));
             row.append($('<td>').text(line.remaining_label));
@@ -1184,7 +1195,7 @@ columns.push(
             body.append(row);
         });
         if (!lines || !lines.length) {
-            body.append('<tr><td colspan="6">This sale has no products left to deliver.</td></tr>');
+            body.append('<tr><td colspan="6">' + @json(__('db.This sale has no products left to deliver.')) + '</td></tr>');
         }
     }
 
@@ -1232,7 +1243,7 @@ columns.push(
         });
         if (!selected || invalid) {
             event.preventDefault();
-            alert('Choose at least one product and a quantity that does not exceed the remaining quantity.');
+            alert(@json(__('db.Choose at least one product and a quantity that does not exceed the remaining quantity.')));
         }
     });
 
@@ -1240,7 +1251,7 @@ columns.push(
         availablePoints = $('table.sale-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.points').val();
         required_point = Math.ceil(amount / reward_point_setting['per_point_amount']);
         if(required_point > availablePoints) {
-          alert('Customer does not have sufficient points. Available points: '+availablePoints+'. Required points: '+required_point);
+          alert(@json(__('db.Customer does not have sufficient points. Available points: '))+availablePoints+'. Required points: '+required_point);
         }
     }
 
@@ -1333,13 +1344,13 @@ columns.push(
             }
         ],
         'select': { style: 'multi',  selector: 'td:first-child'},
-        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "{{ __('db.All') }}"]],
         dom: '<"row"lfB>rtip',
         rowId: 'ObjectID',
         buttons: [
             {
                 extend: 'pdf',
-                text: '<i title="export to pdf" class="fa fa-file-pdf-o"></i>',
+                text: '<i title="{{ __('db.export to pdf') }}" class="fa fa-file-pdf-o"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -1353,7 +1364,7 @@ columns.push(
             },
             {
                 extend: 'excel',
-                text: '<i title="export to excel" class="dripicons-document-new"></i>',
+                text: '<i title="{{ __('db.export to excel') }}" class="dripicons-document-new"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -1367,7 +1378,7 @@ columns.push(
             },
             {
                 extend: 'csv',
-                text: '<i title="export to csv" class="fa fa-file-text-o"></i>',
+                text: '<i title="{{ __('db.export to csv') }}" class="fa fa-file-text-o"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -1381,7 +1392,7 @@ columns.push(
             },
             {
                 extend: 'print',
-                text: '<i title="print" class="fa fa-print"></i>',
+                text: '<i title="{{ __('db.print') }}" class="fa fa-print"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -1394,7 +1405,7 @@ columns.push(
                 footer:true
             },
             {
-                text: '<i title="delete" class="dripicons-cross"></i>',
+                text: '<i title="{{ __('db.delete') }}" class="dripicons-cross"></i>',
                 className: 'buttons-delete',
                 action: function ( e, dt, node, config ) {
                     if(user_verified == '1') {
@@ -1406,7 +1417,7 @@ columns.push(
                                     sale_id[i-1] = sale[13];
                             }
                         });
-                        if(sale_id.length && confirm("Are you sure want to delete?")) {
+                        if(sale_id.length && confirm(@json(__('db.Are you sure want to delete?')))) {
                             $.ajax({
                                 type:'POST',
                                 url:'sales/deletebyselection',
@@ -1421,15 +1432,15 @@ columns.push(
                             });
                         }
                         else if(!sale_id.length)
-                            alert('Nothing is selected!');
+                            alert(@json(__('db.Nothing is selected!')));
                     }
                     else
-                        alert('This feature is disable for demo!');
+                        alert(@json(__('db.This feature is disable for demo!')));
                 }
             },
             {
                 extend: 'colvis',
-                text: '<i title="column visibility" class="fa fa-eye"></i>',
+                text: '<i title="{{ __('db.column visibility') }}" class="fa fa-eye"></i>',
                 columns: ':gt(0)'
             },
         ],
@@ -1643,37 +1654,37 @@ columns.push(
         var htmlfooter = '<p style="word-wrap:break-word;max-width:180mm"><strong>{{__("db.Sale Note")}}:</strong> '+(sale[23] || '')+'</p><p style="word-wrap:break-word;max-width:180mm"><strong>{{__("db.Staff Note")}}:</strong> '+(sale[24] || '')+'</p>{{__("db.Created By")}}:<br>'+sale[25]+'<br>'+sale[26];
         $('#sale-content').html(htmltext);
         $('#sale-footer').html(htmlfooter);
-        $('#delivery-history').html('<p>Loading delivery history...</p>');
+        $('#delivery-history').html('<p>' + @json(__('db.Loading delivery history...')) + '</p>');
         $.get('sales/' + sale[13] + '/delivery-history', function(payload) {
             var html = '';
             if (payload.progress) {
-                html += '<p><strong>Delivery progress:</strong> ' + payload.progress.label + ' (' + payload.progress.delivered_label + ' / ' + payload.progress.sold_label + ', remaining ' + payload.progress.remaining_label + ')</p>';
+                html += '<p><strong>' + @json(__('db.Delivery progress')) + ':</strong> ' + $('<div>').text(payload.progress.label).html() + ' (' + payload.progress.delivered_label + ' / ' + payload.progress.sold_label + ', ' + @json(__('db.remaining')) + ' ' + payload.progress.remaining_label + ')</p>';
             }
             if (payload.lines && payload.lines.length) {
-                html += '<table class="table table-bordered"><thead><tr><th>Product</th><th>Sold</th><th>Delivered</th><th>Remaining</th></tr></thead><tbody>';
+                html += '<table class="table table-bordered"><thead><tr><th>' + @json(__('db.product')) + '</th><th>' + @json(__('db.Sold')) + '</th><th>' + @json(__('db.Delivered')) + '</th><th>' + @json(__('db.Remaining')) + '</th></tr></thead><tbody>';
                 $.each(payload.lines, function(_, line) {
                     html += '<tr><td>' + $('<div>').text(line.name).html() + (line.code ? ' [' + $('<div>').text(line.code).html() + ']' : '') + '</td><td>' + line.sold + '</td><td>' + line.delivered + '</td><td>' + line.remaining + '</td></tr>';
                 });
                 html += '</tbody></table>';
             }
-            html += '<h5>Delivery history</h5>';
+            html += '<h5>' + @json(__('db.Delivery history')) + '</h5>';
             if (!payload.deliveries || !payload.deliveries.length) {
-                html += '<p>No delivery has been recorded for this sale.</p>';
+                html += '<p>' + @json(__('db.No delivery has been recorded for this sale.')) + '</p>';
             } else {
                 $.each(payload.deliveries, function(_, delivery) {
                     html += '<div style="border:1px solid #ddd;padding:8px;margin-bottom:8px">';
                     html += '<strong>' + $('<div>').text(delivery.reference_no).html() + '</strong> — ' + delivery.date + ' — ' + $('<div>').text(delivery.status_label).html();
                     if (delivery.note) {
-                        html += '<br><span style="word-wrap:break-word">Note: ' + $('<div>').text(delivery.note).html() + '</span>';
+                        html += '<br><span style="word-wrap:break-word">' + @json(__('db.Note')) + ': ' + $('<div>').text(delivery.note).html() + '</span>';
                     }
                     if (delivery.items && delivery.items.length) {
-                        html += '<table class="table table-sm table-bordered mt-2"><thead><tr><th>Product</th><th>Qty delivered</th><th>Still remaining</th></tr></thead><tbody>';
+                        html += '<table class="table table-sm table-bordered mt-2"><thead><tr><th>' + @json(__('db.product')) + '</th><th>' + @json(__('db.Qty delivered')) + '</th><th>' + @json(__('db.Still remaining')) + '</th></tr></thead><tbody>';
                         $.each(delivery.items, function(_, item) {
                             html += '<tr><td>' + $('<div>').text(item.name).html() + '</td><td>' + item.qty + '</td><td>' + (item.remaining === null ? '' : item.remaining) + '</td></tr>';
                         });
                         html += '</tbody></table>';
                     } else {
-                        html += '<p>No product quantities were recorded on this delivery.</p>';
+                        html += '<p>' + @json(__('db.No product quantities were recorded on this delivery.')) + '</p>';
                     }
                     html += '</div>';
                 });
@@ -1683,15 +1694,24 @@ columns.push(
         $('#sale-details').modal('show');
     }
 
+    var openSaleId = new URLSearchParams(window.location.search).get('open_sale');
+    if (openSaleId) {
+        $.get('sales/' + openSaleId + '/detail-card', function(sale) {
+            if ($.isArray(sale) && sale.length) {
+                saleDetails(sale);
+            }
+        });
+    }
+
     $(document).on('submit', '.payment-form', function(e) {
         if( $('input[name="paying_amount"]').val() < parseFloat($('#amount').val()) ) {
-            alert('Paying amount cannot be bigger than recieved amount');
+            alert(@json(__('db.Paying amount cannot be bigger than recieved amount')));
             $('input[name="amount"]').val('');
             $(".change").text(parseFloat( $('input[name="paying_amount"]').val() - $('#amount').val() ).toFixed({{$general_setting->decimal}}));
             e.preventDefault();
         }
         else if( $('input[name="edit_paying_amount"]').val() < parseFloat($('input[name="edit_amount"]').val()) ) {
-            alert('Paying amount cannot be bigger than recieved amount');
+            alert(@json(__('db.Paying amount cannot be bigger than recieved amount')));
             $('input[name="edit_amount"]').val('');
             $(".change").text(parseFloat( $('input[name="edit_paying_amount"]').val() - $('input[name="edit_amount"]').val() ).toFixed({{$general_setting->decimal}}));
             e.preventDefault();
@@ -1704,14 +1724,14 @@ columns.push(
         $('.buttons-delete').addClass('d-none');
 
         function confirmDelete() {
-            if (confirm("Are you sure want to delete?")) {
+            if (confirm(@json(__('db.Are you sure want to delete?')))) {
                 return true;
             }
             return false;
         }
 
     function confirmPaymentDelete() {
-        if (confirm("Are you sure want to delete? If you delete this money will be refunded.")) {
+        if (confirm(@json(__('db.Are you sure want to delete? If you delete this money will be refunded.')))) {
             return true;
         }
         return false;

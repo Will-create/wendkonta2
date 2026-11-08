@@ -125,7 +125,7 @@
             </div>
             <div class="gift-card form-group">
                 <label> {{__('db.Gift Card')}} *</label>
-                <select id="gift_card_id" name="gift_card_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Gift Card...">
+                <select id="gift_card_id" name="gift_card_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Gift Card...') }}">
                     @php
                         $balance = [];
                         $expired_date = [];
@@ -336,7 +336,7 @@
     $("ul#people #customer-list-menu").addClass("active");
 
     function confirmDelete() {
-      if (confirm("Are you sure want to delete?")) {
+      if (confirm(@json(__('db.Are you sure want to delete?')))) {
           return true;
       }
       return false;
@@ -431,7 +431,7 @@
             $("#cheque").hide();
             if(id == 6){
                 if($('#p_amount').val() > parseFloat(deposit))
-                    alert('Amount exceeds customer deposit! Customer deposit : ' + deposit);
+                    alert(@json(__('db.Amount exceeds customer deposit! Customer deposit : ')) + deposit);
             }
             else if(id==7) {
                 pointCalculation($('#p_amount').val());
@@ -455,9 +455,9 @@
     $('#clearDueModal select[name="gift_card_id"]').on("change", function() {
         var id = $(this).val();
         if(expired_date[id] < current_date)
-            alert('This card is expired!');
+            alert(@json(__('db.This card is expired!')));
         else if($('#clearDueModal input[name="amount"]').val() > balance[id]){
-            alert('Amount exceeds card balance! Gift Card balance: '+ balance[id]);
+            alert(@json(__('db.Amount exceeds card balance! Gift Card balance: '))+ balance[id]);
         }
     });
 
@@ -467,11 +467,11 @@
 
     $('#p_amount').on("input", function() {
         if( $(this).val() > parseFloat($('input[name="paying_amount"]').val()) ) {
-            alert('Paying amount cannot be bigger than recieved amount');
+            alert(@json(__('db.Paying amount cannot be bigger than recieved amount')));
             $(this).val('');
         }
         else if( $(this).val() > parseFloat($('input[name="balance"]').val()) ) {
-            alert('Paying amount cannot be bigger than due amount');
+            alert(@json(__('db.Paying amount cannot be bigger than due amount')));
             $(this).val('');
         }
         $(".change").text(parseFloat($('input[name="paying_amount"]').val() - $(this).val()).toFixed({{$general_setting->decimal}}));
@@ -480,11 +480,11 @@
         if(id == 2){
             id = $('#clearDueModal select[name="gift_card_id"]').val();
             if(amount > balance[id])
-                alert('Amount exceeds card balance! Gift Card balance: '+ balance[id]);
+                alert(@json(__('db.Amount exceeds card balance! Gift Card balance: '))+ balance[id]);
         }
         else if(id == 6){
             if(amount > parseFloat(deposit))
-                alert('Amount exceeds customer deposit! Customer deposit : ' + deposit);
+                alert(@json(__('db.Amount exceeds customer deposit! Customer deposit : ')) + deposit);
         }
         else if(id==7) {
             pointCalculation(amount);
@@ -495,19 +495,19 @@
         availablePoints = $('table.customer-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.points').val();
         required_point = Math.ceil(amount / reward_point_setting['per_point_amount']);
         if(required_point > availablePoints) {
-          alert('Customer does not have sufficient points. Available points: '+availablePoints+'. Required points: '+required_point);
+          alert(@json(__('db.Customer does not have sufficient points. Available points: '))+availablePoints+'. Required points: '+required_point);
         }
     }
 
     $(document).on('submit', '.clear-due-form', function(e) {
         if( $('input[name="paying_amount"]').val() < parseFloat($('#amount').val()) ) {
-            alert('Paying amount cannot be bigger than recieved amount');
+            alert(@json(__('db.Paying amount cannot be bigger than recieved amount')));
             $('#p_amount').val('');
             $(".change").text(parseFloat( $('input[name="paying_amount"]').val() - $('#p_amount').val() ).toFixed({{$general_setting->decimal}}));
             e.preventDefault();
         }
         else if( $('input[name="edit_paying_amount"]').val() < parseFloat($('input[name="edit_amount"]').val()) ) {
-            alert('Paying amount cannot be bigger than recieved amount');
+            alert(@json(__('db.Paying amount cannot be bigger than recieved amount')));
             $('input[name="edit_amount"]').val('');
             $(".change").text(parseFloat( $('input[name="edit_paying_amount"]').val() - $('input[name="edit_amount"]').val() ).toFixed({{$general_setting->decimal}}));
             e.preventDefault();
@@ -651,13 +651,13 @@
             }
         ],
         'select': { style: 'multi',  selector: 'td:first-child'},
-        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "{{ __('db.All') }}"]],
         dom: '<"row"lfB>rtip',
         rowId: 'ObjectID',
         buttons: [
             {
                 extend: 'pdf',
-                text: '<i title="export to pdf" class="fa fa-file-pdf-o"></i>',
+                text: '<i title="{{ __('db.export to pdf') }}" class="fa fa-file-pdf-o"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -665,7 +665,7 @@
             },
             {
                 extend: 'excel',
-                text: '<i title="export to excel" class="dripicons-document-new"></i>',
+                text: '<i title="{{ __('db.export to excel') }}" class="dripicons-document-new"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -673,7 +673,7 @@
             },
             {
                 extend: 'csv',
-                text: '<i title="export to csv" class="fa fa-file-text-o"></i>',
+                text: '<i title="{{ __('db.export to csv') }}" class="fa fa-file-text-o"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -681,14 +681,14 @@
             },
             {
                 extend: 'print',
-                text: '<i title="print" class="fa fa-print"></i>',
+                text: '<i title="{{ __('db.print') }}" class="fa fa-print"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
                 }
             },
             {
-                text: '<i title="delete" class="dripicons-cross"></i>',
+                text: '<i title="{{ __('db.delete') }}" class="dripicons-cross"></i>',
                 className: 'buttons-delete',
                 action: function ( e, dt, node, config ) {
                     if(user_verified == '1') {
@@ -698,7 +698,7 @@
                                 customer_id[i-1] = $(this).closest('tr').data('customer');
                             }
                         });
-                        if(customer_id.length && confirm("Are you sure want to delete?")) {
+                        if(customer_id.length && confirm(@json(__('db.Are you sure want to delete?')))) {
                             $.ajax({
                                 type:'POST',
                                 url:'customer/deletebyselection',
@@ -712,15 +712,15 @@
                             dt.rows({ page: 'current', selected: true }).remove().draw(false);
                         }
                         else if(!customer_id.length)
-                            alert('No customer is selected!');
+                            alert(@json(__('db.No customer is selected!')));
                     }
                     else
-                        alert('This feature is disable for demo!');
+                        alert(@json(__('db.This feature is disable for demo!')));
                 }
             },
             {
                 extend: 'colvis',
-                text: '<i title="column visibility" class="fa fa-eye"></i>',
+                text: '<i title="{{ __('db.column visibility') }}" class="fa fa-eye"></i>',
                 columns: ':gt(0)'
             },
         ]

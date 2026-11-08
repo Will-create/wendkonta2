@@ -24,7 +24,7 @@
                                     <label>{{ __('db.Discount Plan') }} *</label>
                                     <select required name="discount_plan_id[]" class="selectpicker form-control"
                                         data-live-search="true" data-live-search-style="begins"
-                                        title="Select discount plan..." multiple>
+                                        title="{{ __('db.Select discount plan...') }}" multiple>
                                         @foreach ($lims_discount_plan_list as $discount_plan)
                                             <option value="{{ $discount_plan->id }}">{{ $discount_plan->name }}</option>
                                         @endforeach
@@ -140,7 +140,7 @@
                 });
 
                 if (exists) {
-                    alert("This product already exists in the list.");
+                    alert(@json(__('db.This product already exists in the list.')));
                     $(this).val('');
                     return; // exit without adding
                 }

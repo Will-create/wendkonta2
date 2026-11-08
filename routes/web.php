@@ -313,6 +313,7 @@ Route::group(['middleware' => ['common', 'auth', 'active']], function() {
                 ->middleware('hasPermanentDeletePermission');
         Route::get('sales/product_sale/{id}', 'productSaleData');
         Route::get('sales/{id}/delivery-history', 'deliveryHistory');
+        Route::get('sales/{id}/detail-card', 'detailCard');
         Route::get('sales/invoice-lookup', 'invoiceLookup')->name('sale.invoiceLookup');
         Route::get('sales/get-sale/{id}', 'getSale');
         Route::post('importsale', 'importSale')->name('sale.import');

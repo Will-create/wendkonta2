@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="col-md-4">
                                 	<label>{{__('db.customer')}} *</label>
-                                    <select required name="customer_id[]" id="customer-select" class="selectpicker form-control" data-live-search="true" title="Select customer..." multiple>
+                                    <select required name="customer_id[]" id="customer-select" class="selectpicker form-control" data-live-search="true" title="{{ __('db.Select customer...') }}" multiple>
                                         @foreach($lims_customer_list as $customer)
                                             <option value="{{$customer->id}}">{{$customer->name . ' (' . $customer->phone_number . ')'}}</option>
                                         @endforeach

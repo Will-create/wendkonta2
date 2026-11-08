@@ -148,7 +148,7 @@
     })
 
 function confirmDelete() {
-    if (confirm("Are you sure want to delete?")) {
+    if (confirm(@json(__('db.Are you sure want to delete?')))) {
         return true;
     }
     return false;
@@ -186,12 +186,12 @@ function confirmDelete() {
             }
         ],
         'select': { style: 'multi',  selector: 'td:first-child'},
-        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "{{ __('db.All') }}"]],
         dom: '<"row"lfB>rtip',
         buttons: [
             {
                 extend: 'pdf',
-                text: '<i title="export to pdf" class="fa fa-file-pdf-o"></i>',
+                text: '<i title="{{ __('db.export to pdf') }}" class="fa fa-file-pdf-o"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible',
@@ -220,7 +220,7 @@ function confirmDelete() {
             },
             {
                 extend: 'excel',
-                text: '<i title="export to excel" class="dripicons-document-new"></i>',
+                text: '<i title="{{ __('db.export to excel') }}" class="dripicons-document-new"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible',
@@ -237,7 +237,7 @@ function confirmDelete() {
             },
             {
                 extend: 'csv',
-                text: '<i title="export to csv" class="fa fa-file-text-o"></i>',
+                text: '<i title="{{ __('db.export to csv') }}" class="fa fa-file-text-o"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible',
@@ -254,7 +254,7 @@ function confirmDelete() {
             },
             {
                 extend: 'print',
-                text: '<i title="print" class="fa fa-print"></i>',
+                text: '<i title="{{ __('db.print') }}" class="fa fa-print"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible',
@@ -262,7 +262,7 @@ function confirmDelete() {
                 },
             },
             {
-                text: '<i title="delete" class="dripicons-cross"></i>',
+                text: '<i title="{{ __('db.delete') }}" class="dripicons-cross"></i>',
                 className: 'buttons-delete',
                 action: function ( e, dt, node, config ) {
                     if(user_verified == '1') {
@@ -272,7 +272,7 @@ function confirmDelete() {
                                 income_category_id[i-1] = $(this).closest('tr').data('id');
                             }
                         });
-                        if(income_category_id.length && confirm("Are you sure want to delete?")) {
+                        if(income_category_id.length && confirm(@json(__('db.Are you sure want to delete?')))) {
                             $.ajax({
                                 type:'POST',
                                 url:'income_categories/deletebyselection',
@@ -286,15 +286,15 @@ function confirmDelete() {
                             dt.rows({ page: 'current', selected: true }).remove().draw(false);
                         }
                         else if(!income_category_id.length)
-                            alert('No income category is selected!');
+                            alert(@json(__('db.No income category is selected!')));
                     }
                     else
-                        alert('This feature is disable for demo!');
+                        alert(@json(__('db.This feature is disable for demo!')));
                 }
             },
             {
                 extend: 'colvis',
-                text: '<i title="column visibility" class="fa fa-eye"></i>',
+                text: '<i title="{{ __('db.column visibility') }}" class="fa fa-eye"></i>',
                 columns: ':gt(0)'
             },
         ],

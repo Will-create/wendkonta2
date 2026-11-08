@@ -91,7 +91,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label><strong>{{__('db.Role')}} *</strong></label>
-                                        <select name="role_id" required class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Role...">
+                                        <select name="role_id" required class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Role...') }}">
                                           @foreach($lims_role_list as $role)
                                               <option value="{{$role->id}}">{{$role->name}}</option>
                                           @endforeach
@@ -100,7 +100,7 @@
                                     <div class="customer-section">
                                         <div class="form-group">
                                             <label><strong>{{__('db.Customer Group')}} *</strong></label>
-                                            <select name="customer_group_id" class="selectpicker form-control customer-input" data-live-search="true" data-live-search-style="begins" title="Select customer_group...">
+                                            <select name="customer_group_id" class="selectpicker form-control customer-input" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select customer_group...') }}">
                                               @foreach($lims_customer_group_list as $customer_group)
                                                   <option value="{{$customer_group->id}}">{{$customer_group->name}}</option>
                                               @endforeach
@@ -125,7 +125,7 @@
                                     </div>
                                     <div class="form-group" id="biller-id">
                                         <label><strong>{{__('db.Biller')}} *</strong></label>
-                                        <select name="biller_id" required class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Biller...">
+                                        <select name="biller_id" required class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Biller...') }}">
                                           @foreach($lims_biller_list as $biller)
                                               <option value="{{$biller->id}}">{{$biller->name}}</option>
                                           @endforeach
@@ -133,7 +133,7 @@
                                     </div>
                                     <div class="form-group" id="warehouseId">
                                         <label><strong>{{__('db.Warehouse')}} *</strong></label>
-                                        <select name="warehouse_id" required class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Warehouse...">
+                                        <select name="warehouse_id" required class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Warehouse...') }}">
                                           @foreach($lims_warehouse_list as $warehouse)
                                               <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                                           @endforeach

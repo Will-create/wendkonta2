@@ -26,7 +26,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>{{__('db.From Warehouse')}} *</label>
-                                            <select required name="from_warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" id="from-warehouse-id" title="Select warehouse..." @if(isset(auth()->user()->warehouse_id)) readonly @endif>
+                                            <select required name="from_warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" id="from-warehouse-id" title="{{ __('db.Select warehouse...') }}" @if(isset(auth()->user()->warehouse_id)) readonly @endif>
                                                 @foreach($lims_warehouse_list as $warehouse)
                                                 <option value="{{$warehouse->id}}" @if(isset(auth()->user()->warehouse_id) && (auth()->user()->warehouse_id == $warehouse->id)) selected @endif>{{$warehouse->name}}</option>
                                                 @endforeach
@@ -36,7 +36,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>{{__('db.To Warehouse')}} *</label>
-                                            <select required name="to_warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
+                                            <select required name="to_warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select warehouse...') }}">
                                                 @foreach($lims_warehouse_list as $warehouse)
                                                 <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                                                 @endforeach
@@ -141,7 +141,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>{{__('db.Attach Document')}}</label>
-                                            <i class="dripicons-question" data-toggle="tooltip" title="Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported"></i>
+                                            <i class="dripicons-question" data-toggle="tooltip" title="{{ __('db.Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported') }}"></i>
                                             <input type="file" name="document" class="form-control" />
                                             @if($errors->has('extension'))
                                                 <span>
@@ -300,7 +300,7 @@ $('#lims_productcodeSearch').on('input', function(){
 
     if(!warehouse_id){
         $('#lims_productcodeSearch').val(temp_data.substring(0, temp_data.length - 1));
-        alert('Please select Warehouse!');
+        alert(@json(__('db.Please select Warehouse!')));
     }
 });
 
@@ -434,7 +434,7 @@ function productSearch(data){
                 // console.log('arra '+ rowindex);
 
                 if(imeiNumbersArray.includes(product_info[2])) {
-                    alert('Same imei or serial number is not allowed!');
+                    alert(@json(__('db.Same imei or serial number is not allowed!')));
                     flag = false;
                     $('#lims_productcodeSearch').val('');
                 }
@@ -452,7 +452,7 @@ function productSearch(data){
         //     imeiNumbersArray = imeiNumbers.split(",");
 
         //     if(imeiNumbersArray.includes(product_info[2])) {
-        //         alert('Same imei or serial number is not allowed!');
+        //         alert(@json(__('db.Same imei or serial number is not allowed!')));
         //         flag = 0;
         //         $('#lims_productcodeSearch').val('');
         //     } else {
@@ -523,7 +523,7 @@ function productSearch(data){
                     if(data[15] >= 1){
                         newRow.append(cols);
                     }else{
-                        alert('Quantity not available');
+                        alert(@json(__('db.Quantity not available')));
                     }
                     $("table.order-list tbody").prepend(newRow);
                     rowindex = newRow.index();
@@ -623,7 +623,7 @@ function checkQuantity(purchase_qty, flag) {
         total_qty = purchase_qty / operation_value[0];
 
     if (total_qty > parseFloat(product_qty[pos])) {
-        alert('Quantity exceeds stock quantity!');
+        alert(@json(__('db.Quantity exceeds stock quantity!')));
         if (flag) {
             purchase_qty = purchase_qty.substring(0, purchase_qty.length - 1);
             //$('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.qty').val(purchase_qty);
@@ -776,11 +776,11 @@ $(window).keydown(function(e){
 $('#transfer-form').on('submit',function(e){
     var rownumber = $('table.order-list tbody tr:last').index();
     if (rownumber < 0) {
-        alert("Please insert product to order table!")
+        alert(@json(__('db.Please insert product to order table!')))
         e.preventDefault();
     }
     else if($('select[name="from_warehouse_id"]').val() == $('select[name="to_warehouse_id"]').val()){
-        alert('Both Warehouse can not be same!');
+        alert(@json(__('db.Both Warehouse can not be same!')));
         e.preventDefault();
     }
     else {

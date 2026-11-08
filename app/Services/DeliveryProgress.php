@@ -107,10 +107,10 @@ class DeliveryProgress
     public static function label(string $status): string
     {
         return match ($status) {
-            self::FULL => __('Fully delivered'),
-            self::PARTIAL => __('Partially delivered'),
-            self::IN_PROGRESS => __('In progress'),
-            default => __('Not yet delivered'),
+            self::FULL => __('db.Fully delivered'),
+            self::PARTIAL => __('db.Partially delivered'),
+            self::IN_PROGRESS => __('db.In progress'),
+            default => __('db.Not yet delivered'),
         };
     }
 
@@ -163,7 +163,7 @@ class DeliveryProgress
             $lines[] = [
                 'product_sale_id' => (int) $row->id,
                 'product_id' => (int) $row->product_id,
-                'name' => $row->name ?: ('Removed product #'.$row->product_id),
+                'name' => $row->name ?: __('db.Removed product #:id', ['id' => $row->product_id]),
                 'code' => (string) ($row->code ?? ''),
                 'sold' => $sold,
                 'delivered' => $done,
@@ -209,7 +209,7 @@ class DeliveryProgress
             foreach ($byDelivery[$delivery->id] ?? [] as $item) {
                 $items[] = [
                     'product_sale_id' => (int) $item->product_sale_id,
-                    'name' => $item->name ?: ('Removed product #'.$item->product_id),
+                    'name' => $item->name ?: __('db.Removed product #:id', ['id' => $item->product_id]),
                     'code' => (string) ($item->code ?? ''),
                     'qty' => (float) $item->qty,
                     'remaining' => $remainingById[$item->product_sale_id] ?? null,
@@ -280,28 +280,31 @@ class DeliveryProgress
             $id = $row['product_sale_id'];
             $qty = $row['qty'];
             if (isset($seen[$id])) {
-                throw new \InvalidArgumentException('Each product can be included only once on the same delivery.');
+                throw new \InvalidArgumentException(__('db.Each product can be included only once on the same delivery.'));
             }
             $seen[$id] = true;
             if ($qty === null || $qty === '') {
                 continue;
             }
             if (!is_numeric($qty)) {
-                throw new \InvalidArgumentException('Delivery quantity must be a number.');
+                throw new \InvalidArgumentException(__('db.Delivery quantity must be a number.'));
             }
             $qty = (float) $qty;
             if ($qty <= 0) {
                 continue;
             }
             if (!isset($byId[$id])) {
-                throw new \InvalidArgumentException('A selected product does not belong to this sale.');
+                throw new \InvalidArgumentException(__('db.A selected product does not belong to this sale.'));
             }
             $remaining = $byId[$id]['remaining'];
             if ($remaining <= 0.00001) {
-                throw new \InvalidArgumentException($byId[$id]['name'].' is already fully delivered.');
+                throw new \InvalidArgumentException(__('db.:name is already fully delivered.', ['name' => $byId[$id]['name']]));
             }
             if ($qty - $remaining > 0.00001) {
-                throw new \InvalidArgumentException($byId[$id]['name'].' exceeds the remaining quantity of '.self::formatQty($remaining).'.');
+                throw new \InvalidArgumentException(__('db.:name exceeds the remaining quantity of :qty.', [
+                    'name' => $byId[$id]['name'],
+                    'qty' => self::formatQty($remaining),
+                ]));
             }
             $accepted[] = [
                 'product_sale_id' => $id,
@@ -311,7 +314,7 @@ class DeliveryProgress
         }
 
         if (!$accepted) {
-            throw new \InvalidArgumentException('Select at least one product and a quantity that is still remaining.');
+            throw new \InvalidArgumentException(__('db.Select at least one product and a quantity that is still remaining.'));
         }
 
         return $accepted;
@@ -340,7 +343,7 @@ class DeliveryProgress
                 continue;
             }
             if (is_array($value)) {
-                throw new \InvalidArgumentException('Delivery quantity must be a number.');
+                throw new \InvalidArgumentException(__('db.Delivery quantity must be a number.'));
             }
             $rows[] = [
                 'product_sale_id' => (int) $key,

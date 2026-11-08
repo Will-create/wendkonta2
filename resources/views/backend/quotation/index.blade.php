@@ -16,7 +16,7 @@
                         <label class="d-tc mt-2"><strong>{{__('db.Choose Your Date')}}</strong> &nbsp;</label>
                         <div class="d-tc">
                             <div class="input-group">
-                                <input type="text" class="daterangepicker-field form-control" value="{{$starting_date}} To {{$ending_date}}" required />
+                                <input type="text" class="daterangepicker-field form-control" value="{{$starting_date}} {{__('db.To')}} {{$ending_date}}" required />
                                 <input type="hidden" name="starting_date" value="{{$starting_date}}" />
                                 <input type="hidden" name="ending_date" value="{{$ending_date}}" />
                             </div>
@@ -117,7 +117,7 @@
                     <th>#</th>
                     <th>{{__('db.product')}}</th>
                     <th>{{__('db.Batch No')}}</th>
-                    <th>Qty</th>
+                    <th>{{__('db.Qty')}}</th>
                     <th>{{__('db.Unit Price')}}</th>
                     <th>{{__('db.Tax')}}</th>
                     <th>{{__('db.Discount')}}</th>
@@ -144,7 +144,7 @@
       callback: function(startDate, endDate, period){
         var starting_date = startDate.format('YYYY-MM-DD');
         var ending_date = endDate.format('YYYY-MM-DD');
-        var title = starting_date + ' To ' + ending_date;
+        var title = starting_date + ' ' + @json(__('db.To')) + ' ' + ending_date;
         $(this).val(title);
         $('input[name="starting_date"]').val(starting_date);
         $('input[name="ending_date"]').val(ending_date);
@@ -162,7 +162,7 @@
     });
 
     function confirmDelete() {
-        if (confirm("Are you sure want to delete?")) {
+        if (confirm(@json(__('db.Are you sure want to delete?')))) {
             return true;
         }
         return false;
@@ -258,12 +258,12 @@
             }
         ],
         'select': { style: 'multi',  selector: 'td:first-child'},
-        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "{{ __('db.All') }}"]],
         dom: '<"row"lfB>rtip',
         buttons: [
             {
                 extend: 'pdf',
-                text: '<i title="export to pdf" class="fa fa-file-pdf-o"></i>',
+                text: '<i title="{{ __('db.export to pdf') }}" class="fa fa-file-pdf-o"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -277,7 +277,7 @@
             },
             {
                 extend: 'excel',
-                text: '<i title="export to excel" class="dripicons-document-new"></i>',
+                text: '<i title="{{ __('db.export to excel') }}" class="dripicons-document-new"></i>',
                 exportOptions: {
                     columns: ':visible:not(.not-exported)',
                     rows: ':visible'
@@ -291,7 +291,7 @@
             },
             {
                 extend: 'csv',
-                text: '<i title="export to csv" class="fa fa-file-text-o"></i>',
+                text: '<i title="{{ __('db.export to csv') }}" class="fa fa-file-text-o"></i>',
                 exportOptions: {
                     columns: ':visible:not(.not-exported)',
                     rows: ':visible'
@@ -305,7 +305,7 @@
             },
             {
                 extend: 'print',
-                text: '<i title="print" class="fa fa-print"></i>',
+                text: '<i title="{{ __('db.print') }}" class="fa fa-print"></i>',
                 exportOptions: {
                     columns: ':visible:not(.not-exported)',
                     rows: ':visible'
@@ -318,7 +318,7 @@
                 footer:true
             },
             {
-                text: '<i title="delete" class="dripicons-cross"></i>',
+                text: '<i title="{{ __('db.delete') }}" class="dripicons-cross"></i>',
                 className: 'buttons-delete',
                 action: function ( e, dt, node, config ) {
                     if(user_verified == '1') {
@@ -329,7 +329,7 @@
                                 quotation_id[i-1] = quotation[13];
                             }
                         });
-                        if(quotation_id.length && confirm("Are you sure want to delete?")) {
+                        if(quotation_id.length && confirm(@json(__('db.Are you sure want to delete?')))) {
                             $.ajax({
                                 type:'POST',
                                 url:'quotations/deletebyselection',
@@ -344,15 +344,15 @@
                             });
                         }
                         else if(!quotation_id.length)
-                            alert('Nothing is selected!');
+                            alert(@json(__('db.Nothing is selected!')));
                     }
                     else
-                        alert('This feature is disable for demo!');
+                        alert(@json(__('db.This feature is disable for demo!')));
                 }
             },
             {
                 extend: 'colvis',
-                text: '<i title="column visibility" class="fa fa-eye"></i>',
+                text: '<i title="{{ __('db.column visibility') }}" class="fa fa-eye"></i>',
                 columns: ':gt(0)'
             },
         ],

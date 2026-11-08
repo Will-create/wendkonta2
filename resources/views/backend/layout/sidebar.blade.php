@@ -78,7 +78,7 @@
                 <li id="sale-list-menu"><a href="{{route('sales.index')}}">{{__('db.Sale List')}}</a></li>
                 @endif
                 @if($sale_add_permission_active)
-                <li><a href="{{route('sale.pos')}}">POS</a></li>
+                <li><a href="{{route('sale.pos')}}">{{__('db.POS')}}</a></li>
                 <li id="sale-create-menu"><a href="{{route('sales.create')}}">{{__('db.Add Sale')}}</a></li>
                 <li id="sale-import-menu"><a href="{{url('sales/sale_by_csv')}}">{{__('db.Import Sale By CSV')}}</a></li>
                 @endif
@@ -88,7 +88,7 @@
                 @endif
                 @if($delivery_permission_active)
                 <li id="delivery-menu"><a href="{{route('delivery.index')}}">{{__('db.Delivery List')}}</a></li>
-                <li id="delivery-report-menu"><a href="{{route('delivery.report')}}">{{__('Delivery Report')}}</a></li>
+                <li id="delivery-report-menu"><a href="{{route('delivery.report')}}">{{__('db.Delivery Report')}}</a></li>
                 @endif
                 @if($gift_card_permission_active)
                 <li id="gift-card-menu"><a href="{{route('gift_cards.index')}}">{{__('db.Gift Card List')}}</a> </li>
@@ -667,7 +667,7 @@
                     @endif
 
                     @if($pos_setting_permission_active)
-                    <li id="pos-setting-menu"><a href="{{route('setting.pos')}}">POS {{__('db.settings')}}</a></li>
+                    <li id="pos-setting-menu"><a href="{{route('setting.pos')}}">{{__('db.POS')}} {{__('db.settings')}}</a></li>
                     @endif
                     @if($hrm_setting_permission_active)
                     <li id="hrm-setting-menu"><a href="{{route('setting.hrm')}}"> {{__('db.HRM Setting')}}</a></li>

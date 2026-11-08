@@ -123,7 +123,7 @@ $(document).ready(function () {
         var saleChart = new Chart(SALECHART, {
             type: 'bar',
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                labels: (Array.isArray(SALECHART.data('months')) && SALECHART.data('months').length === 12) ? SALECHART.data('months') : ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
                 datasets: [
                     {
                         label: label1,

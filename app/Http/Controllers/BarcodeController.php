@@ -154,13 +154,13 @@ class BarcodeController extends Controller
             }
             $barcode = Barcode::create($input);
             $output = ['success' => 1,
-                'msg' => __('barcode.added_success'),
+                'msg' => __('db.Barcode added successfully'),
             ];
         } catch (\Exception $e) {
             \Log::emergency('File:'.$e->getFile().'Line:'.$e->getLine().'Message:'.$e->getMessage());
 
             $output = ['success' => 0,
-                'msg' => __('messages.something_went_wrong'),
+                'msg' => __('db.something_went_wrong'),
             ];
         }
 
@@ -228,13 +228,13 @@ class BarcodeController extends Controller
                 Barcode::where('id', $id)->update($input);
 
             $output = ['success' => 1,
-                'msg' => __('barcode.updated_success'),
+                'msg' => __('db.Barcode updated successfully'),
             ];
         } catch (\Exception $e) {
             \Log::emergency('File:'.$e->getFile().'Line:'.$e->getLine().'Message:'.$e->getMessage());
 
             $output = ['success' => 0,
-                'msg' => __('messages.something_went_wrong'),
+                'msg' => __('db.something_went_wrong'),
             ];
         }
 

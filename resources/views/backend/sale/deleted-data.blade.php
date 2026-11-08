@@ -14,7 +14,7 @@
                         <div class="card-header bg-light d-flex justify-content-between align-items-center">
                             <h5 class="mb-0">Deleted Sales</h5>
                             <div>
-                                <button type="submit" class="btn btn-sm btn-danger ms-3" id="deleteSelectedBtn" disabled onclick="return confirm('Are you sure you want to permanently delete the selected records? This action cannot be undone!');">
+                                <button type="submit" class="btn btn-sm btn-danger ms-3" id="deleteSelectedBtn" disabled onclick="return confirm(@json(__('db.Are you sure you want to permanently delete the selected records? This action cannot be undone!')));">
                                     <i class="fas fa-trash-alt"></i> Delete Permanently
                                 </button>
                             </div>

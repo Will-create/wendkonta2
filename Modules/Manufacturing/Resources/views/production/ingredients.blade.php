@@ -31,7 +31,7 @@
                 <td>
                     <div class="input-group" style="max-width: unset">
                         <input type="number" class="form-control qty" name="product_qty[]" data-qty="{{ $qty_list[$key] }}"
-                            value="{{ $qty_list[$key] ?? 1 }}" step="any" placeholder="Qty" aria-label="Quantity" data-stock="{{ $stock->qty ?? 0 }}">
+                            value="{{ $qty_list[$key] ?? 1 }}" step="any" placeholder="{{ __('db.Qty') }}" aria-label="Quantity" data-stock="{{ $stock->qty ?? 0 }}">
 
                         <div class="input-group-append">
                             <select name="production_unit_ids[]" style="width: 112px;"

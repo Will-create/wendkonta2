@@ -81,7 +81,7 @@
                 var url = button.data('url');
                 var row = button.closest('tr');
 
-                if (confirm('Are you sure you want to delete this invoice setting?')) {
+                if (confirm(@json(__('db.Are you sure you want to delete this invoice setting?')))) {
                     $('#table-loader').show(); // Show loader row
 
                     $.ajax({
@@ -97,14 +97,14 @@
                                     $(this).remove();
                                 });
                             }else if (response.success == false){
-                                alert('Default invoice cannot be deleted');
+                                alert(@json(__('db.Default invoice cannot be deleted')));
                             } else {
                                 alert(response.not_permitted);
                             }
 
                         },
                         error: function() {
-                            alert('Error deleting invoice.');
+                            alert(@json(__('db.Error deleting invoice.')));
                         },
                         complete: function() {
                             $('#table-loader').hide();
@@ -119,7 +119,7 @@
                 var url = button.data('url');
                 var column = button.data('column');
                 console.log(id, url, column)
-                if (confirm('Are you sure you want to change the status?')) {
+                if (confirm(@json(__('db.Are you sure you want to change the status?')))) {
                     $.ajax({
                         url: url,
                         method: 'POST',
@@ -133,7 +133,7 @@
                             location.reload();
                         },
                         error: function() {
-                            alert("Failed to update status.");
+                            alert(@json(__('db.Failed to update status.')));
                         }
                     });
                 }

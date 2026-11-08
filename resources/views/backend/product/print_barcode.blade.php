@@ -64,7 +64,7 @@
                                                             <td>{{$preLoadedproduct[0]}}</td>
                                                             <td class="product-code">{{$preLoadedproduct[1]}}</td>
                                                             <td><input type="number" class="form-control qty" name="products[{{$key}}][quantity]" value="1" /></td>
-                                                            <td><button type="button" class="ibtnDel btn btn-md btn-danger">Delete</button></td>
+                                                            <td><button type="button" class="ibtnDel btn btn-md btn-danger">{{__('db.delete')}}</button></td>
                                                             <td><input type="hidden" name="products[{{$key}}][product_id]" value="{{$preLoadedproduct[8]}}"></td>
                                                             <td><input type="hidden" name="products[{{$key}}][product_name]" value="{{$preLoadedproduct[0]}}"></td>
                                                             <td><input type="hidden" name="products[{{$key}}][sub_sku]" value="{{$preLoadedproduct[1]}}"></td>
@@ -230,7 +230,7 @@
 
                     $(".product-code").each(function() {
                         if ($(this).text() == data[1]) {
-                            alert('Duplicate input is not allowed!')
+                            alert(@json(__('db.Duplicate input is not allowed!')))
                             flag = 0;
                         }
                     });
@@ -241,7 +241,7 @@
                         cols += '<td>' + data[0] + '</td>';
                         cols += '<td class="product-code">' + data[1] + '</td>';
                         cols += '<td><input type="number" class="form-control qty" name="products['+ key +'][quantity]" value="1" /></td>';
-                        cols += '<td><button type="button" class="ibtnDel btn btn-md btn-danger">Delete</button></td>';
+                        cols += '<td><button type="button" class="ibtnDel btn btn-md btn-danger">{{__('db.delete')}}</button></td>';
                         cols += '<td><input type="hidden" name="products['+ key +'][product_id]" value="'+data[8]+'"></td>';
                         cols += '<td><input type="hidden" name="products['+ key +'][product_name]" value="'+data[0]+'"></td>';
                         cols += '<td><input type="hidden" name="products['+ key +'][sub_sku]" value="'+data[1]+'"></td>';

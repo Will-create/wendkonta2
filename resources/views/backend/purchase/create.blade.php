@@ -36,7 +36,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>{{__('db.Warehouse')}} *</label>
-                                            <select name="warehouse_id" class="selectpicker form-control" data-live-search="true" title="Select warehouse..." required>
+                                            <select name="warehouse_id" class="selectpicker form-control" data-live-search="true" title="{{ __('db.Select warehouse...') }}" required>
                                                 @foreach($lims_warehouse_list as $warehouse)
                                                 <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                                                 @endforeach
@@ -47,7 +47,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>{{__('db.Supplier')}}</label>
-                                            <select name="supplier_id" class="selectpicker form-control" data-live-search="true" title="Select supplier...">
+                                            <select name="supplier_id" class="selectpicker form-control" data-live-search="true" title="{{ __('db.Select supplier...') }}">
                                                 @foreach($lims_supplier_list as $supplier)
                                                 <option value="{{$supplier->id}}">{{$supplier->name .' ('. $supplier->company_name .')'}}</option>
                                                 @endforeach
@@ -67,7 +67,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>{{__('db.Attach Document')}}</label> <i class="dripicons-question" data-toggle="tooltip" title="Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported"></i>
+                                            <label>{{__('db.Attach Document')}}</label> <i class="dripicons-question" data-toggle="tooltip" title="{{ __('db.Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported') }}"></i>
                                             <input type="file" name="document" class="form-control" >
                                             @if($errors->has('extension'))
                                                 <span>
@@ -695,7 +695,7 @@
                             <button type="button" class="btn btn-info btn-sm ml-2 mb-3" id="imei-add-more"><i class="ion-plus"></i> Add More</button>
                         </div>`;
             }
-        // htmlText = '<div class="col-md-12 form-group imei-section"><label>IMEI or Serial Numbers</label><input type="text" name="imei_numbers" value="'+imeiNumbers+'" class="form-control imei_number" placeholder="Type imei or serial numbers and separate them by comma. Example:1001,2001" step="any"></div>';
+        // htmlText = '<div class="col-md-12 form-group imei-section"><label>IMEI or Serial Numbers</label><input type="text" name="imei_numbers" value="'+imeiNumbers+'" class="form-control imei_number" placeholder="{{ __('db.Type imei or serial numbers and separate them by comma. Example:1001,2001') }}" step="any"></div>';
         $("#editModal .modal-element").append(htmlText);
 
     }
@@ -806,7 +806,7 @@
         var edit_qty = $('input[name="edit_qty"]').val();
         var edit_unit_cost = $('input[name="edit_unit_cost"]').val();
         if (parseFloat(edit_discount) > parseFloat(edit_unit_cost)) {
-            alert('Invalid Discount Input!');
+            alert(@json(__('db.Invalid Discount Input!')));
             return;
         }
         var edit_profit_margin = $('input[name="edit_profit_margin"]').val();
@@ -1158,12 +1158,12 @@
         if (paidAmount > payingAmount) {
             $('#paying-amount-error').addClass('d-none');
             $("#submit-button").prop('disabled', true).css('cursor', 'default');
-            alert('Paying amount cannot be bigger than received amount');
+            alert(@json(__('db.Paying amount cannot be bigger than received amount')));
         }
         else if (paidAmount > grandTotal) {
             $('#paying-amount-error').addClass('d-none');
             $("#submit-button").prop('disabled', true).css('cursor', 'default');
-            alert('Paying amount cannot be bigger than grand total');
+            alert(@json(__('db.Paying amount cannot be bigger than grand total')));
         }
         else if (paidAmount <= 0) {
             $("#submit-button").prop('disabled', true).css('cursor', 'default');
@@ -1207,7 +1207,7 @@
     $('#purchase-form').on('submit',function(e){
     var rownumber = $('table.order-list tbody tr:last').index();
     if (rownumber < 0) {
-        alert("Please insert product to order table!")
+        alert(@json(__('db.Please insert product to order table!')))
         e.preventDefault();
     }
 
@@ -1225,7 +1225,7 @@
             }
         });
         if(!flag){
-            alert('Quantity and Recieved value is same! Please Change Purchase Status or Recieved value');
+            alert(@json(__('db.Quantity and Recieved value is same! Please Change Purchase Status or Recieved value')));
             e.preventDefault();
         }
         else

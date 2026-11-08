@@ -226,7 +226,7 @@ class HomeController extends Controller
 
             $payment_recieved[] = number_format((float)($recieved_amount + $purchase_return_amount), config('decimal'), '.', '');
             $payment_sent[] = number_format((float)$sent_amount, config('decimal'), '.', '');
-            $month[] = date("F", strtotime($start_date));
+            $month[] = __('db.month_'.date('n', strtotime($start_date)));
             $start = strtotime("+1 month", $start);
         }
         // yearly report

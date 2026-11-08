@@ -51,7 +51,7 @@
                                         {{ Form::open(['route' => ['brand.destroy', $brand->id], 'method' => 'DELETE']) }}
                                         <li>
                                             <button type="submit" class="btn btn-link"
-                                                onclick="return confirm('Are you sure want to delete?')"><i
+                                                onclick="return confirm(@json(__('db.Are you sure want to delete?')))"><i
                                                     class="dripicons-trash"></i> {{ __('db.delete') }}</button>
                                         </li>
                                         {{ Form::close() }}
@@ -79,7 +79,7 @@
                     <p class="italic">
                         <small>{{ __('db.The field labels marked with * are required input fields') }}.</small></p>
                     <div class="form-group">
-                        <label>{{ __('Title') }} *</label>
+                        <label>{{ __('db.Title') }} *</label>
                         {{ Form::text('title', null, ['required' => 'required', 'class' => 'form-control', 'placeholder' => __('db.Type brand title')]) }}
                     </div>
                     <div class="form-group">
@@ -89,15 +89,15 @@
                     @if (in_array('ecommerce', explode(',', $general_setting->modules)))
                         <div class="row">
                             <div class="col-md-12 mt-3">
-                                <h6><strong>{{ __('For SEO') }}</strong></h6>
+                                <h6><strong>{{ __('db.For SEO') }}</strong></h6>
                                 <hr>
                             </div>
                             <div class="col-md-12 form-group">
-                                <label>{{ __('Meta Title') }}</label>
+                                <label>{{ __('db.Meta Title') }}</label>
                                 {{ Form::text('page_title', null, ['class' => 'form-control', 'placeholder' => __('db.Meta Title')]) }}
                             </div>
                             <div class="col-md-12 form-group">
-                                <label>{{ __('Meta Description') }}</label>
+                                <label>{{ __('db.Meta Description') }}</label>
                                 {{ Form::text('short_description', null, ['class' => 'form-control', 'placeholder' => __('db.Meta Title')]) }}
                             </div>
                         </div>
@@ -178,11 +178,11 @@
                                 <hr>
                             </div>
                             <div class="col-md-12 form-group">
-                                <label>{{ __('Meta Title') }}</label>
+                                <label>{{ __('db.Meta Title') }}</label>
                                 {{ Form::text('page_title', null, ['class' => 'form-control', 'placeholder' => __('db.Meta Title')]) }}
                             </div>
                             <div class="col-md-12 form-group">
-                                <label>{{ __('Meta Description') }}</label>
+                                <label>{{ __('db.Meta Description') }}</label>
                                 {{ Form::text('short_description', null, ['class' => 'form-control', 'placeholder' => __('db.Meta Description')]) }}
                             </div>
                         </div>
@@ -234,7 +234,7 @@
                     brandArray: brand
                 },
                 success: function(data) {
-                    alert('Exported to CSV file successfully! Click Ok to download file');
+                    alert(@json(__('db.Exported to CSV file successfully! Click Ok to download file')));
                     window.location.href = data;
                 }
             });
@@ -292,12 +292,12 @@
             },
             'lengthMenu': [
                 [10, 25, 50, -1],
-                [10, 25, 50, "All"]
+                [10, 25, 50, "{{ __('db.All') }}"]
             ],
             dom: '<"row"lfB>rtip',
             buttons: [{
                     extend: 'pdf',
-                    text: '<i title="export to pdf" class="fa fa-file-pdf-o"></i>',
+                    text: '<i title="{{ __('db.export to pdf') }}" class="fa fa-file-pdf-o"></i>',
                     exportOptions: {
                         columns: ':visible:Not(.not-exported)',
                         rows: ':visible',
@@ -326,7 +326,7 @@
                 },
                 {
                     extend: 'excel',
-                    text: '<i title="export to excel" class="dripicons-document-new"></i>',
+                    text: '<i title="{{ __('db.export to excel') }}" class="dripicons-document-new"></i>',
                     exportOptions: {
                         columns: ':visible:Not(.not-exported)',
                         rows: ':visible',
@@ -343,7 +343,7 @@
                 },
                 {
                     extend: 'csv',
-                    text: '<i title="export to csv" class="fa fa-file-text-o"></i>',
+                    text: '<i title="{{ __('db.export to csv') }}" class="fa fa-file-text-o"></i>',
                     exportOptions: {
                         columns: ':visible:Not(.not-exported)',
                         rows: ':visible',
@@ -360,7 +360,7 @@
                 },
                 {
                     extend: 'print',
-                    text: '<i title="print" class="fa fa-print"></i>',
+                    text: '<i title="{{ __('db.print') }}" class="fa fa-print"></i>',
                     exportOptions: {
                         columns: ':visible:Not(.not-exported)',
                         rows: ':visible',
@@ -368,7 +368,7 @@
                     },
                 },
                 {
-                    text: '<i title="delete" class="dripicons-cross"></i>',
+                    text: '<i title="{{ __('db.delete') }}" class="dripicons-cross"></i>',
                     className: 'buttons-delete',
                     action: function(e, dt, node, config) {
                         if (user_verified == '1') {
@@ -378,7 +378,7 @@
                                     brand_id[i - 1] = $(this).closest('tr').data('id');
                                 }
                             });
-                            if (brand_id.length && confirm("Are you sure want to delete?")) {
+                            if (brand_id.length && confirm(@json(__('db.Are you sure want to delete?')))) {
                                 $.ajax({
                                     type: 'POST',
                                     url: 'brand/deletebyselection',
@@ -397,14 +397,14 @@
                                 });
                                 // dt.rows({ page: 'current', selected: true }).remove().draw(false);
                             } else if (!brand_id.length)
-                                alert('No brand is selected!');
+                                alert(@json(__('db.No brand is selected!')));
                         } else
-                            alert('This feature is disable for demo!');
+                            alert(@json(__('db.This feature is disable for demo!')));
                     }
                 },
                 {
                     extend: 'colvis',
-                    text: '<i title="column visibility" class="fa fa-eye"></i>',
+                    text: '<i title="{{ __('db.column visibility') }}" class="fa fa-eye"></i>',
                     columns: ':gt(0)'
                 },
             ],

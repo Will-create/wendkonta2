@@ -10,7 +10,7 @@
                     <label class="d-tc mt-2"><strong>{{__('db.Choose Your Date')}}</strong> &nbsp;</label>
                     <div class="d-tc">
                         <div class="input-group">
-                            <input type="text" class="daterangepicker-field form-control" value="{{$start_date}} To {{$end_date}}" required />
+                            <input type="text" class="daterangepicker-field form-control" value="{{$start_date}} {{__('db.To')}} {{$end_date}}" required />
                             <input type="hidden" name="start_date" value="{{$start_date}}" />
                             <input type="hidden" name="end_date" value="{{$end_date}}" />
                             <div class="input-group-append">
@@ -267,7 +267,7 @@
       callback: function(startDate, endDate, period){
         var start_date = startDate.format('YYYY-MM-DD');
         var end_date = endDate.format('YYYY-MM-DD');
-        var title = start_date + ' To ' + end_date;
+        var title = start_date + ' ' + @json(__('db.To')) + ' ' + end_date;
         $(this).val(title);
         $('input[name="start_date"]').val(start_date);
         $('input[name="end_date"]').val(end_date);

@@ -23,7 +23,7 @@
                                 <div class="col-md-4 courier-section">
                                     <div class="form-group">
                                         <label><strong>Courier *</strong></label>
-                                        <select name="courier_id" required id="courier-id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select courier...">
+                                        <select name="courier_id" required id="courier-id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select courier...') }}">
                                             @foreach($courier_list as $courier)
                                             <option value="{{$courier->id}}">{{$courier->name.' ['.$courier->phone_number.']'}}</option>
                                             @endforeach
@@ -39,7 +39,7 @@
                                                     <th>sale Reference</th>
                                                     <th>Packing Slip Reference</th>
                                                     <th>Amount</th>
-                                                    <th>Delete</th>
+                                                    <th>{{__('db.delete')}}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>

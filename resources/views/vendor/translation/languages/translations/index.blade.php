@@ -99,7 +99,7 @@
                     }
                 },
                 'select': {style: 'multi', selector: 'td:first-child'},
-                'lengthMenu': [[100, 200, 500,-1], [100, 200, 500,"All"]],
+                'lengthMenu': [[100, 200, 500,-1], [100, 200, 500, "{{ __('db.All') }}"]],
             });
 
 

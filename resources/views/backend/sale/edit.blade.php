@@ -47,7 +47,7 @@
                                         <div class="form-group">
                                             <label>{{__('db.customer')}} *</label>
                                             <input type="hidden" name="customer_id_hidden" value="{{ $lims_sale_data->customer_id }}" />
-                                            <select required name="customer_id" class="selectpicker form-control" data-live-search="true" id="customer_id" title="Select customer...">
+                                            <select required name="customer_id" class="selectpicker form-control" data-live-search="true" id="customer_id" title="{{ __('db.Select customer...') }}">
                                                 @foreach($lims_customer_list as $customer)
                                                 <option value="{{$customer->id}}">{{$customer->name . ' (' . $customer->phone_number . ')'}}</option>
                                                 @endforeach
@@ -59,7 +59,7 @@
                                         <div class="form-group">
                                             <label>{{__('db.Warehouse')}} *</label>
                                             <input type="hidden" name="warehouse_id_hidden" value="{{$lims_sale_data->warehouse_id}}" />
-                                            <select required id="warehouse_id" name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
+                                            <select required id="warehouse_id" name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select warehouse...') }}">
                                                 @foreach($lims_warehouse_list as $warehouse)
                                                 <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                                                 @endforeach
@@ -71,7 +71,7 @@
                                         <div class="form-group">
                                             <label>{{__('db.Biller')}} *</label>
                                             <input type="hidden" name="biller_id_hidden" value="{{$lims_sale_data->biller_id}}" />
-                                            <select required name="biller_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Biller...">
+                                            <select required name="biller_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Biller...') }}">
                                                 @foreach($lims_biller_list as $biller)
                                                 <option value="{{$biller->id}}">{{$biller->name . ' (' . $biller->company_name . ')'}}</option>
                                                 @endforeach
@@ -84,7 +84,7 @@
                                         <label>{{__('db.Select Product')}}</label>
                                         <div class="search-box form-group mb-2" style="position:relative">
                                             <div class="input-group pos">
-                                                <input style="border: 1px solid #7c5cc4;" type="text" name="product_code_name" id="product-search-input" placeholder="Scan/Search product by name/code/IMEI" class="form-control" autofocus />
+                                                <input style="border: 1px solid #7c5cc4;" type="text" name="product_code_name" id="product-search-input" placeholder="{{ __('db.Scan/Search product by name/code/IMEI') }}" class="form-control" autofocus />
                                                 <button type="button" class="btn btn-primary" onclick="barcode()"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upc" viewBox="0 0 16 16"><path d="M3 4.5a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0zm2 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 1 0v7a.5.5 0 0 1-1 0z"/></svg></button>
                                             </div>
                                             <div id="product-results-container">
@@ -405,7 +405,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>{{__('db.Attach Document')}}</label> <i class="dripicons-question" data-toggle="tooltip" title="Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported"></i>
+                                            <label>{{__('db.Attach Document')}}</label> <i class="dripicons-question" data-toggle="tooltip" title="{{ __('db.Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported') }}"></i>
                                             <input type="file" name="document" class="form-control" />
 
                                             <x-validation-error fieldName="document" />
@@ -1036,7 +1036,7 @@ $('button[name="update_btn"]').on("click", function() {
     var edit_unit_price = $('input[name="edit_unit_price"]').val();
 
     if (parseFloat(edit_discount) > parseFloat(edit_unit_price)) {
-        alert('Invalid Discount Input!');
+        alert(@json(__('db.Invalid Discount Input!')));
         return;
     }
 
@@ -1121,7 +1121,7 @@ $("#myTable").on('click', '.plus', function() {
     if(!qty)
     qty = 1;
     // if(max_qty && parseFloat(qty) >= parseFloat(max_qty)) {
-    //     alert("Maximum quantity reached!");
+    //     alert(@json(__('db.Maximum quantity reached!')));
     //     return;
     // }
     else
@@ -1207,7 +1207,7 @@ function productSearch(data) {
                 imeiNumbersArray = imeiNumbers.split(",");
 
                 if(imeiNumbersArray.includes(data.imei)) {
-                    alert('Same imei or serial number is not allowed!');
+                    alert(@json(__('db.Same imei or serial number is not allowed!')));
                     flag = false;
                     $('#product-search-input').val('');
                     return;
@@ -1463,7 +1463,7 @@ function addNewProduct(data){
                                 </div>
                                 <div class="modal-body">${modalContent}</div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('db.Cancel')}}</button>
                                     <button type="button" class="btn btn-primary" id="confirmSelection">Confirm</button>
                                 </div>
                             </div>
@@ -1679,7 +1679,7 @@ function checkQuantity(sale_qty, flag) {
             else if(operator[0] == '/')
                 total_qty = sale_qty / operation_value[0];
             if (total_qty > parseFloat(qty)) {
-                alert('Quantity exceeds stock quantity!');
+                alert(@json(__('db.Quantity exceeds stock quantity!')));
                 if (flag) {
                     sale_qty = (sale_qty - 1);
                     checkQuantity(sale_qty, true);
@@ -1932,16 +1932,16 @@ $('#payment-form').on('submit',function(e){
     var rownumber = $('table.order-list tbody tr:last').index();
     $("table.order-list tbody .qty").each(function(index) {
         if ($(this).val() == '') {
-            alert('One of products has no quantity!');
+            alert(@json(__('db.One of products has no quantity!')));
             e.preventDefault();
         }
     });
     if (rownumber < 0) {
-        alert("Please insert product to order table!")
+        alert(@json(__('db.Please insert product to order table!')))
         e.preventDefault();
     }
     else if(parseFloat($('input[name="total_qty"]').val()) <= 0) {
-        alert('Product quantity is 0');
+        alert(@json(__('db.Product quantity is 0')));
         e.preventDefault();
     }
     else {

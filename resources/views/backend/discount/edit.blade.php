@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="col-md-3 form-group">
                                 	<label>{{__('db.Discount Plan')}} *</label>
-                                    <select required name="discount_plan_id[]" class="selectpicker form-control discount-plan-id" data-live-search="true" data-live-search-style="begins" title="Select discount plan..." multiple>
+                                    <select required name="discount_plan_id[]" class="selectpicker form-control discount-plan-id" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select discount plan...') }}" multiple>
                                     	@foreach($lims_discount_plan_list as $discount_plan)
                                         	<option value="{{$discount_plan->id}}">{{$discount_plan->name}}</option>
                                         @endforeach

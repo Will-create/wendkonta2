@@ -115,7 +115,7 @@
                                     <div class="form-group">
                                         <label>{{__('db.Production Cost')}}</strong> </label>
                                         <div class="input-group pos">
-                                            <input type="text" name="production_cost" class="form-control" placeholder="Enter production">
+                                            <input type="text" name="production_cost" class="form-control" placeholder="{{ __('db.Enter production') }}">
                                       </div>
                                     </div>
                                 </div> --}}
@@ -123,7 +123,7 @@
                                     <div class="form-group">
                                         <label>{{__('db.Brand')}}</strong> </label>
                                         <div class="input-group pos">
-                                          <select name="brand_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Brand...">
+                                          <select name="brand_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Brand...') }}">
                                             @foreach($lims_brand_list as $brand)
                                                 <option value="{{$brand->id}}">{{$brand->title}}</option>
                                             @endforeach
@@ -136,7 +136,7 @@
                                     <div class="form-group">
                                         <label>{{__('db.category')}} *</strong> </label>
                                         <div class="input-group pos">
-                                          <select name="category_id" required class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Category...">
+                                          <select name="category_id" required class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="{{ __('db.Select Category...') }}">
                                             @foreach($lims_category_list as $category)
                                                 <option value="{{$category->id}}">{{$category->name}}</option>
                                             @endforeach
@@ -533,11 +533,11 @@
                                     <br>
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <label>{{ __('Meta Title') }} *</label>
+                                    <label>{{ __('db.Meta Title') }} *</label>
                                     <input type="text" name="meta_title" class="form-control" value="">
                                 </div>
                                 <div class="col-md-12 form-group">
-                                    <label>{{ __('Meta Description') }} *</label>
+                                    <label>{{ __('db.Meta Description') }} *</label>
                                     <input type="text" name="meta_description" class="form-control" value="">
                                 </div>
                                 <div class="col-md-12 form-group related-section">
@@ -565,7 +565,7 @@
                                     <div class="form-group top-fields">
                                         <label>{{__('db.Kitchen')}}</label>
                                         <div class="input-group pos">
-                                            <select id="kitchen_id" name="kitchen_id" class="selectpicker form-control" title="Select kitchen...">
+                                            <select id="kitchen_id" name="kitchen_id" class="selectpicker form-control" title="{{ __('db.Select kitchen...') }}">
                                                 @foreach($kitchen_list as $kitchen)
                                                 <option value="{{$kitchen->id}}">{{$kitchen->name}}</option>
                                                 @endforeach
@@ -619,15 +619,15 @@
                 @if(in_array('ecommerce',explode(',',$general_setting->modules)) || in_array('restaurant',explode(',',$general_setting->modules)))
                 <div class="row">
                     <div class="col-md-12 mt-3">
-                        <h6><strong>{{ __('For SEO') }}</strong></h6>
+                        <h6><strong>{{ __('db.For SEO') }}</strong></h6>
                         <hr>
                     </div>
                     <div class="col-md-12 form-group">
-                        <label>{{ __('Meta Title') }}</label>
+                        <label>{{ __('db.Meta Title') }}</label>
                         {{Form::text('page_title',null,array('class' => 'form-control', 'placeholder' => __('db.Meta Title')))}}
                     </div>
                     <div class="col-md-12 form-group">
-                        <label>{{ __('Meta Description') }}</label>
+                        <label>{{ __('db.Meta Description') }}</label>
                         {{Form::text('short_description',null,array('class' => 'form-control', 'placeholder' => __('db.Meta Description')))}}
                     </div>
                 </div>
@@ -817,7 +817,7 @@
     });
 
     $('.add-more-variant').on("click", function() {
-        var htmlText = '<div class="row"><div class="col-md-4 form-group mt-2"><label>Option *</label><input type="text" name="variant_option[]" class="form-control variant-field" placeholder="Size, Color etc..."></div><div class="col-md-7 form-group mt-2"><label>Value *</label><input type="text" name="variant_value[]" class="type-variant form-control variant-field"></div><div class="col-sm-1 form-group mt-2" style="display:flex;flex-direction:column;align-items:center;justify-content:end;"><button type="button" class="delVarOption btn btn-danger btn-sm mr-3"><i class="dripicons-cross"></i></button></div></div>';
+        var htmlText = '<div class="row"><div class="col-md-4 form-group mt-2"><label>Option *</label><input type="text" name="variant_option[]" class="form-control variant-field" placeholder="{{ __('db.Size, Color etc...') }}"></div><div class="col-md-7 form-group mt-2"><label>Value *</label><input type="text" name="variant_value[]" class="type-variant form-control variant-field"></div><div class="col-sm-1 form-group mt-2" style="display:flex;flex-direction:column;align-items:center;justify-content:end;"><button type="button" class="delVarOption btn btn-danger btn-sm mr-3"><i class="dripicons-cross"></i></button></div></div>';
         $("#variant-input-section").append(htmlText);
         $('.type-variant').tagsInput();
     });
@@ -1375,7 +1375,7 @@
                     var flag = 1;
                     $(".product-id").each(function() {
                         if ($(this).val() == data[8]) {
-                            alert('Duplicate input is not allowed!')
+                            alert(@json(__('db.Duplicate input is not allowed!')))
                             flag = 0;
                         }
                     });
@@ -1400,7 +1400,7 @@
                                             name="product_qty[]"
                                             value="1"
                                             step="any"
-                                            placeholder="Qty"
+                                            placeholder="{{ __('db.Qty') }}"
                                             aria-label="Quantity">
                                         <div class="input-group-append">
                                             `+data[13]+`
@@ -1562,7 +1562,7 @@
             if(numberOfWarehouse > 0)
                 $("#initial-stock-section").show(300);
             else {
-                alert('Please create warehouse first before adding stock!');
+                alert(@json(__('db.Please create warehouse first before adding stock!')));
                 $(this).prop("checked", false);
             }
         }
@@ -1705,20 +1705,20 @@
         var exp = /^\d+$/;
 
         if(!(product_code.match(exp)) && (barcode_symbology == 'UPCA' || barcode_symbology == 'UPCE' || barcode_symbology == 'EAN8' || barcode_symbology == 'EAN13') ) {
-            alert('Product code must be numeric.');
+            alert(@json(__('db.Product code must be numeric.')));
             return false;
         }
         else if(product_code.match(exp)) {
             if(barcode_symbology == 'UPCA' && product_code.length > 11){
-                alert('Product code length must be less than 12');
+                alert(@json(__('db.Product code length must be less than 12')));
                 return false;
             }
             else if(barcode_symbology == 'EAN8' && product_code.length > 7){
-                alert('Product code length must be less than 8');
+                alert(@json(__('db.Product code length must be less than 8')));
                 return false;
             }
             /*else if(barcode_symbology == 'EAN13' && product_code.length > 12){
-                alert('Product code length must be less than 13');
+                alert(@json(__('db.Product code length must be less than 13')));
                 return false;
             }*/
         }
@@ -1726,14 +1726,14 @@
         if( $("#type").val() == 'combo' ) {
             var rownumber = $('table.order-list tbody tr:last').index();
             if (rownumber < 0) {
-                alert("Please insert product to table!")
+                alert(@json(__('db.Please insert product to table!')))
                 return false;
             }
         }
         if($("#is-variant").is(":checked")) {
             rowindex = $("table#variant-table tbody tr:last").index();
             if (rowindex < 0) {
-                alert('This product has variant. Please insert variant to table');
+                alert(@json(__('db.This product has variant. Please insert variant to table')));
                 return false;
             }
         }

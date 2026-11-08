@@ -28,7 +28,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->extend('translator', function ($translator) {
+            $custom = new \App\Translation\CaseInsensitiveTranslator(
+                $translator->getLoader(),
+                $translator->getLocale()
+            );
+            $custom->setFallback($translator->getFallback());
+
+            return $custom;
+        });
     }
 
     public function boot()
@@ -61,6 +69,8 @@ class AppServiceProvider extends ServiceProvider
                 else {
                     App::setLocale('en');
                 }
+
+                \Carbon\Carbon::setLocale(App::getLocale());
 
                 if (Schema::hasTable('translations')) {
                     $currentLocale = App::getLocale();

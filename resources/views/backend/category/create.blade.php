@@ -68,42 +68,42 @@
             @endif
             @if(in_array('restaurant',explode(',',$general_setting->modules)))
             <div class="col-md-12 mt-3">
-                <h6><strong>{{ __('For Website') }}</strong></h6>
+                <h6><strong>{{ __('db.For Website') }}</strong></h6>
                 <hr>
             </div>
             <div class="col-md-12 form-group">
                 <br>
-                <input type="checkbox" name="featured" id="featured" value="1"> <label>{{ __('List on website') }}</label>
+                <input type="checkbox" name="featured" id="featured" value="1"> <label>{{ __('db.List on website') }}</label>
             </div>
             @endif
             @if(in_array('ecommerce',explode(',',$general_setting->modules)))
             <div class="col-md-12 mt-3">
-                <h6><strong>{{ __('For Website') }}</strong></h6>
+                <h6><strong>{{ __('db.For Website') }}</strong></h6>
                 <hr>
             </div>
 
             <div class="col-md-6 form-group">
-                <label>{{ __('Icon') }}</label>
+                <label>{{ __('db.Icon') }}</label>
                 <input type="file" name="icon" class="form-control">
             </div> 
             <div class="col-md-6 form-group">
                 <br>
-                <input type="checkbox" name="featured" id="featured" value="1"> <label>{{ __('List on category dropdown') }}</label>
+                <input type="checkbox" name="featured" id="featured" value="1"> <label>{{ __('db.List on category dropdown') }}</label>
             </div>
             @endif
         </div>
         @if(in_array('ecommerce',explode(',',$general_setting->modules)))
         <div class="row">
             <div class="col-md-12 mt-3">
-                <h6><strong>{{ __('For SEO') }}</strong></h6>
+                <h6><strong>{{ __('db.For SEO') }}</strong></h6>
                 <hr>
             </div>
             <div class="col-md-12 form-group">
-                <label>{{ __('Meta Title') }}</label>
+                <label>{{ __('db.Meta Title') }}</label>
                 {{Form::text('page_title',null,array('class' => 'form-control', 'placeholder' => __('db.Meta Title')))}}
             </div>
             <div class="col-md-12 form-group">
-                <label>{{ __('Meta Description') }}</label>
+                <label>{{ __('db.Meta Description') }}</label>
                 {{Form::text('short_description',null,array('class' => 'form-control', 'placeholder' => __('db.Meta Description')))}}
             </div>
         </div>
@@ -160,7 +160,7 @@
     $("ul#product #category-menu").addClass("active");
 
     function confirmDelete() {
-      if (confirm("If you delete category all products under this category will also be deleted. Are you sure want to delete?")) {
+      if (confirm(@json(__('db.If you delete category all products under this category will also be deleted. Are you sure want to delete?')))) {
           return true;
       }
       return false;
@@ -251,13 +251,13 @@
             }
         ],
         'select': { style: 'multi',  selector: 'td:first-child'},
-        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "{{ __('db.All') }}"]],
 
         dom: '<"row"lfB>rtip',
         buttons: [
             {
                 extend: 'pdf',
-                text: '<i title="export to pdf" class="fa fa-file-pdf-o"></i>',
+                text: '<i title="{{ __('db.export to pdf') }}" class="fa fa-file-pdf-o"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -266,7 +266,7 @@
             },
             {
                 extend: 'excel',
-                text: '<i title="export to excel" class="dripicons-document-new"></i>',
+                text: '<i title="{{ __('db.export to excel') }}" class="dripicons-document-new"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -275,7 +275,7 @@
             },
             {
                 extend: 'csv',
-                text: '<i title="export to csv" class="fa fa-file-text-o"></i>',
+                text: '<i title="{{ __('db.export to csv') }}" class="fa fa-file-text-o"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -284,7 +284,7 @@
             },
             {
                 extend: 'print',
-                text: '<i title="print" class="fa fa-print"></i>',
+                text: '<i title="{{ __('db.print') }}" class="fa fa-print"></i>',
                 exportOptions: {
                     columns: ':visible:Not(.not-exported)',
                     rows: ':visible'
@@ -292,7 +292,7 @@
                 footer:true
             },
             {
-                text: '<i title="delete" class="dripicons-cross"></i>',
+                text: '<i title="{{ __('db.delete') }}" class="dripicons-cross"></i>',
                 className: 'buttons-delete',
                 action: function ( e, dt, node, config ) {
                     if(user_verified == '1') {
@@ -302,7 +302,7 @@
                                 category_id[i-1] = $(this).closest('tr').data('id');
                             }
                         });
-                        if(category_id.length && confirm("If you delete category all products under this category will also be deleted. Are you sure want to delete?")) {
+                        if(category_id.length && confirm(@json(__('db.If you delete category all products under this category will also be deleted. Are you sure want to delete?')))) {
                             $.ajax({
                                 type:'POST',
                                 url:'category/deletebyselection',
@@ -316,15 +316,15 @@
                             });
                         }
                         else if(!category_id.length)
-                            alert('No category is selected!');
+                            alert(@json(__('db.No category is selected!')));
                     }
                     else
-                        alert('This feature is disable for demo!');
+                        alert(@json(__('db.This feature is disable for demo!')));
                 }
             },
             {
                 extend: 'colvis',
-                text: '<i title="column visibility" class="fa fa-eye"></i>',
+                text: '<i title="{{ __('db.column visibility') }}" class="fa fa-eye"></i>',
                 columns: ':gt(0)'
             },
         ],

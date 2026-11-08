@@ -11,7 +11,7 @@
             <span style="color: red;" id="mobile-error"></span>
             <label class="mt-2">Upload Image:</label>
             <div id="imageUpload" class="dropzone mt-2"></div>
-            <button id="uploaderBtn" type="button" class="btn btn-primary">Save</button>
+            <button id="uploaderBtn" type="button" class="btn btn-primary">{{__('db.Save')}}</button>
         </form>
     </div>
 </div>
