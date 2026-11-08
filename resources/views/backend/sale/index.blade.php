@@ -748,6 +748,8 @@ columns.push(
     var rangeMonths = @json($rangeMonths);
     $('.daterangepicker-field').daterangepicker({
         autoUpdateInput: true,
+        startDate: moment(starting_date, 'YYYY-MM-DD'),
+        endDate: moment(ending_date, 'YYYY-MM-DD'),
         locale: {
             format: 'YYYY-MM-DD',
             cancelLabel: @json(__('db.Clear')),

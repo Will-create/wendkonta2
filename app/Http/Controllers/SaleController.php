@@ -135,8 +135,10 @@ class SaleController extends Controller
                 $ending_date = $request->input('ending_date');
             }
             else {
-                $starting_date = date("Y-m-d", strtotime(date('Y-m-d', strtotime('-1 year', strtotime(date('Y-m-d') )))));
-                $ending_date = date("Y-m-d");
+                // Same window as the All Time preset. A trailing year hides every
+                // invoice once the newest sale is more than twelve months old.
+                $starting_date = '2000-01-01';
+                $ending_date = date('Y-m-d');
             }
 
             $lims_gift_card_list = GiftCard::where("is_active", true)->get();
