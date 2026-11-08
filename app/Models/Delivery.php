@@ -24,4 +24,9 @@ class Delivery extends Model
     {
         return $this->belongsTo('App\Models\Courier');
     }
+
+    public function products()
+    {
+        return $this->hasMany(DeliveryProduct::class);
+    }
 }

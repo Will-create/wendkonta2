@@ -17,9 +17,17 @@
             width: 100%;
             max-width: 210mm;
             background: white;
-            margin: 0;
-            padding: 10mm;
+            margin: 0 auto;
+            padding: 8mm;
             box-sizing: border-box;
+        }
+
+        .note-block {
+            margin-top: 8px;
+            font-size: 11px;
+            line-height: 1.35;
+            word-wrap: break-word;
+            max-width: 190mm;
         }
         
      .header-image {
@@ -201,9 +209,11 @@
             .hidden-print {
                 display: none !important;
             }
+
+            @page { size: A4; margin: 8mm; }
             
             body { margin: 0; padding: 0; }
-            .facture { padding: 5mm; }
+            .facture { padding: 0; max-width: 100%; }
             .header-image { margin-bottom: 10px; }
             .invoice-info { margin-bottom: 10px; }
             .table-container { margin-bottom: 5px; }
@@ -251,7 +261,9 @@
                 
                 <div class="client-details">
                     Client: {{ $lims_customer_data->name ?? '________________________________' }} {{ $lims_customer_data->phone_number ? '('.$lims_customer_data->phone_number. ')' : '' }}
-                   
+                    @if(!empty($lims_customer_data->address) || !empty($lims_customer_data->city))
+                        <br>{{ trim(($lims_customer_data->address ?? '').' '.($lims_customer_data->city ?? '')) }}
+                    @endif
                 </div>
                 
             </div>
@@ -264,6 +276,13 @@
             </div>
         </div>
         
+        @php
+            $deliveryLineMap = [];
+            $deliveryTracked = \App\Services\DeliveryProgress::saleUsesTrackedLines((int) $lims_sale_data->id);
+            foreach (\App\Services\DeliveryProgress::linesForSale((int) $lims_sale_data->id) as $deliveryLine) {
+                $deliveryLineMap[$deliveryLine['product_sale_id']] = $deliveryLine;
+            }
+        @endphp
         <div class="table-container">
             <table>
                 <thead>
@@ -280,16 +299,17 @@
                     @foreach ($lims_product_sale_data as $key => $product_sale_data)
                         <?php
                         $lims_product_data = \App\Models\Product::find($product_sale_data->product_id);
+                        $productName = $lims_product_data->name ?? ('Produit retiré #'.$product_sale_data->product_id);
                         if ($product_sale_data->sale_unit_id) {
                             $unit = \App\Models\Unit::select('unit_code')->find($product_sale_data->sale_unit_id);
-                            $unit_code = $unit->unit_code;
+                            $unit_code = $unit->unit_code ?? '';
                         } else {
                             $unit_code = '';
                         }
 
                         if ($product_sale_data->variant_id) {
                             $variant = \App\Models\Variant::select('name')->find($product_sale_data->variant_id);
-                            $variant_name = $variant->name;
+                            $variant_name = $variant->name ?? '';
                         } else {
                             $variant_name = '';
                         }
@@ -308,10 +328,18 @@
                         }
 
                         $total = ($product_sale_data->net_unit_price + $topping_price_sum) * $product_sale_data->qty;
+                        $trackedLine = $deliveryLineMap[$product_sale_data->id] ?? null;
+                        if ($deliveryTracked && $trackedLine) {
+                            $qtyDelivered = $trackedLine['delivered'];
+                            $qtyRemaining = $trackedLine['remaining'];
+                        } else {
+                            $qtyDelivered = (float) $product_sale_data->dqty;
+                            $qtyRemaining = max(0, (float) $product_sale_data->qty - (float) $product_sale_data->return_qty - $qtyDelivered);
+                        }
                         ?>
                         <tr>
                             <td>
-                                {!! $lims_product_data->name !!}
+                                {!! $productName !!}
 
                                 @if (!empty($topping_names))
                                     <br><small>({{ implode(', ', $topping_names) }})</small>
@@ -336,13 +364,13 @@
                             <td style="text-align: center;"> {{ $product_sale_data->qty }}</td>
                             <td style="text-align: center;">{{ number_format($product_sale_data->net_unit_price + $topping_price_sum, $general_setting->decimal, '.', ',') }} FCFA</td>
                             <td style="text-align: center;">{{ number_format($total, $general_setting->decimal, '.', ',') }} FCFA</td>
-                             <td style="text-align: center;">{{ $product_sale_data->qty - ($product_sale_data->qty - $product_sale_data->dqty) }}</td>
-                            <td style="text-align: center;">{{ $product_sale_data->dqty ? $product_sale_data->qty - $product_sale_data->dqty : '' }}</td>
+                             <td style="text-align: center;">{{ \App\Services\DeliveryProgress::formatQty((float) $qtyDelivered) }}</td>
+                            <td style="text-align: center;">{{ \App\Services\DeliveryProgress::formatQty((float) $qtyRemaining) }}</td>
                         </tr>
                     @endforeach
 
                     @php
-                        $remaining_rows = 18 - count($lims_product_sale_data);
+                        $remaining_rows = max(0, 8 - count($lims_product_sale_data));
                     @endphp
 
                     @for ($i = 0; $i < $remaining_rows; $i++)
@@ -358,8 +386,9 @@
                 </tbody>
                 <tfoot>
                     <tr class="total-row">
-                        <td colspan="5" style="text-align: center; font-weight: bold;">TOTAL GENERAL</td>
+                        <td colspan="3" style="text-align: right; font-weight: bold;">TOTAL GENERAL</td>
                         <td style="text-align: center;">{{ number_format((float) $lims_sale_data->grand_total, $general_setting->decimal, '.', ',') }} FCFA</td>
+                        <td colspan="2"></td>
                     </tr>
                 </tfoot>
             </table>
@@ -381,6 +410,12 @@
                 <div style="font-weight: 600;">Le Client</div>
             </div>
         </div>
+        @if(!empty($lims_sale_data->sale_note))
+            <div class="note-block"><strong>Note:</strong> {{ $lims_sale_data->sale_note }}</div>
+        @endif
+        @if(!empty($lims_sale_data->staff_note))
+            <div class="note-block"><strong>Note interne:</strong> {{ $lims_sale_data->staff_note }}</div>
+        @endif
     </div>
 
     <script type="text/javascript">

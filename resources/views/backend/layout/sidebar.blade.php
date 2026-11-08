@@ -88,6 +88,7 @@
                 @endif
                 @if($delivery_permission_active)
                 <li id="delivery-menu"><a href="{{route('delivery.index')}}">{{__('db.Delivery List')}}</a></li>
+                <li id="delivery-report-menu"><a href="{{route('delivery.report')}}">{{__('Delivery Report')}}</a></li>
                 @endif
                 @if($gift_card_permission_active)
                 <li id="gift-card-menu"><a href="{{route('gift_cards.index')}}">{{__('db.Gift Card List')}}</a> </li>

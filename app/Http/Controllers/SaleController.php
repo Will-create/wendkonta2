@@ -69,6 +69,7 @@ use App\Models\PackingSlip;
 use App\Models\RewardPoint;
 use App\Models\SaleWarrantyGuarantee;
 use App\Models\SmsTemplate;
+use App\Services\DeliveryProgress;
 use App\Services\SmsService;
 use App\SMSProviders\TonkraSms;
 use App\ViewModels\ISmsModel;
@@ -259,95 +260,67 @@ class SaleController extends Controller
         else
         {
             $search = $request->input('search.value');
-            $q = Sale::join('product_sales', 'sales.id', '=', 'product_sales.sale_id')
-                ->leftJoin('billers', 'sales.biller_id', '=', 'billers.id')
-                ->leftJoin('customers', 'sales.customer_id', '=', 'customers.id')
-                ->leftJoin('products', 'product_sales.product_id', '=', 'products.id')
-                ->whereDate('sales.created_at', '=' , date('Y-m-d', strtotime(str_replace('/', '-', $search))))
-                ->offset($start)
-                ->limit($limit)
-                ->orderBy($order,$dir);
-            if(Auth::user()->role_id > 2 && config('staff_access') == 'own') {
-                $q = $q->select('sales.*')
-                        ->with('biller', 'customer', 'warehouse', 'user')
-                        ->where('sales.user_id', Auth::id())
-                        ->orwhere([
-                            ['sales.reference_no', 'LIKE', "%{$search}%"],
-                            ['sales.user_id', Auth::id()]
-                        ])
-                        ->orwhere([
-                            ['customers.name', 'LIKE', "%{$search}%"],
-                            ['sales.user_id', Auth::id()]
-                        ])
-                        ->orwhere([
-                            ['customers.phone_number', 'LIKE', "%{$search}%"],
-                            ['sales.user_id', Auth::id()]
-                        ])
-                        ->orwhere([
-                            ['billers.name', 'LIKE', "%{$search}%"],
-                            ['sales.user_id', Auth::id()]
-                        ])
-                        ->orwhere([
-                            ['product_sales.imei_number', 'LIKE', "%{$search}%"],
-                            ['sales.user_id', Auth::id()]
-                        ]);
-                foreach ($field_names as $key => $field_name) {
-                    $q = $q->orwhere([
-                            ['sales.user_id', Auth::id()],
-                            ['sales.' . $field_name, 'LIKE', "%{$search}%"]
-                        ]);
-                }
-            }
-            elseif(Auth::user()->role_id > 2 && config('staff_access') == 'warehouse') {
-                $q = $q->select('sales.*')
-                        ->with('biller', 'customer', 'warehouse', 'user')
-                        ->where('sales.user_id', Auth::id())
-                        ->orwhere([
-                            ['sales.reference_no', 'LIKE', "%{$search}%"],
-                            ['sales.warehouse_id', Auth::user()->warehouse_id]
-                        ])
-                        ->orwhere([
-                            ['customers.name', 'LIKE', "%{$search}%"],
-                            ['sales.warehouse_id', Auth::user()->warehouse_id]
-                        ])
-                        ->orwhere([
-                            ['customers.phone_number', 'LIKE', "%{$search}%"],
-                            ['sales.warehouse_id', Auth::user()->warehouse_id]
-                        ])
-                        ->orwhere([
-                            ['billers.name', 'LIKE', "%{$search}%"],
-                            ['sales.warehouse_id', Auth::user()->warehouse_id]
-                        ])
-                        ->orwhere([
-                            ['product_sales.imei_number', 'LIKE', "%{$search}%"],
-                            ['sales.warehouse_id', Auth::user()->warehouse_id]
-                        ]);
-                foreach ($field_names as $key => $field_name) {
-                    $q = $q->orwhere([
-                            ['sales.user_id', Auth::id()],
-                            ['sales.warehouse_id', Auth::user()->warehouse_id]
-                        ]);
-                }
-            }
-            else {
-                $q = $q->select('sales.*')
-                        ->with('biller', 'customer', 'warehouse', 'user')
-                        ->orwhere('sales.reference_no', 'LIKE', "%{$search}%")
-                        ->orwhere('customers.name', 'LIKE', "%{$search}%")
-                        ->orwhere('customers.phone_number', 'LIKE', "%{$search}%")
-                        ->orwhere('billers.name', 'LIKE', "%{$search}%")
-                        ->orwhere('product_sales.imei_number', 'LIKE', "%{$search}%")
-                        ->orWhere('products.name', 'LIKE', "%{$search}%");
-                        // ->orWhere('products.code', 'LIKE', "%{$search}%");
-                foreach ($field_names as $key => $field_name) {
-                    $q = $q->orwhere('sales.' . $field_name, 'LIKE', "%{$search}%");
-                }
-            }
-            $sales = $q->groupBy('sales.id')->get();
+            $q = Sale::query()
+                ->select('sales.*')
+                ->with('biller', 'customer', 'warehouse', 'user')
+                ->whereDate('sales.created_at', '>=', $request->input('starting_date'))
+                ->whereDate('sales.created_at', '<=', $request->input('ending_date'));
 
-            $totalFiltered = $q->groupBy('sales.id')->count();
+            if(Auth::user()->role_id > 2 && config('staff_access') == 'own')
+                $q->where('sales.user_id', Auth::id());
+            elseif(Auth::user()->role_id > 2 && config('staff_access') == 'warehouse')
+                $q->where('sales.warehouse_id', Auth::user()->warehouse_id);
+            if($warehouse_id)
+                $q->where('sales.warehouse_id', $warehouse_id);
+            if($sale_status)
+                $q->where('sales.sale_status', $sale_status);
+            if($payment_status)
+                $q->where('sales.payment_status', $payment_status);
+            if($sale_type)
+                $q->where('sales.sale_type', $sale_type);
+            if($payment_method) {
+                $q->whereExists(function ($payment) use ($payment_method) {
+                    $payment->select(DB::raw(1))
+                        ->from('payments')
+                        ->whereColumn('payments.sale_id', 'sales.id')
+                        ->where('payments.paying_method', $payment_method);
+                });
+            }
+
+            $q->where(function ($match) use ($search, $field_names) {
+                $match->where('sales.reference_no', 'LIKE', "%{$search}%")
+                    ->orWhereHas('customer', function ($customer) use ($search) {
+                        $customer->where('name', 'LIKE', "%{$search}%")
+                            ->orWhere('phone_number', 'LIKE', "%{$search}%");
+                    })
+                    ->orWhereHas('biller', function ($biller) use ($search) {
+                        $biller->where('name', 'LIKE', "%{$search}%");
+                    })
+                    ->orWhereExists(function ($product) use ($search) {
+                        $product->select(DB::raw(1))
+                            ->from('product_sales')
+                            ->leftJoin('products', 'product_sales.product_id', '=', 'products.id')
+                            ->whereColumn('product_sales.sale_id', 'sales.id')
+                            ->where(function ($name) use ($search) {
+                                $name->where('products.name', 'LIKE', "%{$search}%")
+                                    ->orWhere('products.code', 'LIKE', "%{$search}%")
+                                    ->orWhere('product_sales.imei_number', 'LIKE', "%{$search}%");
+                            });
+                    });
+                $parsed = strtotime(str_replace('/', '-', $search));
+                if($parsed) {
+                    $match->orWhereDate('sales.created_at', date('Y-m-d', $parsed));
+                }
+                foreach ($field_names as $field_name) {
+                    $match->orWhere('sales.'.$field_name, 'LIKE', "%{$search}%");
+                }
+            });
+
+            $totalFiltered = (clone $q)->count();
+            $sales = $q->offset($start)->limit($limit)->orderBy($order, $dir)->get();
         }
         $data = array();
+        $progressMap = !empty($sales) ? DeliveryProgress::forSales(collect($sales)->pluck('id')) : [];
         if(!empty($sales))
         {
             // return $sales;
@@ -373,22 +346,24 @@ class SaleController extends Controller
                 $productNames = [];
                 $productQtys = [];
 
-                $total_products = $sale->products->count();
+                $saleLines = DB::table('product_sales')
+                    ->leftJoin('products', 'products.id', '=', 'product_sales.product_id')
+                    ->where('product_sales.sale_id', $sale->id)
+                    ->orderBy('product_sales.id')
+                    ->get(['products.name', 'product_sales.qty', 'product_sales.product_id']);
+                $total_products = $saleLines->count();
 
-                foreach ($sale->products as $key => $product) {
-                    $product_sale = Product_Sale::where([
-                        'product_id' => $product->id,
-                        'sale_id' => $sale->id
-                    ])->first();
+                foreach ($saleLines as $key => $product) {
+                    $label = $product->name ?: ('Removed product #'.$product->product_id);
                     if ($key + 1 < $total_products) {
                         $productNames[] = '<div style="border-bottom: 1px solid #ccc; padding-bottom: 4px; margin-bottom: 4px;">'
-                                        . e($product->name) . '</div>';
+                                        . e($label) . '</div>';
                     } else {
                         $productNames[] = '<div style="padding-bottom: 4px; margin-bottom: 4px;">'
-                                        . e($product->name) . '</div>';
+                                        . e($label) . '</div>';
                     }
                     $productQtys[] = '<div style="padding-bottom: 4px; margin-bottom: 4px;">'
-                                    . '<span class="badge badge-primary">' . e($product_sale->qty) . '</span></div>';
+                                    . '<span class="badge badge-primary">' . e($product->qty) . '</span></div>';
                 }
                 $nestedData['products'] = implode('', $productNames);
                 $nestedData['qty'] = implode('', $productQtys);
@@ -437,17 +412,13 @@ class SaleController extends Controller
                     $nestedData['payment_status'] = '<div class="badge badge-warning">'.__('db.Partial').'</div>';
                 else
                     $nestedData['payment_status'] = '<div class="badge badge-success">'.__('db.Paid').'</div>';
-                $delivery_data = DB::table('deliveries')->select('status')->where('sale_id', $sale->id)->first();
-                if($delivery_data) {
-                    if($delivery_data->status == 1)
-                        $nestedData['delivery_status'] = '<div class="badge badge-primary">'.__('db.Packing').'</div>';
-                    elseif($delivery_data->status == 2)
-                        $nestedData['delivery_status'] = '<div class="badge badge-info">'.__('db.Delivering').'</div>';
-                    elseif($delivery_data->status == 3)
-                        $nestedData['delivery_status'] = '<div class="badge badge-success">'.__('db.Delivered').'</div>';
-                }
-                else
-                    $nestedData['delivery_status'] = 'N/A';
+                $saleProgress = $progressMap[$sale->id] ?? [
+                    'status' => DeliveryProgress::NOT_DELIVERED,
+                    'sold' => 0,
+                    'delivered' => 0,
+                    'remaining' => 0,
+                ];
+                $nestedData['delivery_status'] = DeliveryProgress::badge($saleProgress);
 
                 $nestedData['grand_total'] = number_format($sale->grand_total, config('decimal'));
                 //$nestedData['grand_total'] = \Illuminate\Support\Number::format($sale->grand_total, locale: 'id');
@@ -518,9 +489,13 @@ class SaleController extends Controller
                     </form>
                 </li>';
 
-                $nestedData['options'] .=
+                if(in_array("delivery", $request['all_permission']))
+                    $nestedData['options'] .=
                     '<li>
                         <button type="button" class="add-delivery btn btn-link" data-id = "'.$sale->id.'"><i class="fa fa-truck"></i> '.__('db.Add Delivery').'</button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-link view"><i class="fa fa-truck"></i> '.__('Delivery history').'</button>
                     </li>';
                 if(in_array("sales-delete", $request['all_permission']))
                     $nestedData['options'] .= \Form::open(["route" => ["sales.destroy", $sale->id], "method" => "DELETE"] ).'
@@ -3573,11 +3548,22 @@ public function store3(StoreSaleRequest $request)
     public function productSaleData($id)
     {
         $lims_product_sale_data = Product_Sale::where('sale_id', $id)->get();
+        $deliveryLines = [];
+        foreach (DeliveryProgress::linesForSale((int) $id) as $line) {
+            $deliveryLines[$line['product_sale_id']] = $line;
+        }
         foreach ($lims_product_sale_data as $key => $product_sale_data) {
             $product = Product::find($product_sale_data->product_id);
+            if(!$product) {
+                $product = new \stdClass();
+                $product->name = 'Removed product #'.$product_sale_data->product_id;
+                $product->code = '';
+            }
             if($product_sale_data->variant_id) {
                 $lims_product_variant_data = ProductVariant::select('item_code')->FindExactProduct($product_sale_data->product_id, $product_sale_data->variant_id)->first();
-                $product->code = $lims_product_variant_data->item_code;
+                if($lims_product_variant_data) {
+                    $product->code = $lims_product_variant_data->item_code;
+                }
             }
             $unit_data = Unit::find($product_sale_data->sale_unit_id);
             if($unit_data){
@@ -3618,7 +3604,11 @@ public function store3(StoreSaleRequest $request)
             }
             else
                 $product_sale[8][$key] = $product_sale_data->return_qty;
-            if($product_sale_data->is_delivered)
+            $deliveryLine = $deliveryLines[$product_sale_data->id] ?? null;
+            if($deliveryLine) {
+                $product_sale[9][$key] = DeliveryProgress::formatQty($deliveryLine['delivered']).' / '.DeliveryProgress::formatQty($deliveryLine['sold']);
+            }
+            elseif($product_sale_data->is_delivered)
                 $product_sale[9][$key] = __('db.Yes');
             else
                 $product_sale[9][$key] = __('db.No');
@@ -3635,6 +3625,78 @@ public function store3(StoreSaleRequest $request)
             }
         }
         return $product_sale;
+    }
+
+    public function deliveryHistory($id)
+    {
+        $role = Role::find(Auth::user()->role_id);
+        if(!$role->hasPermissionTo('sales-index') && !$role->hasPermissionTo('delivery')) {
+            return response()->json(['error' => __('db.Sorry! You are not allowed to access this module')], 403);
+        }
+        $sale = Sale::find($id);
+        if(!$sale) {
+            return response()->json(['deliveries' => [], 'progress' => null]);
+        }
+        $progress = DeliveryProgress::forSales([(int) $id])[(int) $id] ?? null;
+        if($progress) {
+            $progress['label'] = DeliveryProgress::label($progress['status']);
+            $progress['sold_label'] = DeliveryProgress::formatQty($progress['sold']);
+            $progress['delivered_label'] = DeliveryProgress::formatQty($progress['delivered']);
+            $progress['remaining_label'] = DeliveryProgress::formatQty($progress['remaining']);
+        }
+
+        return response()->json([
+            'progress' => $progress,
+            'lines' => DeliveryProgress::linesForSale((int) $id),
+            'deliveries' => DeliveryProgress::history((int) $id),
+        ]);
+    }
+
+    public function invoiceLookup(Request $request)
+    {
+        $role = Role::find(Auth::user()->role_id);
+        if(!$role->hasPermissionTo('sales-index')) {
+            return response()->json(['error' => __('db.Sorry! You are not allowed to access this module')], 403);
+        }
+
+        $date = $request->input('date');
+        $reference = trim((string) $request->input('reference'));
+        if(!$date && $reference === '') {
+            return response()->json([]);
+        }
+
+        $q = Sale::query()->with('customer:id,name,phone_number');
+        if(Auth::user()->role_id > 2 && config('staff_access') == 'own') {
+            $q->where('user_id', Auth::id());
+        } elseif(Auth::user()->role_id > 2 && config('staff_access') == 'warehouse') {
+            $q->where('warehouse_id', Auth::user()->warehouse_id);
+        }
+        if($date) {
+            $parsed = strtotime(str_replace('/', '-', $date));
+            if(!$parsed) {
+                return response()->json([]);
+            }
+            $q->whereDate('created_at', date('Y-m-d', $parsed));
+        }
+        if($reference !== '') {
+            $q->where('reference_no', 'LIKE', '%'.$reference.'%');
+        }
+
+        $sales = $q->orderByDesc('id')->limit(30)->get();
+        $rows = [];
+        foreach ($sales as $sale) {
+            $rows[] = [
+                'id' => $sale->id,
+                'date' => date(config('date_format'), strtotime($sale->created_at)),
+                'reference_no' => $sale->reference_no,
+                'customer' => optional($sale->customer)->name ?? '',
+                'phone' => optional($sale->customer)->phone_number ?? '',
+                'grand_total' => number_format($sale->grand_total, config('decimal')),
+                'invoice_url' => route('sale.invoice', $sale->id),
+            ];
+        }
+
+        return response()->json($rows);
     }
 
     public function getSale($id)
@@ -4244,11 +4306,11 @@ public function store3(StoreSaleRequest $request)
 
             //new invoice view file(dev:maynuddin)
             $invoice_settings = InvoiceSetting::active_setting();
-            if($invoice_settings->size == 'a4') {
+            if($invoice_settings && $invoice_settings->size == 'a4') {
                     return view('backend.setting.invoice_setting.a4', compact('invoice_settings','lims_sale_data', 'currency_code', 'lims_product_sale_data', 'lims_biller_data', 'lims_warehouse_data', 'lims_customer_data', 'lims_payment_data', 'numberInWords', 'paid_by_info', 'change_amount', 'sale_custom_fields', 'customer_custom_fields', 'product_custom_fields', 'qrText', 'totalDue', 'lims_bill_by'));
-            }elseif($invoice_settings->size == '58mm'){
+            }elseif($invoice_settings && $invoice_settings->size == '58mm'){
                 return view('backend.setting.invoice_setting.58mm', compact('invoice_settings','lims_sale_data', 'currency_code', 'lims_product_sale_data', 'lims_biller_data', 'lims_warehouse_data', 'lims_customer_data', 'lims_payment_data', 'numberInWords', 'sale_custom_fields', 'customer_custom_fields', 'product_custom_fields', 'qrText', 'totalDue', 'lims_bill_by'));
-            }elseif($invoice_settings->size == '80mm'){
+            }elseif($invoice_settings && $invoice_settings->size == '80mm'){
                 return view('backend.setting.invoice_setting.80mm', compact('invoice_settings','lims_sale_data', 'currency_code', 'lims_product_sale_data', 'lims_biller_data', 'lims_warehouse_data', 'lims_customer_data', 'lims_payment_data', 'numberInWords', 'sale_custom_fields', 'customer_custom_fields', 'product_custom_fields', 'qrText', 'totalDue', 'lims_bill_by'));
             }
             // old invoice code

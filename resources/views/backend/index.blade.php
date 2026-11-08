@@ -92,6 +92,85 @@
           </div>
         </div>
       </div>
+      @php
+        $warehouse_report_permission = $role_has_permissions_list->where('name', 'warehouse-report')->first();
+        $sales_index_permission = $role_has_permissions_list->where('name', 'sales-index')->first();
+        $delivery_dashboard_permission = $role_has_permissions_list->where('name', 'delivery')->first();
+      @endphp
+      @if($warehouse_report_permission || $sales_index_permission || $delivery_dashboard_permission)
+      <section class="mt-3">
+        <div class="container-fluid">
+          <div class="row">
+            @if($warehouse_report_permission)
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header"><h4>{{__('Warehouse Report')}}</h4></div>
+                <div class="card-body">
+                  {!! Form::open(['route' => 'report.warehouse', 'method' => 'post']) !!}
+                  <div class="form-group">
+                    <label>{{__('Warehouse')}}</label>
+                    {{-- bootstrap-select hides this control, so a native required attribute blocks submit even when a warehouse is selected --}}
+                    <select name="warehouse_id" class="selectpicker form-control" data-live-search="true" title="Select warehouse...">
+                      @foreach($lims_warehouse_list as $warehouse)
+                        <option value="{{$warehouse->id}}" {{Auth::user()->warehouse_id == $warehouse->id ? 'selected' : ''}}>{{$warehouse->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <input type="hidden" name="start_date" value="{{date('Y-m').'-01'}}" />
+                  <input type="hidden" name="end_date" value="{{date('Y-m-d')}}" />
+                  <button type="submit" class="btn btn-primary">{{__('Open warehouse report')}}</button>
+                  {!! Form::close() !!}
+                </div>
+              </div>
+            </div>
+            @endif
+            @if($sales_index_permission)
+            <div class="col-md-5">
+              <div class="card">
+                <div class="card-header"><h4>{{__('Invoice search')}}</h4></div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label>{{__('db.date')}}</label>
+                    <input type="date" id="invoice-search-date" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label>{{__('db.reference')}}</label>
+                    <input type="text" id="invoice-search-reference" class="form-control" placeholder="{{__('Invoice reference')}}">
+                  </div>
+                  <button type="button" id="invoice-search-btn" class="btn btn-primary">{{__('db.Search')}}</button>
+                  <div class="table-responsive mt-3">
+                    <table class="table table-bordered" id="invoice-search-results">
+                      <thead>
+                        <tr>
+                          <th>{{__('db.date')}}</th>
+                          <th>{{__('db.reference')}}</th>
+                          <th>{{__('db.customer')}}</th>
+                          <th>{{__('db.grand total')}}</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            @endif
+            @if($delivery_dashboard_permission)
+            <div class="col-md-3">
+              <div class="card">
+                <div class="card-header"><h4>{{__('Delivery Report')}}</h4></div>
+                <div class="card-body">
+                  <p>{{__('Pending, partial and completed deliveries for the current period.')}}</p>
+                  <a href="{{route('delivery.report')}}" class="btn btn-primary">{{__('Open delivery report')}}</a>
+                </div>
+              </div>
+            </div>
+            @endif
+          </div>
+        </div>
+      </section>
+      @endif
       <!-- Counts Section -->
       <section class="dashboard-counts">
         <div class="container-fluid">
@@ -366,6 +445,26 @@
 
 @push('scripts')
 <script type="text/javascript">
+    $('#invoice-search-btn').on('click', function() {
+        var date = $('#invoice-search-date').val();
+        var reference = $('#invoice-search-reference').val();
+        var body = $('#invoice-search-results tbody');
+        body.empty();
+        if (!date && !reference) {
+            body.append('<tr><td colspan="5">Enter an invoice date or a reference.</td></tr>');
+            return;
+        }
+        $.get('{{ route('sale.invoiceLookup') }}', {date: date, reference: reference}, function(rows) {
+            if (!rows.length) {
+                body.append('<tr><td colspan="5">No invoice matches this search.</td></tr>');
+                return;
+            }
+            $.each(rows, function(_, row) {
+                body.append('<tr><td>'+$('<div>').text(row.date).html()+'</td><td>'+$('<div>').text(row.reference_no).html()+'</td><td>'+$('<div>').text(row.customer).html()+'</td><td>'+$('<div>').text(row.grand_total).html()+'</td><td><a class="btn btn-sm btn-primary" href="'+row.invoice_url+'">Invoice</a></td></tr>');
+            });
+        });
+    });
+
     $(document).ready(function(){
       $.ajax({
         url: '{{url("/yearly-best-selling-price")}}',

@@ -545,13 +545,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{{__('db.Sale Note')}}</label>
-                                            <textarea rows="25" class="form-control" name="sale_note"></textarea>
+                                            <textarea rows="4" class="form-control" name="sale_note"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{{__('db.Staff Note')}}</label>
-                                            <textarea rows="25" class="form-control" name="staff_note"></textarea>
+                                            <textarea rows="4" class="form-control" name="staff_note"></textarea>
                                         </div>
                                     </div>
                                 </div>

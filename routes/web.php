@@ -312,6 +312,8 @@ Route::group(['middleware' => ['common', 'auth', 'active']], function() {
             ->name('sales.forceDeleteSelected')
                 ->middleware('hasPermanentDeletePermission');
         Route::get('sales/product_sale/{id}', 'productSaleData');
+        Route::get('sales/{id}/delivery-history', 'deliveryHistory');
+        Route::get('sales/invoice-lookup', 'invoiceLookup')->name('sale.invoiceLookup');
         Route::get('sales/get-sale/{id}', 'getSale');
         Route::post('importsale', 'importSale')->name('sale.import');
         Route::get('pos/{id?}', 'posSale')->name('sale.pos');
@@ -375,6 +377,7 @@ Route::group(['middleware' => ['common', 'auth', 'active']], function() {
             Route::get('/', 'index')->name('delivery.index');
             Route::get('delivery_list_data','deliveryListData');
             Route::get('product_delivery/{id}','productDeliveryData');
+            Route::get('report', 'report')->name('delivery.report');
             Route::get('create/{id}', 'create');
             Route::post('store', 'store')->name('delivery.store');
             Route::post('sendmail', 'sendMail')->name('delivery.sendMail');

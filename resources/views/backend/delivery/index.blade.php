@@ -139,6 +139,7 @@
                     <th>{{__('db.Batch No')}}</th>
                     <th>{{__('db.Expired Date')}}</th>
                     <th>Qty</th>
+                    <th>{{__('Remaining')}}</th>
                 </thead>
                 <tbody>
                 </tbody>
@@ -151,7 +152,7 @@
 </div>
 
 <div id="edit-delivery" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
-    <div role="document" class="modal-dialog">
+    <div role="document" class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 id="exampleModalLabel" class="modal-title">{{__('db.Update Delivery')}}</h5>
@@ -208,9 +209,28 @@
                         <label>{{__('db.Note')}}</label>
                         <textarea rows="3" name="note" class="form-control"></textarea>
                     </div>
+                    <div class="col-md-12">
+                        <label>{{__('db.product')}}</label>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="edit-delivery-lines">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>{{__('db.product')}}</th>
+                                        <th>{{__('db.Qty')}}</th>
+                                        <th>{{__('Delivered')}}</th>
+                                        <th>{{__('Remaining')}}</th>
+                                        <th>{{__('This delivery')}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
                 <input type="hidden" name="reference_no">
                 <input type="hidden" name="delivery_id">
+                <input type="hidden" name="track_lines" value="1">
                 <button type="submit" class="btn btn-primary">{{__('db.submit')}}</button>
                 {{ Form::close() }}
             </div>
@@ -241,7 +261,7 @@
           var divContents = document.getElementById("delivery-details").innerHTML;
         var a = window.open('');
         a.document.write('<html>');
-        a.document.write('<body><style>body{font-family: sans-serif;line-height: 1.15;-webkit-text-size-adjust: 100%;}.d-print-none{display:none}.text-center{text-align:center}.row{width:100%;margin-right: -15px;margin-left: -15px;}.col-md-12{width:100%;display:block;padding: 5px 15px;}.col-md-6{width: 50%;float:left;padding: 5px 15px;}table{width:100%;margin-top:30px;}th{text-aligh:left}td{padding:10px}table,th,td{border: 1px solid black; border-collapse: collapse;}#delivery-footer{margin-left:10px}</style><style>@media print {.modal-dialog { max-width: 1000px;} }</style>');
+        a.document.write('<body><style>body{font-family:sans-serif;font-size:12px;line-height:1.3;max-width:148mm;margin:0 auto}.d-print-none{display:none}.text-center{text-align:center}.row{width:100%}.col-md-12{width:100%;display:block;padding:4px 0}.col-md-6{width:48%;float:left;padding:4px}table{width:100%;margin-top:8px;font-size:11px}th{text-align:left}td,th{padding:3px 4px}table,th,td{border:1px solid black;border-collapse:collapse}#delivery-footer{clear:both;margin-top:8px}img{max-width:28mm;height:auto}@media print{@page{size:A5;margin:8mm}}</style>');
         a.document.write(divContents);
         a.document.write('</body></html>');
         a.document.close();
@@ -296,6 +316,7 @@
                 cols += '<td>' + batch_no[index] + '</td>';
                 cols += '<td>' + expired_date[index] + '</td>';
                 cols += '<td>' + qty[index] + '</td>';
+                cols += '<td>' + ((data[5] && data[5][index] !== undefined) ? data[5][index] : '') + '</td>';
                 newRow.append(cols);
                 newBody.append(newRow);
             });
@@ -306,7 +327,7 @@
         htmlfooter += '<div class="col-md-4 form-group"><p>Delivered By: '+delivery[11]+'</p></div>';
         htmlfooter += '<div class="col-md-4 form-group"><p>Recieved By: '+delivery[12]+'</p></div>';
         htmlfooter += '<br><br>';
-        htmlfooter += '<div class="col-md-2 offset-md-5"><img style="max-width:850px;height:100%;max-height:130px" src="data:image/png;base64,'+barcode+'" alt="barcode" /></div>';
+        htmlfooter += '<div class="col-md-2 offset-md-5"><img style="width:28mm;height:auto" src="data:image/png;base64,'+barcode+'" alt="barcode" /></div>';
 
         $('#delivery-footer').html(htmlfooter);
         $('#delivery-details').modal('show');
@@ -332,6 +353,34 @@
                 $('input[name="reference_no"]').val(data[0]);
                 $('input[name="delivery_id"]').val(id);
                 $('.selectpicker').selectpicker('refresh');
+                var body = $('#edit-delivery-lines tbody');
+                body.empty();
+                $.each(data[9] || [], function(_, line) {
+                    var maxQty = parseFloat(line.max_qty);
+                    if (!(maxQty >= 0)) {
+                        maxQty = (parseFloat(line.remaining) || 0) + (parseFloat(line.current_qty) || 0);
+                    }
+                    var row = $('<tr>').attr('data-remaining', maxQty);
+                    var check = $('<input>', {type:'checkbox', class:'line-check'});
+                    var qty = $('<input>', {type:'number', class:'form-control line-qty', name:'deliver_qty['+line.product_sale_id+']', min:0, step:'any', max:maxQty}).prop('disabled', maxQty <= 0);
+                    if ((parseFloat(line.current_qty) || 0) > 0) {
+                        check.prop('checked', true);
+                        qty.prop('disabled', false).val(line.current_qty);
+                    } else if (maxQty <= 0) {
+                        check.prop('disabled', true);
+                    }
+                    check.on('change', function() {
+                        qty.prop('disabled', !$(this).is(':checked'));
+                        if (!$(this).is(':checked')) qty.val('');
+                    });
+                    row.append($('<td>').append(check));
+                    row.append($('<td>').text((line.name || '') + (line.code ? ' ['+line.code+']' : '')));
+                    row.append($('<td>').text(line.sold_label));
+                    row.append($('<td>').text(line.delivered_label));
+                    row.append($('<td>').text(line.remaining_label));
+                    row.append($('<td>').append(qty));
+                    body.append(row);
+                });
           });
           $("#edit-delivery").modal('show');
         });

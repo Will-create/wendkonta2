@@ -59,6 +59,11 @@ class Sale extends Model
         return $this->hasOne(Delivery::class);
     }
 
+    public function deliveries()
+    {
+        return $this->hasMany(Delivery::class);
+    }
+
     public function return()
     {
         return $this->hasOne(Returns::class);

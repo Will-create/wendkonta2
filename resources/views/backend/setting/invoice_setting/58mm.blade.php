@@ -76,11 +76,29 @@
             font-size: 10px;
         }
 
+        html, body {
+            width: 58mm;
+            margin: 0 auto;
+        }
+
+        img { max-width: 48mm; height: auto; }
+
+        #receipt-data, .ticket-sheet {
+            width: 58mm;
+            max-width: 58mm;
+            margin: 0;
+            word-wrap: break-word;
+        }
+
         @media print {
+            @page { size: 58mm auto; margin: 1mm; }
+
             * {
                 font-size: 10px !important;
-                line-height: 20px;
+                line-height: 14px;
             }
+
+            html, body { width: 58mm; margin: 0; }
 
             table {
                 width: 100%;
@@ -107,7 +125,7 @@
 </head>
 
 <body>
-    <div style="width:100%;max-width:180px;margin:0 0">
+    <div class="ticket-sheet" style="width:58mm;max-width:58mm;margin:0 auto">
         @if (preg_match('~[0-9]~', url()->previous()))
             @php $url = '../../pos'; @endphp
         @else
@@ -127,7 +145,7 @@
 
 
 
-        <div id="receipt-data" style="margin-right:15%">
+        <div id="receipt-data">
             <div class="centered">
                 @if ($general_setting->site_logo || $invoice_settings->company_logo)
                     <img src="{{ $invoice_settings->company_logo ? url('invoices', $invoice_settings->company_logo) : url('logo', $general_setting->site_logo) }}"

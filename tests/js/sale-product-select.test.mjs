@@ -48,7 +48,7 @@ function stripAtLines(source) {
 
 check(
     'mousedown keeps the result from blurring the search field',
-    blade.includes("$results.on('mousedown', '.product-img'") && blade.includes('event.preventDefault()') && blade.includes('pointerOnResult')
+    blade.includes("$results.on('mousedown', '.product-img, .add-selected-products'") && blade.includes('event.preventDefault()') && blade.includes('pointerOnResult')
 );
 check(
     'search reads the live warehouse id',

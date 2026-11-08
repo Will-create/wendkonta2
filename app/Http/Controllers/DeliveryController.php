@@ -10,6 +10,9 @@ use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\ProductBatch;
 use App\Models\Delivery;
+use App\Models\DeliveryProduct;
+use App\Models\Warehouse;
+use App\Services\DeliveryProgress;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use DB;
@@ -99,12 +102,24 @@ class DeliveryController extends Controller
                             ->select('sales.reference_no','customers.name', 'customers.phone_number', 'customers.city', 'sales.grand_total')
                             ->get();
 
-            $product_names = DB::table('sales')
+            $product_names = DB::table('delivery_products')
+                            ->leftJoin('products', 'products.id', '=', 'delivery_products.product_id')
+                            ->where('delivery_products.delivery_id', $delivery->id)
+                            ->select('products.name', 'delivery_products.qty', 'delivery_products.product_id')
+                            ->get()
+                            ->map(function ($line) {
+                                $name = $line->name ?: ('Removed product #'.$line->product_id);
+                                return $name.' × '.DeliveryProgress::formatQty((float) $line->qty);
+                            })
+                            ->all();
+            if(!$product_names) {
+                $product_names = DB::table('sales')
                             ->join('product_sales', 'sales.id', '=', 'product_sales.sale_id')
-                            ->join('products', 'products.id', '=', 'product_sales.product_id')
+                            ->leftJoin('products', 'products.id', '=', 'product_sales.product_id')
                             ->where('sales.id', $delivery->sale_id)
                             ->pluck('products.name')
                             ->toArray();
+            }
             if($delivery->packing_slip_ids)
                 $packing_slip_references = \App\Models\PackingSlip::whereIn('id', explode(",", $delivery->packing_slip_ids))->pluck('reference_no')->toArray();
             else
@@ -165,103 +180,125 @@ class DeliveryController extends Controller
     }
 
     public function create($id){
-        $lims_delivery_data = Delivery::where('sale_id', $id)->first();
-        if($lims_delivery_data){
-            $customer_sale = DB::table('sales')->join('customers', 'sales.customer_id', '=', 'customers.id')->where('sales.id', $id)->select('sales.reference_no','customers.name')->get();
+        if(!$this->canManageDelivery()) {
+            return response()->json(['error' => __('db.Sorry! You are not allowed to access this module')], 403);
+        }
 
-            $delivery_data[] = $lims_delivery_data->reference_no;
-            $delivery_data[] = $customer_sale[0]->reference_no;
-            $delivery_data[] = $lims_delivery_data->status;
-            $delivery_data[] = $lims_delivery_data->delivered_by;
-            $delivery_data[] = $lims_delivery_data->recieved_by;
-            $delivery_data[] = $customer_sale[0]->name;
-            $delivery_data[] = $lims_delivery_data->address;
-            $delivery_data[] = $lims_delivery_data->note;
-            $delivery_data[] = $lims_delivery_data->courier_id;
+        $sale = Sale::find($id);
+        if(!$sale) {
+            return response()->json(['error' => 'Sale not found'], 404);
         }
-        else{
-            if(in_array('ecommerce', explode(',',config('addons'))) || in_array('restaurant', explode(',',config('addons')))) {
-                $customer_sale = DB::table('sales')->join('customers', 'sales.customer_id', '=', 'customers.id')->where('sales.id', $id)->select('sales.reference_no','customers.name', 'sales.shipping_address', 'sales.shipping_city', 'sales.shipping_country')->get();
-    
-                $delivery_data[] = 'dr-' . date("Ymd") . '-'. date("his");
-                $delivery_data[] = $customer_sale[0]->reference_no;
-                $delivery_data[] = '';
-                $delivery_data[] = '';
-                $delivery_data[] = '';
-                $delivery_data[] = $customer_sale[0]->name;
-                $delivery_data[] = $customer_sale[0]->shipping_address.' '.$customer_sale[0]->shipping_city.' '.$customer_sale[0]->shipping_country;
-                $delivery_data[] = '';
-            }else{
-            
-                $customer_sale = DB::table('sales')->join('customers', 'sales.customer_id', '=', 'customers.id')->where('sales.id', $id)->select('sales.reference_no','customers.name', 'customers.address', 'customers.city', 'customers.country')->get();
-    
-                $delivery_data[] = 'dr-' . date("Ymd") . '-'. date("his");
-                $delivery_data[] = $customer_sale[0]->reference_no;
-                $delivery_data[] = '';
-                $delivery_data[] = '';
-                $delivery_data[] = '';
-                $delivery_data[] = $customer_sale[0]->name;
-                $delivery_data[] = $customer_sale[0]->address.' '.$customer_sale[0]->city.' '.$customer_sale[0]->country;
-                $delivery_data[] = '';
-            }
+
+        $customer = Customer::find($sale->customer_id);
+        $delivery_data[] = $this->nextReference();
+        $delivery_data[] = $sale->reference_no;
+        $delivery_data[] = '1';
+        $delivery_data[] = '';
+        $delivery_data[] = '';
+        $delivery_data[] = optional($customer)->name ?? '';
+        if(in_array('ecommerce', explode(',',config('addons'))) || in_array('restaurant', explode(',',config('addons')))) {
+            $delivery_data[] = trim(($sale->shipping_address ?? '').' '.($sale->shipping_city ?? '').' '.($sale->shipping_country ?? ''));
+        } else {
+            $delivery_data[] = trim((optional($customer)->address ?? '').' '.(optional($customer)->city ?? '').' '.(optional($customer)->country ?? ''));
         }
+        $delivery_data[] = '';
+        $delivery_data[] = '';
+        $delivery_data[] = $this->linePayload((int) $id);
+
         return $delivery_data;
     }
 
     public function store(Request $request)
     {
-        $data = $request->except('file');
-        $delivery = Delivery::firstOrNew(['reference_no' => $data['reference_no'] ]);
-        $document = $request->file;
-        if ($document) {
-            $ext = pathinfo($document->getClientOriginalName(), PATHINFO_EXTENSION);
-            $documentName = $data['reference_no'] . '.' . $ext;
-            $document->move(public_path('documents/delivery'), $documentName);
-            $delivery->file = $documentName;
+        if(!$this->canManageDelivery()) {
+            return redirect()->back()->with('not_permitted', __('db.Sorry! You are not allowed to access this module'));
         }
-        $delivery->sale_id = $data['sale_id'];
-        $delivery->user_id = Auth::id();
-        $delivery->courier_id = $data['courier_id'];
-        $delivery->address = $data['address'];
-        $delivery->delivered_by = $data['delivered_by'];
-        $delivery->recieved_by = $data['recieved_by'];
-        $delivery->status = $data['status'];
-        $delivery->note = $data['note'];
-        $delivery->save();
-        $lims_sale_data = Sale::find($data['sale_id']);
-        $lims_customer_data = Customer::find($lims_sale_data->customer_id);
-        $message = 'Delivery created successfully';
-        $mail_setting = MailSetting::latest()->first();
-        if($lims_customer_data->email && $data['status'] != 1 && $mail_setting) {
-            $mail_data['email'] = $lims_customer_data->email;
-            $mail_data['customer'] = $lims_customer_data->name;
-            $mail_data['sale_reference'] = $lims_sale_data->reference_no;
-            $mail_data['delivery_reference'] = $delivery->reference_no;
-            $mail_data['status'] = $data['status'];
-            $mail_data['address'] = $data['address'];
-            $mail_data['delivered_by'] = $data['delivered_by'];
-            $this->setMailInfo($mail_setting);
-            try{
-                Mail::to($mail_data['email'])->send(new DeliveryDetails($mail_data));
-            }
-            catch(\Exception $e){
-                $message = 'Delivery created successfully. Please setup your <a href="setting/mail_setting">mail setting</a> to send mail.';
-            }
+
+        $data = $request->except('file', 'deliver_qty', 'deliver_lines');
+        $saleId = (int) $request->input('sale_id');
+        try {
+            $delivery = DB::transaction(function () use ($request, $data, $saleId) {
+                $sale = Sale::where('id', $saleId)->lockForUpdate()->first();
+                if(!$sale) {
+                    throw new \InvalidArgumentException('Sale not found.');
+                }
+                Product_Sale::where('sale_id', $saleId)->lockForUpdate()->get();
+                $accepted = DeliveryProgress::assertLines($saleId, $this->submittedQuantities($request));
+
+                $reference = $data['reference_no'] ?? '';
+                if(!$reference || Delivery::where('reference_no', $reference)->exists()) {
+                    $reference = $this->nextReference();
+                }
+
+                $delivery = new Delivery();
+                $delivery->reference_no = $reference;
+                $delivery->sale_id = $saleId;
+                $delivery->user_id = Auth::id();
+                $delivery->courier_id = $data['courier_id'] ?? null;
+                $delivery->address = $data['address'] ?? '';
+                $delivery->delivered_by = $data['delivered_by'] ?? null;
+                $delivery->recieved_by = $data['recieved_by'] ?? null;
+                $delivery->status = $data['status'] ?? '1';
+                $delivery->note = $data['note'] ?? null;
+                $document = $request->file;
+                if ($document) {
+                    $ext = pathinfo($document->getClientOriginalName(), PATHINFO_EXTENSION);
+                    $documentName = $reference . '.' . $ext;
+                    $document->move(public_path('documents/delivery'), $documentName);
+                    $delivery->file = $documentName;
+                }
+                $delivery->save();
+
+                foreach ($accepted as $line) {
+                    DeliveryProduct::create([
+                        'delivery_id' => $delivery->id,
+                        'product_sale_id' => $line['product_sale_id'],
+                        'product_id' => $line['product_id'],
+                        'qty' => $line['qty'],
+                    ]);
+                }
+                DeliveryProgress::syncFlags($saleId);
+
+                return $delivery;
+            });
+        } catch (\InvalidArgumentException $e) {
+            return redirect()->back()->with('not_permitted', $e->getMessage());
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('not_permitted', 'Delivery could not be saved. '.$e->getMessage());
         }
+
+        $message = $this->notifyCustomer($delivery, $data['status'] ?? '1');
+
         return redirect('delivery')->with('message', $message);
     }
 
     public function productDeliveryData($id)
     {
         $lims_delivery_data = Delivery::find($id);
-        //return 'madarchod';
-        $lims_product_sale_data = Product_Sale::where('sale_id', $lims_delivery_data->sale->id)->get();
+        if(!$lims_delivery_data || !$lims_delivery_data->sale) {
+            return [];
+        }
+        $saleId = $lims_delivery_data->sale->id;
+        $lineQty = DeliveryProduct::where('delivery_id', $lims_delivery_data->id)->pluck('qty', 'product_sale_id');
+        $remaining = [];
+        foreach (DeliveryProgress::linesForSale((int) $saleId) as $line) {
+            $remaining[$line['product_sale_id']] = $line['remaining'];
+        }
+        $lims_product_sale_data = Product_Sale::where('sale_id', $saleId)->get();
+        $product_sale = [[], [], [], [], [], []];
 
         foreach ($lims_product_sale_data as $key => $product_sale_data) {
+            if($lineQty->isNotEmpty() && !$lineQty->has($product_sale_data->id)) {
+                continue;
+            }
             $product = Product::select('name', 'code')->find($product_sale_data->product_id);
-            if($product_sale_data->variant_id) {
+            $code = $product->code ?? ('#'.$product_sale_data->product_id);
+            $name = $product->name ?? ('Removed product #'.$product_sale_data->product_id);
+            if($product && $product_sale_data->variant_id) {
                 $lims_product_variant_data = ProductVariant::select('item_code')->FindExactProduct($product_sale_data->product_id, $product_sale_data->variant_id)->first();
-                $product->code = $lims_product_variant_data->item_code;
+                if($lims_product_variant_data) {
+                    $code = $lims_product_variant_data->item_code;
+                }
             }
             if($product_sale_data->product_batch_id) {
                 $product_batch_data = ProductBatch::select('batch_no', 'expired_date')->find($product_sale_data->product_batch_id);
@@ -269,16 +306,24 @@ class DeliveryController extends Controller
                     $batch_no = $product_batch_data->batch_no;
                     $expired_date = date(config('date_format'), strtotime($product_batch_data->expired_date));
                 }
+                else {
+                    $batch_no = 'N/A';
+                    $expired_date = 'N/A';
+                }
             }
             else {
                 $batch_no = 'N/A';
                 $expired_date = 'N/A';
             }
-            $product_sale[0][$key] = $product->code;
-            $product_sale[1][$key] = $product->name;
-            $product_sale[2][$key] = $batch_no;
-            $product_sale[3][$key] = $expired_date;
-            $product_sale[4][$key] = $product_sale_data->qty;
+            $index = count($product_sale[0]);
+            $product_sale[0][$index] = $code;
+            $product_sale[1][$index] = $name;
+            $product_sale[2][$index] = $batch_no;
+            $product_sale[3][$index] = $expired_date;
+            $product_sale[4][$index] = $lineQty->has($product_sale_data->id)
+                ? DeliveryProgress::formatQty((float) $lineQty[$product_sale_data->id])
+                : $product_sale_data->qty;
+            $product_sale[5][$index] = DeliveryProgress::formatQty((float) ($remaining[$product_sale_data->id] ?? 0));
         }
         return $product_sale;
     }
@@ -340,75 +385,358 @@ class DeliveryController extends Controller
 
     public function edit($id)
     {
+        if(!$this->canManageDelivery()) {
+            return response()->json(['error' => __('db.Sorry! You are not allowed to access this module')], 403);
+        }
         $lims_delivery_data = Delivery::find($id);
+        if(!$lims_delivery_data) {
+            return response()->json(['error' => 'Delivery not found'], 404);
+        }
         $customer_sale = DB::table('sales')->join('customers', 'sales.customer_id', '=', 'customers.id')->where('sales.id', $lims_delivery_data->sale_id)->select('sales.reference_no','customers.name')->get();
 
         $delivery_data[] = $lims_delivery_data->reference_no;
-        $delivery_data[] = $customer_sale[0]->reference_no;
+        $delivery_data[] = $customer_sale[0]->reference_no ?? '';
         $delivery_data[] = $lims_delivery_data->status;
         $delivery_data[] = $lims_delivery_data->delivered_by;
         $delivery_data[] = $lims_delivery_data->recieved_by;
-        $delivery_data[] = $customer_sale[0]->name;
+        $delivery_data[] = $customer_sale[0]->name ?? '';
         $delivery_data[] = $lims_delivery_data->address;
         $delivery_data[] = $lims_delivery_data->note;
         $delivery_data[] = $lims_delivery_data->courier_id;
+        $current = DeliveryProduct::where('delivery_id', $lims_delivery_data->id)->pluck('qty', 'product_sale_id');
+        $lines = $this->linePayload((int) $lims_delivery_data->sale_id, (int) $lims_delivery_data->id);
+        foreach ($lines as &$line) {
+            $currentQty = isset($current[$line['product_sale_id']]) ? (float) $current[$line['product_sale_id']] : 0;
+            $line['current_qty'] = $currentQty;
+            $line['max_qty'] = $line['remaining'];
+            $saleDelivered = $line['delivered'] + $currentQty;
+            $saleRemaining = max(0, $line['sold'] - $saleDelivered);
+            $line['delivered'] = $saleDelivered;
+            $line['remaining'] = $saleRemaining;
+            $line['delivered_label'] = DeliveryProgress::formatQty($saleDelivered);
+            $line['remaining_label'] = DeliveryProgress::formatQty($saleRemaining);
+        }
+        unset($line);
+        $delivery_data[] = $lines;
         return $delivery_data;
     }
 
     public function update(Request $request)
     {
-        $input = $request->except('file');
-        //return $input;
+        if(!$this->canManageDelivery()) {
+            return redirect()->back()->with('not_permitted', __('db.Sorry! You are not allowed to access this module'));
+        }
+
+        $input = $request->except('file', 'deliver_qty', 'deliver_lines', 'track_lines');
         $lims_delivery_data = Delivery::find($input['delivery_id']);
-        $document = $request->file;
-        if ($document) {
-            $this->fileDelete(public_path('documents/delivery/'), $lims_delivery_data->file);
-            $ext = pathinfo($document->getClientOriginalName(), PATHINFO_EXTENSION);
-            $documentName = $input['reference_no'] . '.' . $ext;
-            $document->move(public_path('documents/delivery'), $documentName);
-            $input['file'] = $documentName;
+        if(!$lims_delivery_data) {
+            return redirect()->back()->with('not_permitted', 'Delivery not found');
         }
-        $lims_delivery_data->update($input);
-        $lims_sale_data = Sale::find($lims_delivery_data->sale_id);
-        $lims_customer_data = Customer::find($lims_sale_data->customer_id);
+
+        try {
+            DB::transaction(function () use ($request, $input, $lims_delivery_data) {
+                Product_Sale::where('sale_id', $lims_delivery_data->sale_id)->lockForUpdate()->get();
+                $hasLines = DeliveryProduct::where('delivery_id', $lims_delivery_data->id)->exists();
+                if($request->input('track_lines')) {
+                    try {
+                        $accepted = DeliveryProgress::assertLines(
+                            (int) $lims_delivery_data->sale_id,
+                            $this->submittedQuantities($request),
+                            (int) $lims_delivery_data->id
+                        );
+                    } catch (\InvalidArgumentException $e) {
+                        if($hasLines || $e->getMessage() !== 'Select at least one product and a quantity that is still remaining.') {
+                            throw $e;
+                        }
+                        $accepted = [];
+                    }
+                    if($accepted) {
+                        DeliveryProduct::where('delivery_id', $lims_delivery_data->id)->delete();
+                        foreach ($accepted as $line) {
+                            DeliveryProduct::create([
+                                'delivery_id' => $lims_delivery_data->id,
+                                'product_sale_id' => $line['product_sale_id'],
+                                'product_id' => $line['product_id'],
+                                'qty' => $line['qty'],
+                            ]);
+                        }
+                    }
+                }
+
+                $document = $request->file;
+                if ($document) {
+                    $this->fileDelete(public_path('documents/delivery/'), $lims_delivery_data->file);
+                    $ext = pathinfo($document->getClientOriginalName(), PATHINFO_EXTENSION);
+                    $documentName = $input['reference_no'] . '.' . $ext;
+                    $document->move(public_path('documents/delivery'), $documentName);
+                    $input['file'] = $documentName;
+                }
+                $lims_delivery_data->update($input);
+                DeliveryProgress::syncFlags((int) $lims_delivery_data->sale_id);
+            });
+        } catch (\InvalidArgumentException $e) {
+            return redirect()->back()->with('not_permitted', $e->getMessage());
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('not_permitted', 'Delivery could not be updated. '.$e->getMessage());
+        }
+
+        $lims_delivery_data->refresh();
         $message = 'Delivery updated successfully';
-        $mail_setting = MailSetting::latest()->first();
-        if($lims_customer_data->email && $input['status'] != 1 && $mail_setting) {
-            $mail_data['email'] = $lims_customer_data->email;
-            $mail_data['customer'] = $lims_customer_data->name;
-            $mail_data['sale_reference'] = $lims_sale_data->reference_no;
-            $mail_data['delivery_reference'] = $lims_delivery_data->reference_no;
-            $mail_data['status'] = $input['status'];
-            $mail_data['address'] = $input['address'];
-            $mail_data['delivered_by'] = $input['delivered_by'];
-            $this->setMailInfo($mail_setting);
-            try{
-                Mail::to($mail_data['email'])->send(new DeliveryDetails($mail_data));
-            }
-            catch(\Exception $e){
-                $message = 'Delivery updated successfully. Please setup your <a href="setting/mail_setting">mail setting</a> to send mail.';
-            }
-        }
-        return redirect('delivery')->with('message', $message);
+        $mailMessage = $this->notifyCustomer($lims_delivery_data, $input['status'] ?? $lims_delivery_data->status, $message);
+        return redirect('delivery')->with('message', $mailMessage);
     }
 
     public function deleteBySelection(Request $request)
     {
+        if(!$this->canManageDelivery()) {
+            return __('db.Sorry! You are not allowed to access this module');
+        }
         $delivery_id = $request['deliveryIdArray'];
         foreach ($delivery_id as $id) {
-            $lims_delivery_data = Delivery::find($id);
-            $this->fileDelete(public_path('documents/delivery/'), $lims_delivery_data->file);
-            $lims_delivery_data->delete();
+            $this->removeDelivery((int) $id);
         }
         return 'Delivery deleted successfully';
     }
 
     public function delete($id)
     {
-        $lims_delivery_data = Delivery::find($id);
-        $this->fileDelete(public_path('documents/delivery/'), $lims_delivery_data->file);
-        $lims_delivery_data->delete();
+        if(!$this->canManageDelivery()) {
+            return redirect()->back()->with('not_permitted', __('db.Sorry! You are not allowed to access this module'));
+        }
+        $this->removeDelivery((int) $id);
 
-        return redirect('delivery')->with('not_permitted', __('db.Delivery deleted successfully'));
+        return redirect('delivery')->with('message', __('db.Delivery deleted successfully'));
+    }
+
+    public function report(Request $request)
+    {
+        if(!$this->canManageDelivery()) {
+            return redirect()->back()->with('not_permitted', __('db.Sorry! You are not allowed to access this module'));
+        }
+
+        $start_date = $request->input('start_date', date('Y-m-01'));
+        $end_date = $request->input('end_date', date('Y-m-d'));
+        $warehouse_id = (int) $request->input('warehouse_id', 0);
+        $progress = $request->input('progress', 'all');
+
+        $saleQuery = Sale::query()
+            ->whereDate('sales.created_at', '>=', $start_date)
+            ->whereDate('sales.created_at', '<=', $end_date)
+            ->whereNotIn('sales.sale_status', [3, 4]);
+        if(Auth::user()->role_id > 2 && config('staff_access') == 'own') {
+            $saleQuery->where('sales.user_id', Auth::id());
+        } elseif(Auth::user()->role_id > 2 && config('staff_access') == 'warehouse') {
+            $saleQuery->where('sales.warehouse_id', Auth::user()->warehouse_id);
+        }
+        if($warehouse_id) {
+            $saleQuery->where('sales.warehouse_id', $warehouse_id);
+        }
+
+        $sales = $saleQuery->with('customer')->orderByDesc('sales.id')->limit(500)->get();
+        $progressMap = DeliveryProgress::forSales($sales->pluck('id'));
+
+        $summary = [
+            'sales' => $sales->count(),
+            'not_delivered' => 0,
+            'partial' => 0,
+            'full' => 0,
+            'in_progress' => 0,
+            'sold' => 0,
+            'delivered' => 0,
+            'remaining' => 0,
+        ];
+        $saleRows = [];
+        foreach ($sales as $sale) {
+            $row = $progressMap[$sale->id] ?? [
+                'status' => DeliveryProgress::NOT_DELIVERED,
+                'sold' => 0,
+                'delivered' => 0,
+                'remaining' => 0,
+            ];
+            $summary['sold'] += $row['sold'];
+            $summary['delivered'] += $row['delivered'];
+            $summary['remaining'] += $row['remaining'];
+            $summary[$row['status'] === DeliveryProgress::NOT_DELIVERED ? 'not_delivered' : $row['status']]++;
+            if($progress !== 'all' && $row['status'] !== $progress) {
+                continue;
+            }
+            $saleRows[] = [
+                'id' => $sale->id,
+                'date' => date(config('date_format'), strtotime($sale->created_at)),
+                'reference_no' => $sale->reference_no,
+                'customer' => optional($sale->customer)->name ?? '',
+                'status' => $row['status'],
+                'label' => DeliveryProgress::label($row['status']),
+                'sold' => $row['sold'],
+                'delivered' => $row['delivered'],
+                'remaining' => $row['remaining'],
+                'invoice' => route('sale.invoice', $sale->id),
+            ];
+        }
+
+        $deliveryQuery = Delivery::query()
+            ->join('sales', 'sales.id', '=', 'deliveries.sale_id')
+            ->leftJoin('customers', 'customers.id', '=', 'sales.customer_id')
+            ->whereDate('deliveries.created_at', '>=', $start_date)
+            ->whereDate('deliveries.created_at', '<=', $end_date)
+            ->whereNull('sales.deleted_at');
+        if(Auth::user()->role_id > 2 && config('staff_access') == 'own') {
+            $deliveryQuery->where('deliveries.user_id', Auth::id());
+        } elseif(Auth::user()->role_id > 2 && config('staff_access') == 'warehouse') {
+            $deliveryQuery->where('sales.warehouse_id', Auth::user()->warehouse_id);
+        }
+        if($warehouse_id) {
+            $deliveryQuery->where('sales.warehouse_id', $warehouse_id);
+        }
+        $deliveries = $deliveryQuery
+            ->orderByDesc('deliveries.id')
+            ->limit(500)
+            ->get([
+                'deliveries.id',
+                'deliveries.reference_no',
+                'deliveries.sale_id',
+                'deliveries.status',
+                'deliveries.note',
+                'deliveries.created_at',
+                'sales.reference_no as sale_reference',
+                'customers.name as customer_name',
+            ]);
+
+        $deliveryIds = $deliveries->pluck('id')->all();
+        $lineRows = $deliveryIds
+            ? DB::table('delivery_products')
+                ->leftJoin('products', 'products.id', '=', 'delivery_products.product_id')
+                ->whereIn('delivery_id', $deliveryIds)
+                ->get(['delivery_id', 'delivery_products.qty', 'products.name'])
+            : collect();
+        $linesByDelivery = [];
+        foreach ($lineRows as $line) {
+            $linesByDelivery[$line->delivery_id][] = ($line->name ?: 'Removed product').' × '.DeliveryProgress::formatQty((float) $line->qty);
+        }
+
+        $awaiting = [];
+        if($progress === 'all' || $progress === DeliveryProgress::NOT_DELIVERED || $progress === DeliveryProgress::PARTIAL || $progress === DeliveryProgress::IN_PROGRESS) {
+            foreach ($saleRows as $saleRow) {
+                if($saleRow['remaining'] <= 0.00001) {
+                    continue;
+                }
+                foreach (DeliveryProgress::linesForSale((int) $saleRow['id']) as $line) {
+                    if($line['remaining'] <= 0.00001) {
+                        continue;
+                    }
+                    $awaiting[] = [
+                        'sale' => $saleRow['reference_no'],
+                        'date' => $saleRow['date'],
+                        'customer' => $saleRow['customer'],
+                        'product' => $line['name'],
+                        'code' => $line['code'],
+                        'sold' => $line['sold'],
+                        'delivered' => $line['delivered'],
+                        'remaining' => $line['remaining'],
+                    ];
+                }
+            }
+        }
+
+        $warehouses = Warehouse::where('is_active', true)->get();
+
+        return view('backend.delivery.report', compact(
+            'start_date',
+            'end_date',
+            'warehouse_id',
+            'progress',
+            'summary',
+            'saleRows',
+            'deliveries',
+            'linesByDelivery',
+            'awaiting',
+            'warehouses'
+        ));
+    }
+
+    private function submittedQuantities(Request $request): array
+    {
+        $lines = $request->input('deliver_lines', []);
+        if (is_array($lines) && $lines !== []) {
+            return array_values($lines);
+        }
+
+        return (array) $request->input('deliver_qty', []);
+    }
+
+    private function canManageDelivery(): bool
+    {
+        $role = Role::find(Auth::user()->role_id);
+
+        return $role && $role->hasPermissionTo('delivery');
+    }
+
+    private function nextReference(): string
+    {
+        do {
+            $reference = 'dr-'.date('Ymd-His').'-'.random_int(100, 999);
+        } while (Delivery::where('reference_no', $reference)->exists());
+
+        return $reference;
+    }
+
+    private function linePayload(int $saleId, ?int $exceptDeliveryId = null): array
+    {
+        $lines = [];
+        foreach (DeliveryProgress::linesForSale($saleId, $exceptDeliveryId) as $line) {
+            $lines[] = [
+                'product_sale_id' => $line['product_sale_id'],
+                'name' => $line['name'],
+                'code' => $line['code'],
+                'sold' => $line['sold'],
+                'delivered' => $line['delivered'],
+                'remaining' => $line['remaining'],
+                'sold_label' => DeliveryProgress::formatQty($line['sold']),
+                'delivered_label' => DeliveryProgress::formatQty($line['delivered']),
+                'remaining_label' => DeliveryProgress::formatQty($line['remaining']),
+            ];
+        }
+
+        return $lines;
+    }
+
+    private function notifyCustomer(Delivery $delivery, $status, string $success = 'Delivery created successfully'): string
+    {
+        $sale = Sale::find($delivery->sale_id);
+        $customer = $sale ? Customer::find($sale->customer_id) : null;
+        $message = $success;
+        $mail_setting = MailSetting::latest()->first();
+        if($customer && $customer->email && $status != 1 && $mail_setting) {
+            $mail_data['email'] = $customer->email;
+            $mail_data['customer'] = $customer->name;
+            $mail_data['sale_reference'] = $sale->reference_no;
+            $mail_data['delivery_reference'] = $delivery->reference_no;
+            $mail_data['status'] = $status;
+            $mail_data['address'] = $delivery->address;
+            $mail_data['delivered_by'] = $delivery->delivered_by;
+            $this->setMailInfo($mail_setting);
+            try {
+                Mail::to($mail_data['email'])->send(new DeliveryDetails($mail_data));
+            } catch (\Exception $e) {
+                $message = $success.'. Please setup your <a href="setting/mail_setting">mail setting</a> to send mail.';
+            }
+        }
+
+        return $message;
+    }
+
+    private function removeDelivery(int $id): void
+    {
+        $delivery = Delivery::find($id);
+        if(!$delivery) {
+            return;
+        }
+        $saleId = (int) $delivery->sale_id;
+        $this->fileDelete(public_path('documents/delivery/'), $delivery->file);
+        DeliveryProduct::where('delivery_id', $delivery->id)->delete();
+        $delivery->delete();
+        if($saleId) {
+            DeliveryProgress::syncFlags($saleId);
+        }
     }
 }

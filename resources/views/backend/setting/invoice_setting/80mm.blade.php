@@ -76,15 +76,22 @@
             font-size: 11px;
         }
 
+        html, body {
+            width: 80mm;
+            margin: 0 auto;
+        }
+
+        img { max-width: 70mm; height: auto; }
+
         @media print {
             * {
                 font-size: 12px;
-                line-height: 20px;
+                line-height: 16px;
             }
 
             td,
             th {
-                padding: 5px 0;
+                padding: 4px 0;
             }
 
             .hidden-print {
@@ -92,12 +99,11 @@
             }
 
             @page {
-                margin: 1.5cm 0.5cm 0.5cm;
+                size: 80mm auto;
+                margin: 2mm;
             }
 
-            @page: first {
-                margin-top: 0.5cm;
-            }
+            html, body { width: 80mm; margin: 0; }
 
             /*tbody::after {
                 content: ''; display: block;
@@ -111,7 +117,7 @@
 
 <body>
 
-    <div style="max-width:290px;margin:0 auto">
+    <div style="width:80mm;max-width:80mm;margin:0 auto">
         @if (preg_match('~[0-9]~', url()->previous()))
             @php $url = '../../pos'; @endphp
         @else

@@ -173,7 +173,7 @@
 </section>
 
 <div id="sale-details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
-    <div role="document" class="modal-dialog">
+    <div role="document" class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="container mt-3 pb-2 border-bottom">
                 <div class="row">
@@ -218,6 +218,7 @@
                 <tbody>
                 </tbody>
             </table>
+            <div id="delivery-history" class="modal-body"></div>
             <div id="sale-footer" class="modal-body"></div>
         </div>
     </div>
@@ -510,7 +511,7 @@
 </div>
 
 <div id="add-delivery" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
-    <div role="document" class="modal-dialog">
+    <div role="document" class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 id="exampleModalLabel" class="modal-title">{{__('db.Add Delivery')}}</h5>
@@ -567,9 +568,29 @@
                         <label>{{__('db.Note')}}</label>
                         <textarea rows="3" name="note" class="form-control"></textarea>
                     </div>
+                    <div class="col-md-12">
+                        <label>{{__('db.product')}}</label>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="delivery-lines">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>{{__('db.product')}}</th>
+                                        <th>{{__('db.Qty')}}</th>
+                                        <th>{{__('Delivered')}}</th>
+                                        <th>{{__('Remaining')}}</th>
+                                        <th>{{__('This delivery')}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <p class="text-muted"><small>{{__('Select the products on this delivery. The quantity cannot exceed what is still remaining.')}}</small></p>
+                    </div>
                 </div>
                 <input type="hidden" name="reference_no">
                 <input type="hidden" name="sale_id">
+                <input type="hidden" name="track_lines" value="1">
                 <button type="submit" class="btn btn-primary">{{__('db.submit')}}</button>
                 {{ Form::close() }}
             </div>
@@ -835,7 +856,7 @@ columns.push(
         var a = window.open('');
         a.document.write('<html>');
         a.document.write('<body>');
-        a.document.write('<style>body{line-height: 1.15;-webkit-text-size-adjust: 100%;}.d-print-none{display:none}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.row{width:100%;margin-right: -15px;margin-left: -15px;}.col-md-12{width:100%;display:block;padding: 5px 15px;}.col-md-6{width: 50%;float:left;padding: 5px 15px;}table{width:100%;margin-top:30px;}th{text-aligh:left}td{padding:10px}table,th,td{border: 1px solid black; border-collapse: collapse;}</style><style>@media print {.modal-dialog { max-width: 1000px;} }</style>');
+        a.document.write('<style>body{font-family:sans-serif;font-size:12px;line-height:1.3;max-width:190mm;margin:0 auto;} .d-print-none{display:none}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.row{width:100%;}.col-md-12{width:100%;display:block;padding:4px 0;}.col-md-6{width:48%;float:left;padding:4px;}table{width:100%;margin-top:8px;font-size:11px;}th{text-align:left}td,th{padding:3px 4px}table,th,td{border:1px solid black;border-collapse:collapse;}img{max-width:70px;height:auto;} #sale-footer,#delivery-history{clear:both;margin-top:8px;font-size:11px;word-wrap:break-word;} @media print {@page{size:A4;margin:10mm} body{max-width:190mm}}</style>');
         a.document.write(divContents);
         a.document.write('</body></html>');
         a.document.close();
@@ -1118,9 +1139,62 @@ columns.push(
         }
     });
 
+    function renderDeliveryLines(lines) {
+        var body = $('#delivery-lines tbody');
+        body.empty();
+        $.each(lines || [], function(_, line) {
+            var remaining = parseFloat(line.remaining) || 0;
+            var disabled = remaining <= 0.00001;
+            var row = $('<tr>');
+            row.attr('data-remaining', remaining);
+            var check = $('<input>', {type: 'checkbox', class: 'line-check'}).prop('disabled', disabled);
+            var qty = $('<input>', {
+                type: 'number',
+                class: 'form-control line-qty',
+                name: 'deliver_qty[' + line.product_sale_id + ']',
+                min: 0,
+                step: 'any',
+                max: remaining
+            }).prop('disabled', true);
+            if (disabled) {
+                qty.prop('disabled', true);
+            }
+            check.on('change', function() {
+                var on = $(this).is(':checked');
+                qty.prop('disabled', !on);
+                if (!on) {
+                    qty.val('');
+                } else if (!qty.val()) {
+                    qty.val(remaining);
+                }
+            });
+            qty.on('input', function() {
+                var value = parseFloat($(this).val());
+                if (value > remaining) {
+                    $(this).val(remaining);
+                    alert(line.name + ' cannot exceed the remaining quantity of ' + line.remaining_label + '.');
+                }
+            });
+            row.append($('<td>').append(check));
+            row.append($('<td>').text((line.name || '') + (line.code ? ' [' + line.code + ']' : '') + (disabled ? ' (fully delivered)' : '')));
+            row.append($('<td>').text(line.sold_label));
+            row.append($('<td>').text(line.delivered_label));
+            row.append($('<td>').text(line.remaining_label));
+            row.append($('<td>').append(qty));
+            body.append(row);
+        });
+        if (!lines || !lines.length) {
+            body.append('<tr><td colspan="6">This sale has no products left to deliver.</td></tr>');
+        }
+    }
+
     $(document).on("click", "table.sale-list tbody .add-delivery", function(event) {
         var id = $(this).data('id').toString();
         $.get('delivery/create/'+id, function(data) {
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
             $('#dr').text(data[0]);
             $('#sr').text(data[1]);
 
@@ -1135,8 +1209,31 @@ columns.push(
             $('.selectpicker').selectpicker('refresh');
             $('input[name="reference_no"]').val(data[0]);
             $('input[name="sale_id"]').val(id);
+            renderDeliveryLines(data[9]);
             $('#add-delivery').modal('show');
         });
+    });
+
+    $('#add-delivery form').on('submit', function(event) {
+        var selected = 0;
+        var invalid = false;
+        $('#delivery-lines tbody tr').each(function() {
+            var remaining = parseFloat($(this).attr('data-remaining'));
+            var checked = $(this).find('.line-check').is(':checked');
+            var qty = parseFloat($(this).find('.line-qty').val());
+            if (!checked) {
+                return;
+            }
+            if (!(qty > 0) || qty - remaining > 0.00001) {
+                invalid = true;
+            } else {
+                selected++;
+            }
+        });
+        if (!selected || invalid) {
+            event.preventDefault();
+            alert('Choose at least one product and a quantity that does not exceed the remaining quantity.');
+        }
     });
 
     function pointCalculation(amount) {
@@ -1543,9 +1640,46 @@ columns.push(
 
             $("table.product-sale-list").append(newBody);
         });
-        var htmlfooter = '<p>{{__("db.Sale Note")}}: '+sale[23]+'</p><p>{{__("db.Staff Note")}}: '+sale[24]+'</p>{{__("db.Created By")}}:<br>'+sale[25]+'<br>'+sale[26];
+        var htmlfooter = '<p style="word-wrap:break-word;max-width:180mm"><strong>{{__("db.Sale Note")}}:</strong> '+(sale[23] || '')+'</p><p style="word-wrap:break-word;max-width:180mm"><strong>{{__("db.Staff Note")}}:</strong> '+(sale[24] || '')+'</p>{{__("db.Created By")}}:<br>'+sale[25]+'<br>'+sale[26];
         $('#sale-content').html(htmltext);
         $('#sale-footer').html(htmlfooter);
+        $('#delivery-history').html('<p>Loading delivery history...</p>');
+        $.get('sales/' + sale[13] + '/delivery-history', function(payload) {
+            var html = '';
+            if (payload.progress) {
+                html += '<p><strong>Delivery progress:</strong> ' + payload.progress.label + ' (' + payload.progress.delivered_label + ' / ' + payload.progress.sold_label + ', remaining ' + payload.progress.remaining_label + ')</p>';
+            }
+            if (payload.lines && payload.lines.length) {
+                html += '<table class="table table-bordered"><thead><tr><th>Product</th><th>Sold</th><th>Delivered</th><th>Remaining</th></tr></thead><tbody>';
+                $.each(payload.lines, function(_, line) {
+                    html += '<tr><td>' + $('<div>').text(line.name).html() + (line.code ? ' [' + $('<div>').text(line.code).html() + ']' : '') + '</td><td>' + line.sold + '</td><td>' + line.delivered + '</td><td>' + line.remaining + '</td></tr>';
+                });
+                html += '</tbody></table>';
+            }
+            html += '<h5>Delivery history</h5>';
+            if (!payload.deliveries || !payload.deliveries.length) {
+                html += '<p>No delivery has been recorded for this sale.</p>';
+            } else {
+                $.each(payload.deliveries, function(_, delivery) {
+                    html += '<div style="border:1px solid #ddd;padding:8px;margin-bottom:8px">';
+                    html += '<strong>' + $('<div>').text(delivery.reference_no).html() + '</strong> — ' + delivery.date + ' — ' + $('<div>').text(delivery.status_label).html();
+                    if (delivery.note) {
+                        html += '<br><span style="word-wrap:break-word">Note: ' + $('<div>').text(delivery.note).html() + '</span>';
+                    }
+                    if (delivery.items && delivery.items.length) {
+                        html += '<table class="table table-sm table-bordered mt-2"><thead><tr><th>Product</th><th>Qty delivered</th><th>Still remaining</th></tr></thead><tbody>';
+                        $.each(delivery.items, function(_, item) {
+                            html += '<tr><td>' + $('<div>').text(item.name).html() + '</td><td>' + item.qty + '</td><td>' + (item.remaining === null ? '' : item.remaining) + '</td></tr>';
+                        });
+                        html += '</tbody></table>';
+                    } else {
+                        html += '<p>No product quantities were recorded on this delivery.</p>';
+                    }
+                    html += '</div>';
+                });
+            }
+            $('#delivery-history').html(html);
+        });
         $('#sale-details').modal('show');
     }
 
