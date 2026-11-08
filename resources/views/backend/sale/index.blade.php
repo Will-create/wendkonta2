@@ -561,8 +561,8 @@
                         <input type="file" name="file" class="form-control">
                     </div>
                     <div class="col-md-6 form-group">
-                        <label>{{__('db.Address')}} *</label>
-                        <textarea rows="3" name="address" class="form-control" required></textarea>
+                        <label>{{__('db.Address')}}</label>
+                        <textarea rows="3" name="address" class="form-control"></textarea>
                     </div>
                     <div class="col-md-6 form-group">
                         <label>{{__('db.Note')}}</label>

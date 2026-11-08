@@ -102,18 +102,23 @@ function addDeliveryForms(): array
     return $forms;
 }
 
-function noteTag(string $form): ?string
+function fieldTag(string $form, string $name): ?string
 {
     if (!preg_match_all('/<textarea\b[^>]*>/i', $form, $tags)) {
         return null;
     }
     foreach ($tags[0] as $tag) {
-        if (preg_match('/\bname=["\']note["\']/', $tag)) {
+        if (preg_match('/\bname=["\']'.preg_quote($name, '/').'["\']/', $tag)) {
             return $tag;
         }
     }
 
     return null;
+}
+
+function noteTag(string $form): ?string
+{
+    return fieldTag($form, 'note');
 }
 
 $beforeLines = (int) DB::table('delivery_products')->count();
@@ -131,6 +136,9 @@ try {
         $tag = noteTag($form);
         check('add form shows a note field', $tag !== null, $name);
         check('add form note is not required', $tag !== null && !preg_match('/\brequired\b/i', $tag), $tag ?? $name);
+        $address = fieldTag($form, 'address');
+        check('add form shows an address field', $address !== null, $name);
+        check('add form address is not required', $address !== null && !preg_match('/\brequired\b/i', $address), $address ?? $name);
     }
 
     $updateText = file_get_contents(resource_path('views/backend/delivery/index.blade.php'));
@@ -147,7 +155,7 @@ try {
     $candidate = DB::table('sales as s')
         ->join('product_sales as ps', 'ps.sale_id', '=', 's.id')
         ->whereNull('s.deleted_at')
-        ->whereRaw('(ps.qty - IFNULL(ps.return_qty, 0)) >= 2')
+        ->whereRaw('(ps.qty - IFNULL(ps.return_qty, 0)) >= 3')
         ->whereRaw('(SELECT COUNT(*) FROM product_sales ps2 WHERE ps2.sale_id = s.id) = 1')
         ->whereNotExists(function ($query) {
             $query->select(DB::raw(1))->from('deliveries as d')->whereColumn('d.sale_id', 's.id');
@@ -156,7 +164,7 @@ try {
         ->first(['s.id as sale_id', 'ps.id as product_sale_id']);
 
     if (!$candidate) {
-        throw new RuntimeException('No single-line sale with remaining quantity of at least 2.');
+        throw new RuntimeException('No single-line sale with remaining quantity of at least 3.');
     }
 
     $saleId = (int) $candidate->sale_id;
@@ -170,10 +178,14 @@ try {
         'deliver_qty' => [$lineId => 1],
     ];
 
-    storeDelivery($base);
+    $withoutAddress = $base;
+    unset($withoutAddress['address']);
+    storeDelivery($withoutAddress);
     $omitted = latestDelivery($saleId);
     check('add without a note succeeds', $omitted !== null && flashError() === '', flashError());
     check('add without a note stores an empty note', noteIsEmpty($omitted), var_export($omitted->note ?? null, true));
+    check('add without an address succeeds', flashError() === '', flashError());
+    check('add without an address stores an empty address', $omitted !== null && (string) ($omitted->address ?? '') === '', var_export($omitted->address ?? null, true));
 
     $header = [
         'delivery_id' => $omitted->id,
@@ -203,10 +215,11 @@ try {
     $spaces = DB::table('deliveries')->where('id', $omitted->id)->first();
     check('update with a whitespace note stores an empty note', noteIsEmpty($spaces), var_export($spaces->note ?? null, true));
 
-    storeDelivery($base + ['note' => '']);
+    storeDelivery(array_merge($base, ['note' => '', 'address' => '']));
     $blankAdd = latestDelivery($saleId);
     check('add with a blank note succeeds', (int) $blankAdd->id !== (int) $omitted->id && flashError() === '', flashError());
     check('add with a blank note stores an empty note', noteIsEmpty($blankAdd), var_export($blankAdd->note ?? null, true));
+    check('add with a blank address stores an empty address', $blankAdd !== null && (string) ($blankAdd->address ?? '') === '', var_export($blankAdd->address ?? null, true));
 
     DB::rollBack();
     $open = false;
