@@ -24,25 +24,27 @@
             <a href="{{route('product.allProductInStock')}}" class="btn btn-dark add-product-btn btn-icon"><i class="dripicons-stack"></i> {{__('db.All Product In Stock')}}</a>
             <a href="{{route('product.showAllProductOnline')}}" class="btn btn-dark add-product-btn btn-icon"><i class="dripicons-wifi"></i> {{__('db.Show All Product Online')}}</a>
         @endif
+        <div class="sp-inventory-toolbar"><div class="sp-inventory-filter"><label id="inventory-category-label" for="category_id">{{ __('db.Category') }}</label><select form="product-filter-form" name="category_id" required class="form-control" id="category_id" data-live-search="true" data-live-search-style="begins">
+                                <option value="0" selected>{{ __('mobile.all_categories') }}</option>
+                                @foreach($lims_category_list as $category)
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
+                            </select></div><div class="sp-inventory-filter @if(\Auth::user()->role_id > 2) d-none @endif"><label id="inventory-warehouse-label" for="warehouse_id">{{ __('db.Warehouse') }}</label><select form="product-filter-form" id="warehouse_id" name="warehouse_id" class="form-control" data-live-search="true" data-live-search-style="begins" >
+                                <option value="0">{{__('db.All Warehouse')}}</option>
+                                @foreach($lims_warehouse_list as $warehouse)
+                                    <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
+                                @endforeach
+                            </select></div></div>
+        <p class="sp-stock-scope">{{ __('mobile.stock_scope') }}: <strong id="stock-scope" role="status"></strong></p>
         <button type="button" class="btn btn-warning btn-icon" id="toggle-filter">
             <i class="dripicons-experiment"></i> {{ __('db.Filter Products') }}
         </button>
 
         <div class="card mt-3 mb-2">
             <div class="card-body" id="filter-card" style="display: none;">
-                {!! Form::open(['route' => 'products.index', 'method' => 'get']) !!}
+                {!! Form::open(['route' => 'products.index', 'method' => 'get', 'id' => 'product-filter-form']) !!}
                 <div class="row">
-                    <div class="col-md-3 @if(\Auth::user()->role_id > 2){{'d-none'}}@endif">
-                        <div class="form-group top-fields">
-                            <label>{{__('db.Warehouse')}}</label>
-                            <select id="warehouse_id" name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" >
-                                <option value="0">{{__('db.All Warehouse')}}</option>
-                                @foreach($lims_warehouse_list as $warehouse)
-                                    <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+
                     <div class="col-md-3">
                         <div class="form-group top-fields">
                             <label>{{__('db.Product Type')}}</label>
@@ -66,17 +68,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group top-fields">
-                            <label>{{__('db.category')}}</label>
-                            <select name="category_id" required class="form-control selectpicker" id="category_id" data-live-search="true" data-live-search-style="begins">
-                                <option value="0" selected>All Categories</option>
-                                @foreach($lims_category_list as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+
                     <div class="col-md-3">
                         <div class="form-group top-fields">
                             <label>{{__('db.Unit')}}</label>
@@ -115,7 +107,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 {!! Form::close() !!}
             </div>
         </div>
@@ -127,13 +119,13 @@
                     <th class="not-exported"></th>
                     <th>{{__('db.product')}}</th>
                     <th>{{__('db.Code')}}</th>
-                    <th>{{__('db.Brand')}}</th>
-                    <th>{{__('db.category')}}</th>
+                    <th data-mobile-secondary="true">{{__('db.Brand')}}</th>
+                    <th data-mobile-priority="true">{{__('db.category')}}</th>
                     <th>{{__('db.Quantity')}}</th>
-                    <th>{{__('db.Unit')}}</th>
-                    <th>{{__('db.Price')}}</th>
-                    <th>{{__('db.Cost')}}</th>
-                    <th>{{__('db.Stock Worth') . '(' . __('db.Price') . '/' . __('db.Cost') . ')'}}</th>
+                    <th data-mobile-secondary="true">{{__('db.Unit')}}</th>
+                    <th data-mobile-secondary="true">{{__('db.Price')}}</th>
+                    <th data-mobile-secondary="true">{{__('db.Cost')}}</th>
+                    <th data-mobile-secondary="true">{{__('db.Stock Worth') . '(' . __('db.Price') . '/' . __('db.Cost') . ')'}}</th>
                     @foreach($custom_fields as $fieldName)
                         <th>{{$fieldName}}</th>
                     @endforeach
@@ -237,6 +229,7 @@
 
 @endsection
 @push('scripts')
+<script src="{{ asset('js/product-listing.js') }}?v={{ filemtime(public_path('js/product-listing.js')) }}"></script>
 <script>
 
     $("ul#product").siblings('a').attr('aria-expanded','true');
@@ -269,7 +262,7 @@
         return false;
     }
 
-    var columns = [{"data": "key"},{"data": "name"},{"data": "code"},{"data": "brand"},{"data": "category"},{"data": "qty"},{"data": "unit"},{"data": "price"},{"data": "cost"},{"data": "stock_worth"}];
+    var columns = [{"data": "key"},{"data": "name"},{"data": "code"},{"data": "brand"},{"data": "category"},{"data": "qty", render: function(value, type, row) { return SaleProInventory.quantity(value, type, row, @json(trans('mobile'))); }},{"data": "unit"},{"data": "price"},{"data": "cost"},{"data": "stock_worth"}];
     var field_name = <?php echo json_encode($field_name) ?>;
     for(i = 0; i < field_name.length; i++) {
         columns.push({"data": field_name[i]});
@@ -540,15 +533,11 @@
             "serverSide": true,
             "ajax":{
                 url:"products/product-data",
-                data:{
-                    all_permission: all_permission,
-                    warehouse_id: warehouse_id,
-                    product_type: product_type,
-                    brand_id: brand_id,
-                    category_id: category_id,
-                    unit_id: unit_id,
-                    tax_id: tax_id,
-                    imeiorvariant: imeiorvariant,
+                data: function (data) {
+                    data.all_permission = all_permission;
+                    ['warehouse_id','product_type','brand_id','category_id','unit_id','tax_id','imeiorvariant'].forEach(function (name) {
+                        data[name] = document.querySelector('[name="'+name+'"]').value;
+                    });
                 },
                 dataType: "json",
                 type:"post"
@@ -721,6 +710,7 @@
             ],
         } );
 
+        SaleProInventory.bind(table);
         let hasFilters = window.location.search.length > 0;
         if (hasFilters) {
             $('#filter-card').show();
@@ -730,7 +720,7 @@
     if(all_permission.indexOf("products-delete") == -1)
         $('.buttons-delete').addClass('d-none');
 
-    $('select').selectpicker();
+    $('select.selectpicker').selectpicker();
 
 </script>
 @endpush

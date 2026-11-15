@@ -5,6 +5,9 @@
 <x-error-message key="account_no" />
 
 <section>
+    @if(isset($role_has_permissions_list) && $role_has_permissions_list->contains('name', 'customers-index'))
+    <div class="container-fluid mb-3"><a class="btn btn-primary" href="{{ route('customer.accounts') }}">{{ __('credit.account') }} · {{ __('credit.make_deposit') }}</a></div>
+    @endif
     <div class="container-fluid">
         <button class="btn btn-info" data-toggle="modal" data-target="#account-modal"><i class="dripicons-plus"></i> {{__('db.Add Account')}}</button>
     </div>

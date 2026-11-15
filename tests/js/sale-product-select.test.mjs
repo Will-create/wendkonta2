@@ -16,7 +16,8 @@ const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
 
 const bladePath = new URL('../../resources/views/backend/sale/create.blade.php', import.meta.url);
-const blade = fs.readFileSync(bladePath, 'utf8');
+const blade = fs.readFileSync(bladePath, 'utf8')
+    .replace(/@json\(__\('([^']*)'\)\)/g, (_, message) => JSON.stringify(message.replace(/^db\./, '')));
 const controllerPath = new URL('../../app/Http/Controllers/SaleController.php', import.meta.url);
 const controller = fs.readFileSync(controllerPath, 'utf8');
 

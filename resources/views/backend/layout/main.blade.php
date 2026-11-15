@@ -172,9 +172,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" rel="stylesheet">
 
   @stack('css')
+@include('backend.layout.mobile-head')
 </head>
 
 <body class="@if($theme == 'dark')dark-mode dripicons-brightness-low @endif  @if(Route::current()->getName() == 'sale.pos') pos-page @endif" onload="myFunction()">
+@include('backend.layout.mobile-navigation')
   <div id="loader"></div>
   <!-- Side Navbar -->
   <nav class="side-navbar shrink d-print-none">
@@ -188,6 +190,7 @@
       </a>
     </span>
     @include('backend.layout.sidebar')
+    @include('backend.layout.mobile-menu-tools')
   </nav>
 
   <div class="page">
@@ -296,6 +299,12 @@
           $language_setting_active = $role_has_permissions_list->where('name', 'language_setting')->first();
 
           ?>
+          @if($role_has_permissions_list->contains('name', 'purchases-add'))
+          <li class="nav-item d-none d-md-block"><a class="btn btn-outline-primary" href="{{ route('purchases.create') }}">{{ __('mobile.buy') }}</a></li>
+          @endif
+          @if($sale_add_permission_active)
+          <li class="nav-item d-none d-md-block"><a class="btn btn-primary" href="{{ route('sales.create') }}">{{ __('mobile.sell') }}</a></li>
+          @endif
           @if($sale_add_permission_active)
           <li class="nav-item"><a class="btn-pos btn-sm" href="{{route('sale.pos') }}"><i class="dripicons-shopping-bag"></i><span> POS</span></a></li>
           @endif

@@ -100,26 +100,21 @@ class CustomerController extends Controller
             $field_names[] = str_replace(" ", "_", strtolower($fieldName));
         }
 
-        $q = $q->offset($start)
-            ->limit($limit)
-            ->orderBy($order, $dir);
-        if(empty($request->input('search.value'))) {
-            $customers = $q->get();
+        $search = $request->input('search.value');
+        if ($search !== null && $search !== '') {
+            $q->where(function ($query) use ($search, $field_names) {
+                $query->where('customers.name', 'LIKE', "%{$search}%")
+                    ->orWhere('customers.company_name', 'LIKE', "%{$search}%")
+                    ->orWhere('customers.phone_number', 'LIKE', "%{$search}%");
+                foreach ($field_names as $field_name) $query->orWhere('customers.'.$field_name, 'LIKE', "%{$search}%");
+            });
         }
-        else
-        {
-            $search = $request->input('search.value');
-            $q = $q
-                ->with('discountPlans', 'customerGroup')
-                ->where('customers.name', 'LIKE', "%{$search}%")
-                ->orwhere('customers.company_name', 'LIKE', "%{$search}%")
-                ->orwhere('customers.phone_number', 'LIKE', "%{$search}%");
-            foreach ($field_names as $key => $field_name) {
-                $q = $q->orwhere('customers.' . $field_name, 'LIKE', "%{$search}%");
-            }
-            $customers = $q->get();
-            $totalFiltered = $q->count();
-        }
+        $totalFiltered = (clone $q)->count();
+        $customers = $q->with('discountPlans', 'customerGroup')->offset(max(0, (int) $start))
+            ->limit($limit)->orderBy($order, $dir)->get();
+        $dueByCustomer = Sale::whereIn('customer_id', $customers->pluck('id'))->where('sale_status', 1)
+            ->selectRaw('customer_id, SUM(CASE WHEN grand_total > paid_amount THEN grand_total - paid_amount ELSE 0 END) as due')
+            ->groupBy('customer_id')->pluck('due', 'customer_id');
         $data = array();
         if(!empty($customers))
         {
@@ -128,7 +123,7 @@ class CustomerController extends Controller
                 $nestedData['id'] = $customer->id;
                 $nestedData['key'] = $key;
                 $nestedData['customer_group'] = $customer->customerGroup->name;
-                $nestedData['customer_details'] = $customer->name;
+                $nestedData['customer_details'] = '<a href="'.route('customer.account', $customer->id).'">'.e($customer->name).'</a>';
                 if($customer->company_name)
                     $nestedData['customer_details'] .= '<br>'.$customer->company_name;
                 if($customer->email)
@@ -148,22 +143,8 @@ class CustomerController extends Controller
                 $nestedData['reward_point'] = $customer->points;
                 $nestedData['deposited_balance'] = number_format($customer->deposit - $customer->expense, 2);
 
-                $returned_amount = DB::table('sales')
-                                    ->join('returns', 'sales.id', '=', 'returns.sale_id')
-                                    ->where([
-                                        ['sales.customer_id', $customer->id],
-                                        ['sales.payment_status', '!=', 4]
-                                    ])
-                                    ->sum('returns.grand_total');
-                $saleData = DB::table('sales')->where([
-                                ['customer_id', $customer->id],
-                                ['payment_status', '!=', 4]
-                            ])
-                            ->selectRaw('SUM(grand_total) as grand_total,SUM(paid_amount) as paid_amount')
-                            ->first();
-
-                $total_due = number_format($saleData->grand_total - $returned_amount - $saleData->paid_amount, 2);
-                $nestedData['total_due'] = $total_due;
+                $total_due = $dueByCustomer[$customer->id] ?? 0;
+                $nestedData['total_due'] = number_format($total_due, 2);
                 //fetching custom fields data
                 foreach($field_names as $field_name) {
                     $nestedData[$field_name] = $customer->$field_name;
@@ -202,7 +183,7 @@ class CustomerController extends Controller
 
                     $nestedData['options'] .=
                         '<li>
-                            <button type="button" data-id="'.$customer->id.'" class="deposit btn btn-link" data-toggle="modal" data-target="#depositModal" ><i class="dripicons-plus"></i>'.__('db.Add Deposit').'</button>
+                            <a href="'.route('customer.account', $customer->id).'#customer-deposit" class="btn btn-link"><i class="dripicons-plus"></i>'.__('credit.make_deposit').'</a>
                         </li>';
 
                     $nestedData['options'] .=
@@ -229,9 +210,8 @@ class CustomerController extends Controller
                     $nestedData['options'] .= \Form::open(["route" => ["customer.destroy", $customer->id], "method" => "DELETE"] ).'
                             <li>
                               <button type="submit" class="btn btn-link" onclick="return confirmDelete()"><i class="dripicons-trash"></i> '.__("db.delete").'</button>
-                            </li>'.\Form::close().'
-                        </ul>
-                    </div>';
+                            </li>'.\Form::close();
+                $nestedData['options'] .= '</ul></div>';
 
                 $data[] = $nestedData;
             }
@@ -740,37 +720,20 @@ class CustomerController extends Controller
 
     public function addDeposit(Request $request)
     {
-        $data = $request->all();
-        $data['user_id'] = Auth::id();
-        $lims_customer_data = Customer::find($data['customer_id']);
-        $lims_customer_data->deposit += $data['amount'];
-        $lims_customer_data->save();
-        Deposit::create($data);
-        $message = 'Data inserted successfully';
-        $mail_setting = MailSetting::latest()->first();
-
-        if($lims_customer_data->email && $mail_setting) {
-            $data['name'] = $lims_customer_data->name;
-            $data['email'] = $lims_customer_data->email;
-            $data['balance'] = $lims_customer_data->deposit - $lims_customer_data->expense;
-            $data['currency'] = config('currency');
-            $message = $this->mailAction($data, $mail_setting, $request);
-
-            // $this->setMailInfo($mail_setting);
-            // try {
-            //     Mail::to($data['email'])->send(new CustomerDeposit($data));
-            // }
-            // catch(\Exception $e){
-            //     $message = 'Data inserted successfully. Please setup your <a href="setting/mail_setting">mail setting</a> to send mail.';
-            // }
+        $customer = Customer::findOrFail($request->input('customer_id'));
+        app(CustomerAccountController::class)->authorizeAccount($request, $customer, true);
+        if ($request->filled(['receipt_token', 'account_id', 'payment_method', 'transaction_date'])) {
+            return app(CustomerAccountController::class)->store($request, $customer, app(\App\Services\CustomerAccountService::class));
         }
-        return redirect('customer')->with('create_message', $message);
+        return redirect()->route('customer.account', $customer)->withInput($request->only('amount', 'note', 'reference'))
+            ->with('message', __('credit.use_account_deposit'));
     }
 
     public function updateDeposit(Request $request)
     {
         $data = $request->all();
-        $lims_deposit_data = Deposit::find($data['deposit_id']);
+        $lims_deposit_data = Deposit::findOrFail($data['deposit_id']);
+        abort_if($lims_deposit_data->receipt_token, 422, __('credit.immutable_receipt'));
         $lims_customer_data = Customer::find($lims_deposit_data->customer_id);
         $amount_dif = $data['amount'] - $lims_deposit_data->amount;
         $lims_customer_data->deposit += $amount_dif;
@@ -784,12 +747,13 @@ class CustomerController extends Controller
     public function deleteDeposit(Request $request)
     {
         $data = $request->all();
-        $lims_deposit_data = Deposit::find($data['id']);
+        $lims_deposit_data = Deposit::findOrFail($data['id']);
+        abort_if($lims_deposit_data->receipt_token, 422, __('credit.immutable_receipt'));
         $lims_customer_data = Customer::find($lims_deposit_data->customer_id);
         $lims_customer_data->deposit -= $lims_deposit_data->amount;
         $lims_customer_data->save();
         $lims_deposit_data->delete();
-        return redirect('customer')->with('not_permitted', __('db.Data deleted successfully'));
+        return redirect('customer')->with('create_message', __('db.Data deleted successfully'));
     }
 
     public function addPoint(Request $request)

@@ -17,6 +17,21 @@ class Customer extends Model
         return $this->belongsTo('App\Models\CustomerGroup');
     }
 
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
+
+    public function deposits()
+    {
+        return $this->hasMany(Deposit::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasManyThrough(Payment::class, Sale::class);
+    }
+
     public function user()
     {
     	return $this->belongsTo('App\Models\User');

@@ -1,0 +1,2052 @@
+[
+  {
+    "view": "resources/views/backend/forms.blade.php",
+    "tables": 0,
+    "modals": 7,
+    "forms": 5,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/addonlist.blade.php",
+    "tables": 1,
+    "modals": 24,
+    "forms": 8,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/charts.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 5,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/index.blade.php",
+    "tables": 8,
+    "modals": 0,
+    "forms": 1,
+    "charts": 3,
+    "async": 12,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/home.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/customer_index.blade.php",
+    "tables": 7,
+    "modals": 18,
+    "forms": 0,
+    "charts": 0,
+    "async": 3,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/unit/create.blade.php",
+    "tables": 1,
+    "modals": 18,
+    "forms": 6,
+    "charts": 0,
+    "async": 5,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/income_category/index.blade.php",
+    "tables": 1,
+    "modals": 12,
+    "forms": 3,
+    "charts": 0,
+    "async": 4,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/currency/index.blade.php",
+    "tables": 1,
+    "modals": 12,
+    "forms": 3,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/cash_register/index.blade.php",
+    "tables": 2,
+    "modals": 6,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/return_purchase/edit.blade.php",
+    "tables": 2,
+    "modals": 7,
+    "forms": 2,
+    "charts": 0,
+    "async": 4,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/return_purchase/index.blade.php",
+    "tables": 2,
+    "modals": 6,
+    "forms": 1,
+    "charts": 0,
+    "async": 3,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/return_purchase/create.blade.php",
+    "tables": 3,
+    "modals": 7,
+    "forms": 2,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/purchase/deleted-data.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/purchase/quick-product.blade.php",
+    "tables": 0,
+    "modals": 6,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/purchase/import.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/purchase/defaults.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/purchase/edit.blade.php",
+    "tables": 4,
+    "modals": 7,
+    "forms": 2,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/purchase/index.blade.php",
+    "tables": 3,
+    "modals": 24,
+    "forms": 4,
+    "charts": 0,
+    "async": 7,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/purchase/create.blade.php",
+    "tables": 4,
+    "modals": 7,
+    "forms": 2,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/purchase/duplicate.blade.php",
+    "tables": 2,
+    "modals": 7,
+    "forms": 2,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/delivery/index_new.blade.php",
+    "tables": 3,
+    "modals": 11,
+    "forms": 3,
+    "charts": 0,
+    "async": 4,
+    "fixed_dimensions": 1,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/delivery/report.blade.php",
+    "tables": 3,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/delivery/index.blade.php",
+    "tables": 4,
+    "modals": 11,
+    "forms": 3,
+    "charts": 0,
+    "async": 4,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/product/print_barcode.blade.php",
+    "tables": 1,
+    "modals": 6,
+    "forms": 2,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/product/history.blade.php",
+    "tables": 4,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/product/print_barcode_rongta.blade.php",
+    "tables": 2,
+    "modals": 6,
+    "forms": 0,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/product/gallery_image.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/product/edit.blade.php",
+    "tables": 4,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 8,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/product/index.blade.php",
+    "tables": 5,
+    "modals": 12,
+    "forms": 2,
+    "charts": 0,
+    "async": 6,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/product/create.blade.php",
+    "tables": 4,
+    "modals": 12,
+    "forms": 4,
+    "charts": 0,
+    "async": 11,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/income/index.blade.php",
+    "tables": 1,
+    "modals": 6,
+    "forms": 2,
+    "charts": 0,
+    "async": 3,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/department/index.blade.php",
+    "tables": 1,
+    "modals": 12,
+    "forms": 4,
+    "charts": 0,
+    "async": 2,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/discount_plan/edit.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/discount_plan/index.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/discount_plan/create.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/role/permission.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/role/create.blade.php",
+    "tables": 1,
+    "modals": 12,
+    "forms": 5,
+    "charts": 0,
+    "async": 2,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/courier/index.blade.php",
+    "tables": 1,
+    "modals": 12,
+    "forms": 3,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/stock_count/index.blade.php",
+    "tables": 2,
+    "modals": 16,
+    "forms": 2,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/stock_count/qty_adjustment.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 3,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/holiday/my_holiday.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/holiday/index.blade.php",
+    "tables": 1,
+    "modals": 12,
+    "forms": 3,
+    "charts": 0,
+    "async": 3,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/table/index.blade.php",
+    "tables": 1,
+    "modals": 12,
+    "forms": 5,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/brand/create.blade.php",
+    "tables": 1,
+    "modals": 18,
+    "forms": 4,
+    "charts": 0,
+    "async": 4,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/user/profile.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 2,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/user/edit.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/user/index.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 3,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/user/create.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 2,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/user/my_transaction.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/adjustment/edit.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 3,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/adjustment/index.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 2,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/adjustment/create.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 2,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/packing_slip/index.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/packing_slip/invoice.blade.php",
+    "tables": 2,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/labels/print_label.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/labels/show.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 2,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/customer_group/create.blade.php",
+    "tables": 1,
+    "modals": 18,
+    "forms": 5,
+    "charts": 0,
+    "async": 5,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/payroll/index.blade.php",
+    "tables": 1,
+    "modals": 12,
+    "forms": 3,
+    "charts": 0,
+    "async": 2,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/attendance/index.blade.php",
+    "tables": 1,
+    "modals": 6,
+    "forms": 3,
+    "charts": 0,
+    "async": 2,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/supplier/edit.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/supplier/index.blade.php",
+    "tables": 1,
+    "modals": 12,
+    "forms": 4,
+    "charts": 0,
+    "async": 2,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/supplier/create.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/return/create_backup.blade.php",
+    "tables": 2,
+    "modals": 13,
+    "forms": 3,
+    "charts": 0,
+    "async": 5,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/return/edit.blade.php",
+    "tables": 2,
+    "modals": 13,
+    "forms": 3,
+    "charts": 0,
+    "async": 7,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/return/index.blade.php",
+    "tables": 2,
+    "modals": 6,
+    "forms": 2,
+    "charts": 0,
+    "async": 3,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/return/create.blade.php",
+    "tables": 3,
+    "modals": 13,
+    "forms": 3,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/discount/edit.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/discount/index.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/discount/create.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/customer_group_report.blade.php",
+    "tables": 4,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/biller_report.blade.php",
+    "tables": 7,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/monthly_purchase.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/warehouse_report.blade.php",
+    "tables": 6,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/best_seller.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 1,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/daily_purchase.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/qty_alert_report.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/due_report.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/sale_report_chart.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 1,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/customer_report.blade.php",
+    "tables": 4,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/product_expiry_report.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/warehouse_stock.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 1,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/profit_loss.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/daily_sale.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/purchase_report.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/payment_report.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/daily_sale_objective.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/supplier_report.blade.php",
+    "tables": 4,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/product_report.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/challan_report.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/monthly_sale.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/supplier_due_report.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/sale_report.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/report/user_report.blade.php",
+    "tables": 7,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/employee/index.blade.php",
+    "tables": 1,
+    "modals": 6,
+    "forms": 2,
+    "charts": 0,
+    "async": 3,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/employee/create.blade.php",
+    "tables": 0,
+    "modals": 6,
+    "forms": 3,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/warehouse/create.blade.php",
+    "tables": 1,
+    "modals": 18,
+    "forms": 4,
+    "charts": 0,
+    "async": 6,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/account/account_statement.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/account/balance_sheet.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/account/index.blade.php",
+    "tables": 1,
+    "modals": 6,
+    "forms": 2,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/layouts/app.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/challan/finalize.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/challan/money_reciept.blade.php",
+    "tables": 2,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 1,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/challan/index.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/challan/invoice.blade.php",
+    "tables": 2,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 1,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/challan/create.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/money_transfer/index.blade.php",
+    "tables": 1,
+    "modals": 12,
+    "forms": 3,
+    "charts": 0,
+    "async": 2,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/gift_card/index.blade.php",
+    "tables": 1,
+    "modals": 24,
+    "forms": 4,
+    "charts": 0,
+    "async": 5,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/setting/create_sms.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/setting/payment-gateways.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/setting/pos_setting.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/setting/general_setting.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 2,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/setting/mail_setting.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/setting/reward_point_setting.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/setting/hrm_setting.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/setting/sms_setting.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/setting/invoice_setting/a4.blade.php",
+    "tables": 2,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/setting/invoice_setting/80mm.blade.php",
+    "tables": 3,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/setting/invoice_setting/2a4.blade.php",
+    "tables": 3,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/setting/invoice_setting/edit.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/setting/invoice_setting/index.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 2,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/setting/invoice_setting/58mm.blade.php",
+    "tables": 2,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/setting/invoice_setting/create.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/quotation/create_purchase.blade.php",
+    "tables": 2,
+    "modals": 7,
+    "forms": 2,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/quotation/edit.blade.php",
+    "tables": 3,
+    "modals": 6,
+    "forms": 2,
+    "charts": 0,
+    "async": 6,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/quotation/index.blade.php",
+    "tables": 2,
+    "modals": 5,
+    "forms": 2,
+    "charts": 0,
+    "async": 3,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/quotation/create.blade.php",
+    "tables": 3,
+    "modals": 7,
+    "forms": 2,
+    "charts": 0,
+    "async": 4,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/quotation/create_sale.blade.php",
+    "tables": 2,
+    "modals": 7,
+    "forms": 2,
+    "charts": 0,
+    "async": 9,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/notification/index.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/tax/create.blade.php",
+    "tables": 1,
+    "modals": 18,
+    "forms": 6,
+    "charts": 0,
+    "async": 4,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/sale/deleted-data.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/sale/pos.blade.php",
+    "tables": 8,
+    "modals": 103,
+    "forms": 12,
+    "charts": 0,
+    "async": 31,
+    "fixed_dimensions": 2,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/sale/import.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/sale/edit.blade.php",
+    "tables": 3,
+    "modals": 14,
+    "forms": 3,
+    "charts": 0,
+    "async": 7,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/sale/index.blade.php",
+    "tables": 7,
+    "modals": 43,
+    "forms": 8,
+    "charts": 0,
+    "async": 12,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/sale/create.blade.php",
+    "tables": 3,
+    "modals": 20,
+    "forms": 4,
+    "charts": 0,
+    "async": 11,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/transfer/import.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/transfer/edit.blade.php",
+    "tables": 3,
+    "modals": 7,
+    "forms": 2,
+    "charts": 0,
+    "async": 4,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/transfer/index.blade.php",
+    "tables": 2,
+    "modals": 6,
+    "forms": 1,
+    "charts": 0,
+    "async": 3,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/transfer/create.blade.php",
+    "tables": 3,
+    "modals": 7,
+    "forms": 2,
+    "charts": 0,
+    "async": 4,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/mail/supplier_create.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/mail/gift_card_recharge.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/mail/customer_deposit.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/mail/user_details.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/mail/log_message.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/mail/payment_details.blade.php",
+    "tables": 4,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 1,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/mail/sale_details.blade.php",
+    "tables": 5,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 1,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/mail/delivery_challan.blade.php",
+    "tables": 6,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 1,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/mail/gift_card_create.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/mail/return_details.blade.php",
+    "tables": 5,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 1,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/mail/transfer_details.blade.php",
+    "tables": 5,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 1,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/mail/payroll_details.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/mail/contact_form.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/mail/quotation_details.blade.php",
+    "tables": 5,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 1,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/mail/biller_create.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/mail/customer_create.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/mail/holiday_approve.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/mail/delivery_details.blade.php",
+    "tables": 4,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 1,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/coupon/index.blade.php",
+    "tables": 1,
+    "modals": 12,
+    "forms": 3,
+    "charts": 0,
+    "async": 4,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/auth/register.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/auth/register-backup.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/auth/login.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/auth/verify.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/auth/passwords/email.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/auth/passwords/reset.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/barcode/edit.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/barcode/index.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 2,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/barcode/create.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/biller/edit.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/biller/index.blade.php",
+    "tables": 1,
+    "modals": 6,
+    "forms": 2,
+    "charts": 0,
+    "async": 3,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/biller/create.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/sms_templates/index.blade.php",
+    "tables": 1,
+    "modals": 12,
+    "forms": 4,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/expense_category/index.blade.php",
+    "tables": 1,
+    "modals": 18,
+    "forms": 4,
+    "charts": 0,
+    "async": 4,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/customer/account.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 2,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/customer/statement.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 1,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/customer/edit.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/customer/receipt.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/customer/index.blade.php",
+    "tables": 3,
+    "modals": 48,
+    "forms": 8,
+    "charts": 0,
+    "async": 6,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/customer/ledger.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/customer/create.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/custom_field/edit.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/custom_field/index.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/custom_field/create.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/category/create.blade.php",
+    "tables": 1,
+    "modals": 12,
+    "forms": 3,
+    "charts": 0,
+    "async": 3,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/expense/index.blade.php",
+    "tables": 1,
+    "modals": 6,
+    "forms": 2,
+    "charts": 0,
+    "async": 3,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "resources/views/backend/layout/locale_js.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/layout/top-head-rtl.blade.php",
+    "tables": 0,
+    "modals": 36,
+    "forms": 6,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/layout/mobile-navigation.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/layout/sidebar.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 8,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/layout/mobile-menu-tools.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/layout/top-head.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 2,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/layout/main.blade.php",
+    "tables": 0,
+    "modals": 84,
+    "forms": 15,
+    "charts": 0,
+    "async": 4,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/layout/mobile-overview.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/layout/0main_rtl.blade.php",
+    "tables": 0,
+    "modals": 48,
+    "forms": 15,
+    "charts": 0,
+    "async": 1,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "resources/views/backend/layout/mobile-head.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "Modules/Manufacturing/Resources/views/index.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "Modules/Manufacturing/Resources/views/production/details.blade.php",
+    "tables": 1,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "Modules/Manufacturing/Resources/views/production/ingredients.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "Modules/Manufacturing/Resources/views/production/index.blade.php",
+    "tables": 2,
+    "modals": 6,
+    "forms": 1,
+    "charts": 0,
+    "async": 2,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "Modules/Manufacturing/Resources/views/production/create.blade.php",
+    "tables": 2,
+    "modals": 7,
+    "forms": 2,
+    "charts": 0,
+    "async": 8,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "Modules/Manufacturing/Resources/views/recipe/ingredients.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  },
+  {
+    "view": "Modules/Manufacturing/Resources/views/recipe/edit.blade.php",
+    "tables": 2,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 8,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "Modules/Manufacturing/Resources/views/recipe/index.blade.php",
+    "tables": 5,
+    "modals": 12,
+    "forms": 1,
+    "charts": 0,
+    "async": 6,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "Modules/Manufacturing/Resources/views/recipe/create.blade.php",
+    "tables": 2,
+    "modals": 0,
+    "forms": 1,
+    "charts": 0,
+    "async": 8,
+    "fixed_dimensions": 0,
+    "shared_shell": true
+  },
+  {
+    "view": "Modules/Manufacturing/Resources/views/layouts/master.blade.php",
+    "tables": 0,
+    "modals": 0,
+    "forms": 0,
+    "charts": 0,
+    "async": 0,
+    "fixed_dimensions": 0,
+    "shared_shell": false
+  }
+]

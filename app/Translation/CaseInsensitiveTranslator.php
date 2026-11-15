@@ -37,7 +37,7 @@ class CaseInsensitiveTranslator extends Translator
                 $line = $lines[$item];
             } else {
                 $found = Arr::get($lines, $item);
-                $line = is_string($found) ? $found : null;
+                $line = is_string($found) || is_array($found) ? $found : null;
             }
         }
 
@@ -47,6 +47,14 @@ class CaseInsensitiveTranslator extends Translator
 
         if (is_string($line)) {
             return $this->makeReplacements($line, $replace);
+        }
+        if (is_array($line)) {
+            array_walk_recursive($line, function (&$value) use ($replace) {
+                if (is_string($value)) {
+                    $value = $this->makeReplacements($value, $replace);
+                }
+            });
+            return $line;
         }
     }
 

@@ -15,6 +15,7 @@ use App\Payment\PaystackPayment;
 use App\Payment\RazorpayPayment;
 use App\Models\PaymentWithCheque;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\PaymentWithCreditCard;
 
 class PaymentService
@@ -42,9 +43,15 @@ class PaymentService
     }
 
     public function payForPurchase(array $data) {
-        $lims_purchase_data = Purchase::find($data['purchase_id']);
+        return DB::transaction(fn () => $this->recordPurchasePayment($data));
+    }
+
+    private function recordPurchasePayment(array $data)
+    {
+        validator($data, ['amount' => 'required|numeric|min:0', 'paying_amount' => 'required|numeric|min:0'])->validate();
+        $lims_purchase_data = Purchase::whereKey($data['purchase_id'])->lockForUpdate()->firstOrFail();
         $lims_purchase_data->paid_amount += $data['amount'];
-        $balance = $lims_purchase_data->grand_total - $lims_purchase_data->paid_amount;
+        $balance = round($lims_purchase_data->grand_total - $lims_purchase_data->paid_amount, (int) config('decimal', 2));
         // dd($data, $balance, $lims_purchase_data);
         if($balance > 0)
             $lims_purchase_data->payment_status = 1;
@@ -73,20 +80,20 @@ class PaymentService
         $lims_payment_data->payment_note = $data['payment_note'];
         $lims_payment_data->save();
 
-        $lims_payment_data = Payment::latest()->first();
         $data['payment_id'] = $lims_payment_data->id;
         $lims_pos_setting_data = PosSetting::latest()->first();
-        if($paying_method == 'Credit Card' && $lims_pos_setting_data->stripe_secret_key){
+        if($paying_method == 'Credit Card' && ($lims_pos_setting_data->stripe_secret_key ?? null)){
             Stripe::setApiKey($lims_pos_setting_data->stripe_secret_key);
             $token = $data['stripeToken'];
             $amount = $data['amount'];
 
             // Charge the Customer
+            $options = request()->attributes->get('salepro.operation_key');
             $charge = \Stripe\Charge::create([
                 'amount' => $amount * 100,
                 'currency' => 'usd',
                 'source' => $token,
-            ]);
+            ], $options ? ['idempotency_key' => $options] : []);
 
             $data['charge_id'] = $charge->id;
             PaymentWithCreditCard::create($data);

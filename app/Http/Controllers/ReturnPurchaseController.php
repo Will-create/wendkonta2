@@ -1039,6 +1039,6 @@ class ReturnPurchaseController extends Controller
         $lims_return_data->delete();
         $this->fileDelete(public_path('documents/purchase_return/'), $lims_return_data->document);
 
-        return redirect('return-purchase')->with('not_permitted', __('db.Data deleted successfully'));
+        return redirect('return-purchase')->with('message', __('db.Data deleted successfully'));
     }
 }

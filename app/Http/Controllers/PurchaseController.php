@@ -119,12 +119,14 @@ class PurchaseController extends Controller
                 $lims_warehouse_list = Warehouse::where('is_active', true)->get();
             }
             $lims_tax_list = Tax::where('is_active', true)->get();
-            $lims_product_list_without_variant = $this->productWithoutVariant();
-            $lims_product_list_with_variant = $this->productWithVariant();
+            $purchase_defaults = app(\App\Services\PurchaseDefaults::class)->forWarehouses($lims_warehouse_list);
+            $quick_categories = \App\Models\Category::where("is_active", true)->get();
+            $quick_units = \App\Models\Unit::where("is_active", true)->get();
+            $quick_fields = CustomField::where("belongs_to", "product")->get();
             $currency_list = Currency::where('is_active', true)->get();
             $custom_fields = CustomField::where('belongs_to', 'purchase')->get();
             $lims_account_list = Account::select('id', 'name', 'account_no')->where('is_active', true)->get();
-            return view('backend.purchase.create', compact('lims_supplier_list', 'lims_warehouse_list', 'lims_tax_list', 'lims_product_list_without_variant', 'lims_product_list_with_variant', 'currency_list', 'custom_fields', 'lims_account_list'));
+            return view('backend.purchase.create', compact('lims_supplier_list', 'lims_warehouse_list', 'lims_tax_list', 'purchase_defaults', 'quick_categories', 'quick_units', 'quick_fields', 'currency_list', 'custom_fields', 'lims_account_list'));
         }
         else
             return redirect()->back()->with('not_permitted', __('db.Sorry! You are not allowed to access this module'));
@@ -885,14 +887,14 @@ class PurchaseController extends Controller
     public function productWithoutVariant()
     {
         return Product::ActiveStandard()->select('id', 'name', 'code')
-                ->whereNull('is_variant')->get();
+                ->withoutVariant()->get();
     }
 
     public function productWithVariant()
     {
         return Product::join('product_variants', 'products.id', 'product_variants.product_id')
             ->ActiveStandard()
-            ->whereNotNull('is_variant')
+            ->where('products.is_variant', 1)
             ->select('products.id', 'products.name', 'product_variants.item_code')
             ->orderBy('position')
             ->get();
@@ -901,7 +903,7 @@ class PurchaseController extends Controller
     public function newProductWithVariant()
     {
         return Product::ActiveStandard()
-                ->whereNotNull('is_variant')
+                ->where('products.is_variant', 1)
                 ->whereNotNull('variant_data')
                 ->select('id', 'name', 'variant_data')
                 ->get();
@@ -915,21 +917,21 @@ class PurchaseController extends Controller
                                 ['code', $product_code[0]],
                                 ['is_active', true]
                             ])
-                            ->whereNull('is_variant')
+                            ->withoutVariant()
                             ->first();
         if(!$lims_product_data) {
             $lims_product_data = Product::where([
                                 ['name', $product_code[1]],
                                 ['is_active', true]
                             ])
-                            ->whereNotNull(['is_variant'])
+                            ->where('products.is_variant', 1)
                             ->first();
             $lims_product_data = Product::join('product_variants', 'products.id', 'product_variants.product_id')
                 ->where([
                     ['product_variants.item_code', $product_code[0]],
                     ['products.is_active', true]
                 ])
-                ->whereNotNull('is_variant')
+                ->where('products.is_variant', 1)
                 ->select('products.*', 'product_variants.item_code', 'product_variants.additional_cost')
                 ->first();
             $lims_product_data->cost += $lims_product_data->additional_cost;
@@ -944,7 +946,8 @@ class PurchaseController extends Controller
         $product['profit_margin'] = $lims_product_data->profit_margin;
         $product['product_price'] = $lims_product_data->price;
 
-        $calculatedMargin = (((float)$lims_product_data->price - (float)$lims_product_data->cost) / (float)$lims_product_data->cost) * 100;
+        $calculatedMargin = (float) $lims_product_data->cost > 0
+            ? (((float) $lims_product_data->price - (float) $lims_product_data->cost) / (float) $lims_product_data->cost) * 100 : 0;
         if (round($calculatedMargin, 2) != round((float)$lims_product_data->profit_margin, 2)) {
             $product['profit_margin'] = $calculatedMargin;
         }
@@ -1434,10 +1437,10 @@ class PurchaseController extends Controller
         //updating purchase table
         $amount_dif = $lims_payment_data->amount - $data['edit_amount'];
         $lims_purchase_data->paid_amount = $lims_purchase_data->paid_amount - $amount_dif;
-        $balance = $lims_purchase_data->grand_total - $lims_purchase_data->paid_amount;
-        if($balance > 0 || $balance < 0)
+        $balance = round($lims_purchase_data->grand_total - $lims_purchase_data->paid_amount, (int) config('decimal', 2));
+        if($balance > 0)
             $lims_purchase_data->payment_status = 1;
-        elseif ($balance == 0)
+        else
             $lims_purchase_data->payment_status = 2;
         $lims_purchase_data->save();
 
@@ -1506,10 +1509,10 @@ class PurchaseController extends Controller
         $lims_payment_data = Payment::find($request['id']);
         $lims_purchase_data = Purchase::where('id', $lims_payment_data->purchase_id)->first();
         $lims_purchase_data->paid_amount -= $lims_payment_data->amount;
-        $balance = $lims_purchase_data->grand_total - $lims_purchase_data->paid_amount;
-        if($balance > 0 || $balance < 0)
+        $balance = round($lims_purchase_data->grand_total - $lims_purchase_data->paid_amount, (int) config('decimal', 2));
+        if($balance > 0)
             $lims_purchase_data->payment_status = 1;
-        elseif ($balance == 0)
+        else
             $lims_purchase_data->payment_status = 2;
         $lims_purchase_data->save();
         $lims_pos_setting_data = PosSetting::latest()->first();
@@ -1528,7 +1531,7 @@ class PurchaseController extends Controller
             $lims_payment_cheque_data->delete();
         }
         $lims_payment_data->delete();
-        return redirect('purchases')->with('not_permitted', __('db.Payment deleted successfully'));
+        return redirect('purchases')->with('message', __('db.Payment deleted successfully'));
     }
 
     private function purchaseHasSale($lims_product_purchase_data)
@@ -1722,7 +1725,7 @@ class PurchaseController extends Controller
             $lims_purchase_data->delete();
             $this->fileDelete(public_path('documents/purchase/'), $lims_purchase_data->document);
 
-            return redirect('purchases')->with('not_permitted', __('db.Purchase deleted successfully'));
+            return redirect('purchases')->with('message', __('db.Purchase deleted successfully'));
         }
 
     }
@@ -1989,7 +1992,7 @@ class PurchaseController extends Controller
 
         if (!empty($ids)) {
             Purchase::withTrashed()->whereIn('id', $ids)->forceDelete();
-            return back()->with('not_permitted', 'Selected purchases deleted permanently!');
+            return back()->with('message', 'Selected purchases deleted permanently!');
         }
 
         return back()->with('not_permitted', 'No purchases selected!');

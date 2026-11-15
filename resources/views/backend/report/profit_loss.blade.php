@@ -142,6 +142,7 @@
                             <p class="mt-2">{{__('db.Amount')}} <span class="float-right"> {{number_format((float)$payment_recieved, $general_setting->decimal, '.', '')}}</span></p>
                             <p class="mt-2">{{__('db.Recieved')}} <span class="float-right">{{$payment_recieved_number}}</span></p>
                             <p class="mt-2">Cash <span class="float-right">{{number_format((float)$cash_payment_sale, $general_setting->decimal, '.', '')}}</span></p>
+                            <p class="mt-2">{{ __('db.Bank Transfer') }} <span class="float-right">{{ number_format((float) ($bank_transfer_payment_sale ?? 0), $general_setting->decimal, '.', '') }}</span></p>
                             <p class="mt-2">Cheque <span class="float-right">{{number_format((float)$cheque_payment_sale, $general_setting->decimal, '.', '')}}</span></p>
                             <p class="mt-2">Credit Card <span class="float-right">{{number_format((float)$credit_card_payment_sale, $general_setting->decimal, '.', '')}}</span></p>
                             <p class="mt-2">Gift Card <span class="float-right">{{number_format((float)$gift_card_payment_sale, $general_setting->decimal, '.', '')}}</span></p>

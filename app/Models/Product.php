@@ -38,6 +38,20 @@ class Product extends Model
         ]);
     }
 
+    public function scopeWithoutVariant($query)
+    {
+        return $query->where(function ($query) {
+            $query->whereNull('products.is_variant')->orWhere('products.is_variant', 0);
+        });
+    }
+
+    public function scopeWithoutSerialNumber($query)
+    {
+        return $query->where(function ($query) {
+            $query->whereNull('products.is_imei')->orWhere('products.is_imei', 0);
+        });
+    }
+
     public function scopeActiveFeatured($query)
     {
         return $query->where([

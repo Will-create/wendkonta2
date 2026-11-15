@@ -26,6 +26,7 @@
     <!-- Scripts -->
     <script src="{{ asset('../../js/app.js') }}" defer></script>
     @endif
+@include('backend.layout.mobile-head')
 </head>
 <body>
     <div id="app">

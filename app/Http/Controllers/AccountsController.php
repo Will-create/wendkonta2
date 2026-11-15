@@ -98,7 +98,7 @@ class AccountsController extends Controller
             $debit = [];
             $credit = [];
             foreach ($lims_account_list as $account) {
-                $payment_recieved = Payment::whereNotNull('sale_id')->where('account_id', $account->id)->sum('amount');
+                $payment_recieved = Payment::whereNotNull('sale_id')->where('account_id', $account->id)->sum(DB::raw('amount - customer_credit_transfer'));
                 $payment_sent = Payment::whereNotNull('purchase_id')->where('account_id', $account->id)->sum('amount');
                 $returns = DB::table('returns')->where('account_id', $account->id)->sum('grand_total');
                 $return_purchase = DB::table('return_purchases')->where('account_id', $account->id)->sum('grand_total');
@@ -107,6 +107,7 @@ class AccountsController extends Controller
                 $sent_money_via_transfer = MoneyTransfer::where('from_account_id', $account->id)->sum('amount');
                 $recieved_money_via_transfer = MoneyTransfer::where('to_account_id', $account->id)->sum('amount');
 
+                $payment_recieved += app(\App\Services\CustomerDepositCash::class)->total(account: $account->id);
                 $credit[] = $payment_recieved + $return_purchase + $recieved_money_via_transfer + $account->initial_balance;
                 $debit[] = $payment_sent + $returns + $expenses + $payrolls + $sent_money_via_transfer;
             }
@@ -124,6 +125,7 @@ class AccountsController extends Controller
         $credit_list = new Collection;
         $debit_list = new Collection;
         $expense_list = new Collection;
+        $income_list = new Collection;
         $return_list = new Collection;
         $purchase_return_list = new Collection;
         $payroll_list = new Collection;
@@ -135,7 +137,7 @@ class AccountsController extends Controller
                             ->where('account_id', $data['account_id'])
                             ->whereDate('created_at', '>=' , $data['start_date'])
                             ->whereDate('created_at', '<=' , $data['end_date'])
-                            ->select('payment_reference as reference_no', 'sale_id', 'amount', 'created_at')
+                            ->select('payment_reference as reference_no', 'sale_id', DB::raw('amount - customer_credit_transfer as amount'), 'created_at')
                             ->get();
 
             $recieved_money_transfer_list = MoneyTransfer::where('to_account_id', $data['account_id'])
@@ -182,6 +184,17 @@ class AccountsController extends Controller
                                         ->select('reference_no', 'to_account_id', 'amount', 'created_at')
                                         ->get();
         }
+        $depositCash = app(\App\Services\CustomerDepositCash::class)->query()
+            ->where('account_id', $data['account_id'])->whereDate('created_at', '>=', $data['start_date'])
+            ->whereDate('created_at', '<=', $data['end_date'])->orderBy('created_at')->get()
+            ->filter(fn ($row) => $data['type'] == '0' || ($data['type'] == '2' && $row->amount > 0) || ($data['type'] == '1' && $row->amount < 0))
+            ->map(function ($row) {
+                $row->reference_no = 'spr-DEP-'.$row->id.($row->amount < 0 ? '-REV' : '');
+                $row->sale_id = null; $row->purchase_id = null; $row->to_account_id = null;
+                $row->created_at = \Carbon\Carbon::parse($row->created_at);
+                return $row;
+            });
+        $credit_list = $credit_list->concat($depositCash);
         $all_transaction_list = new Collection;
         $all_transaction_list = $credit_list->concat($recieved_money_transfer_list)
                                 ->concat($debit_list)

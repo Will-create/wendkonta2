@@ -78,12 +78,19 @@ class CashRegisterController extends Controller
 								])
 								->whereNotNull('sale_id')
 								->sum('amount');
+        $depositCash = app(\App\Services\CustomerDepositCash::class);
+        $data['cash_payment'] += $depositCash->total(register: $cash_register_data->id, method: 'Cash');
+        $data['cheque_payment'] += $depositCash->total(register: $cash_register_data->id, method: 'Cheque');
+        $data['total_payment'] += $depositCash->total(register: $cash_register_data->id)
+            - Payment::where('cash_register_id', $cash_register_data->id)->whereNotNull('sale_id')->sum('customer_credit_transfer');
 		$data['total_supplier_payment'] = Payment::where('cash_register_id', $cash_register_data->id)
 										->whereNotNull('purchase_id')
 										->sum('amount');
 		$data['total_sale_return'] = Returns::where('cash_register_id', $cash_register_data->id)->sum('grand_total');
 		$data['total_expense'] = Expense::where('cash_register_id', $cash_register_data->id)->sum('amount');
 		$data['total_cash'] = $data['cash_in_hand'] + $data['total_payment'] - ($data['total_sale_return'] + $data['total_expense'] + $data['total_supplier_payment']);
+        $data['total_cash'] -= $depositCash->total(register: $cash_register_data->id)
+            - $depositCash->total(register: $cash_register_data->id, method: 'Cash');
 		$data['status'] = $cash_register_data->status;
 		return $data;
 	}

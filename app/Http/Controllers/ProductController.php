@@ -7,7 +7,6 @@ use Auth;
 use File;
 use DNS1D;
 use Exception;
-use Keygen\Keygen;
 use App\Models\Tax;
 use App\Models\Unit;
 use App\Models\Brand;
@@ -61,11 +60,7 @@ class ProductController extends Controller
             $tax_id = 0;
             $imeiorvariant = 0;
 
-            if ($request->input('warehouse_id')) {
-                $warehouse_id = $request->input('warehouse_id');
-            } else if (Auth::user()->warehouse_id) {
-                $warehouse_id = Auth::user()->warehouse_id;
-            }
+            $warehouse_id = app(\App\Services\ProductListing::class)->warehouse($request);
             if ($request->input('product_type')) $product_type = $request->input('product_type');
             if ($request->input('brand_id')) $brand_id = $request->input('brand_id');
             if ($request->input('category_id')) $category_id = $request->input('category_id');
@@ -97,132 +92,21 @@ class ProductController extends Controller
 
     public function productData(Request $request)
     {
-        $columns = array(
-            1 => 'name',
-            2 => 'code',
-            3 => 'brand_id',
-            4 => 'category_id',
-            5 => 'qty',
-            6 => 'unit_id',
-            7 => 'price',
-            8 => 'cost',
-        );
-        
-        $filtered_data = [
-            'warehouse_id' => $request->input('warehouse_id'),
-            'product_type' => $request->input('product_type'),
-            'brand_id' => $request->input('brand_id'),
-            'category_id' => $request->input('category_id'),
-            'unit_id' => $request->input('unit_id'),
-            'tax_id' => $request->input('tax_id'),
-            'is_imei' => $request->input('imeiorvariant') == 'imei' ? "1" : "0",
-            'is_variant' => $request->input('imeiorvariant') == 'variant' ? "1" : "0",
-        ];
-
-        $totalData = DB::table('products')->where('is_active', true)->count();
-
-        $warehouse_id = $request->input('warehouse_id');
-        $is_recipe = $request->input('is_recipe');
-        // dd($warehouse_id);
-        if($is_recipe == true){
-            $totalData = Product::where('is_recipe',1)->where('is_active', true)->count();
-        }else{
-            $totalData = DB::table('products')->where('is_active', true)->count();
-        }
-
-        $totalFiltered = $totalData;
-
-        if($request->input('length') != -1)
-            $limit = $request->input('length');
-        else
-            $limit = $totalData;
-        $start = $request->input('start');
-        $order = 'products.'.$columns[$request->input('order.0.column')];
-        $dir = $request->input('order.0.dir');
-        //fetching custom fields data
-        $custom_fields = CustomField::where([
-                        ['belongs_to', 'product'],
-                        ['is_table', true]
-                    ])->pluck('name');
-        $field_names = [];
-        foreach($custom_fields as $fieldName) {
-            $field_names[] = str_replace(" ", "_", strtolower($fieldName));
-        }
-        if(empty($request->input('search.value'))){
-            $query = Product::with('category', 'brand', 'unit')->offset($start)
-                        ->where('is_active', true)
-                        ->limit($limit)
-                        ->orderBy($order,$dir);
-            $products = $is_recipe ? $query->where('is_recipe',1)->get() : $query->get();
-        } else {
-            $search = $request->input('search.value');
-            $q = Product::select('products.*')
-                ->with('category', 'brand', 'unit')
-                ->join('categories', 'products.category_id', '=', 'categories.id')
-                ->leftjoin('product_purchases','product_purchases.product_id','=', 'products.id')
-                ->leftjoin('brands', 'products.brand_id', '=', 'brands.id')
-                ->leftjoin('product_variants', 'products.id', '=', 'product_variants.product_id')
-                ->where([
-                    ['products.name', 'LIKE', "%{$search}%"],
-                    ['products.is_active', true]
-                ])
-                ->orWhere([
-                    ['products.code', 'LIKE', "%{$search}%"],
-                    ['products.is_active', true]
-                ])
-                ->orWhere([
-                    ['product_variants.item_code', 'LIKE', "%{$search}%"],
-                    ['products.is_active', true]
-                ])
-                ->orWhere([
-                    ['categories.name', 'LIKE', "%{$search}%"],
-                    ['categories.is_active', true],
-                    ['products.is_active', true]
-                ])
-                ->orWhere([
-                    ['brands.title', 'LIKE', "%{$search}%"],
-                    ['brands.is_active', true],
-                    ['products.is_active', true]
-                ])
-                ->orWhere([
-                    ['product_purchases.imei_number', 'LIKE', "%{$search}%"],
-                    ['products.is_active', true]
-                ]);
-            //searching with custom field
-            foreach ($field_names as $key => $field_name) {
-                $q = $q->orwhere('products.' . $field_name, 'LIKE', "%{$search}%");
-            }
-
-            $q = $q->offset($start)
-                ->limit($limit)
-                ->orderBy($order,$dir);
-
-            $products = $q->groupBy('products.id')->get();
-            $products = $is_recipe ? $q->where('is_recipe',1)->get() : $q->get();
-            $totalFiltered = $q->groupBy('products.id')->count();
-            /*$totalFiltered = Product::
-                            join('categories', 'products.category_id', '=', 'categories.id')
-                            ->leftjoin('brands', 'products.brand_id', '=', 'brands.id')
-                            ->where([
-                                ['products.name','LIKE',"%{$search}%"],
-                                ['products.is_active', true]
-                            ])
-                            ->orWhere([
-                                ['products.code', 'LIKE', "%{$search}%"],
-                                ['products.is_active', true]
-                            ])
-                            ->orWhere([
-                                ['categories.name', 'LIKE', "%{$search}%"],
-                                ['categories.is_active', true],
-                                ['products.is_active', true]
-                            ])
-                            ->orWhere([
-                                ['brands.title', 'LIKE', "%{$search}%"],
-                                ['brands.is_active', true],
-                                ['products.is_active', true]
-                            ])
-                            ->count();*/
-        }
+        abort_unless(Role::find($request->user()->role_id)?->hasPermissionTo('products-index'), 403);
+        $listing = app(\App\Services\ProductListing::class);
+        $warehouse_id = $listing->warehouse($request);
+        $field_names = CustomField::where('belongs_to', 'product')->where('is_table', true)
+            ->pluck('name')->map(fn ($name) => str_replace(' ', '_', strtolower($name)))->all();
+        $totalData = Product::where('is_active', true)->when($request->boolean('is_recipe'), fn ($q) => $q->where('is_recipe', 1))->count();
+        $query = $listing->query($request, $field_names);
+        $totalFiltered = (clone $query)->count();
+        $columns = [1 => 'products.name', 2 => 'products.code', 3 => 'products.brand_id', 4 => 'products.category_id',
+            5 => 'available_qty', 6 => 'products.unit_id', 7 => 'products.price', 8 => 'products.cost'];
+        $length = (int) $request->input('length', 25);
+        $limit = $length === -1 ? $totalFiltered : max(1, min(100, $length));
+        $products = $query->orderBy($columns[(int) $request->input('order.0.column', 1)] ?? 'products.name',
+            $request->input('order.0.dir') === 'desc' ? 'desc' : 'asc')->orderBy('products.id')
+            ->offset(max(0, (int) $request->input('start', 0)))->limit($limit)->get();
         $data = array();
         if(!empty($products))
         {
@@ -246,44 +130,11 @@ class ProductController extends Controller
                     $nestedData['brand'] = $product->brand->title;
                 else
                     $nestedData['brand'] = "N/A";
-                $nestedData['category'] = $product->category->name;
-                if($filtered_data['warehouse_id'] > 0 && $product->type == 'standard') {
-                    $nestedData['qty'] = Product_Warehouse::where([
-                                                ['product_id', $product->id],
-                                                ['warehouse_id', $filtered_data['warehouse_id']]
-                                            ])->sum('qty');
-                }
-                elseif($product->type == 'standard') {
-                    $nestedData['qty'] = Product_Warehouse::where([
-                        ['product_id', $product->id],
-                    ])->sum('qty');
-                }
-                else
-                    $nestedData['qty'] = $product->qty;
-
-                // 'product_type', 'brand_id', 'category_id', 'unit_id', 'tax_id'
-                if ($filtered_data['product_type'] != 'all' && $filtered_data['product_type'] != $product->type) {
-                    $nestedData['qty'] = 0;
-                }
-                if ($filtered_data['brand_id'] != '0' && $filtered_data['brand_id'] != $product->brand_id) {
-                    $nestedData['qty'] = 0;
-                }
-                if ($filtered_data['category_id'] != '0' && $filtered_data['category_id'] != $product->category_id) {
-                    $nestedData['qty'] = 0;
-                }
-                if ($filtered_data['unit_id'] != '0' && $filtered_data['unit_id'] != $product->unit_id) {
-                    $nestedData['qty'] = 0;
-                }
-                if ($filtered_data['tax_id'] != '0' && $filtered_data['tax_id'] != $product->tax_id) {
-                    $nestedData['qty'] = 0;
-                }
-                if ($filtered_data['is_imei'] != '0' && $filtered_data['is_imei'] != $product->is_imei) {
-                    $nestedData['qty'] = 0;
-                }
-                if ($filtered_data['is_variant'] != '0' && $filtered_data['is_variant'] != $product->is_variant) {
-                    $nestedData['qty'] = 0;
-                }
-
+                $nestedData['category'] = $product->category->name ?? '—';
+                $nestedData['qty'] = (float) $product->available_qty;
+                $nestedData['stock_status'] = in_array($product->type, ['service', 'digital']) ? 'untracked'
+                    : ($nestedData['qty'] <= 0 ? 'out_of_stock' : ((float) $product->alert_quantity > 0 && $nestedData['qty'] <= (float) $product->alert_quantity ? 'low_stock' : 'in_stock'));
+                $nestedData['warehouse_id'] = $warehouse_id;
                 if($product->unit_id)
                     $nestedData['unit'] = $product->unit->unit_name ?? 'N/A';
                 else
@@ -348,9 +199,8 @@ class ProductController extends Controller
                     $nestedData['options'] .= \Form::open(["route" => ["products.destroy", $product->id], "method" => "DELETE"] ).'
                             <li>
                               <button type="submit" class="btn btn-link" onclick="return confirmDelete()"><i class="fa fa-trash"></i> '.__("db.delete").'</button>
-                            </li>'.\Form::close().'
-                        </ul>
-                    </div>';
+                            </li>'.\Form::close();
+                $nestedData['options'] .= '</ul></div>';
                 // data for product details by one click
                 if($product->tax_id)
                     $tax = Tax::find($product->tax_id)->name ?? "N/A";
@@ -637,6 +487,9 @@ class ProductController extends Controller
         }
         $this->cacheForget('product_list');
         $this->cacheForget('product_list_with_variant');
+        if ($request->attributes->get('salepro.quick_product')) {
+            return $lims_product_data;
+        }
         \Session::flash('create_message', 'Product created successfully');
     }
 
@@ -1516,10 +1369,11 @@ class ProductController extends Controller
         }
     }
 
-    public function generateCode()
+    public function generateCode(Request $request)
     {
-        $id = Keygen::numeric(8)->generate();
-        return $id;
+        $role = Role::find($request->user()->role_id);
+        abort_unless($role && ($role->hasPermissionTo('products-add') || $role->hasPermissionTo('products-edit')), 403);
+        return app(\App\Services\ProductCode::class)->generate();
     }
 
     public function search(Request $request)
@@ -1655,14 +1509,14 @@ class ProductController extends Controller
     public function productWithoutVariant()
     {
         return Product::ActiveStandard()->select('id', 'name', 'code')
-                ->whereNull('is_variant')->get();
+                ->withoutVariant()->get();
     }
 
     public function productWithVariant()
     {
         return Product::join('product_variants', 'products.id', 'product_variants.product_id')
                 ->ActiveStandard()
-                ->whereNotNull('is_variant')
+                ->where('products.is_variant', 1)
                 ->select('products.id', 'products.name', 'product_variants.item_code', 'product_variants.qty')
                 ->orderBy('position')->get();
     }

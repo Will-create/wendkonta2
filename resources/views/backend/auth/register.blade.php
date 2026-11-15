@@ -30,7 +30,8 @@
     <noscript><link href="https://fonts.googleapis.com/css?family=Nunito:400,500,700" rel="stylesheet"></noscript>
     <script type="text/javascript" src="<?php echo asset('../../vendor/jquery/jquery.min.js') ?>"></script>
     @endif
-  </head>
+  @include('backend.layout.mobile-head')
+</head>
   <body>
     <div class="page login-page">
       <div class="container">

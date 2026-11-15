@@ -5,6 +5,12 @@
 *.zip
 .env
 .env.backup
+/deploy/state/
+/test-results/
+/playwright-report/
+/tests/e2e/permissions.json
+/tests/e2e/dictionary.json
+__pycache__/
 .phpunit.result.cache
 .vscode
 Homestead.json

@@ -1,0 +1,22 @@
+{
+    "id": "/",
+    "name": "SalePro POS",
+    "short_name": "SalePro",
+    "description": "Warehouse management, sales, purchases and inventory",
+    "lang": "en",
+    "start_url": "/dashboard",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "any",
+    "background_color": "#f5f4f8",
+    "theme_color": "#733686",
+    "icons": [
+        {"src": "/icons/icon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+        {"src": "/icons/icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"}
+    ],
+    "shortcuts": [
+        {"name": "New sale", "url": "/sales/create"},
+        {"name": "New purchase", "url": "/purchases/create"},
+        {"name": "Products and stock", "url": "/products"}
+    ]
+}

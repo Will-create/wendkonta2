@@ -37,11 +37,17 @@
                                         <div class="form-group">
                                             <label>{{__('db.Warehouse')}} *</label>
                                             <select name="warehouse_id" class="selectpicker form-control" data-live-search="true" title="{{ __('db.Select warehouse...') }}" required>
+                                                <option value="">{{ __('db.Select warehouse...') }}</option>
                                                 @foreach($lims_warehouse_list as $warehouse)
-                                                <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
+                                                <option value="{{$warehouse->id}}" @selected(old('warehouse_id', $purchase_defaults['warehouse_id']) == $warehouse->id)>{{$warehouse->name}}</option>
                                                 @endforeach
                                             </select>
                                             <x-validation-error fieldName="warehouse_id" />
+                                            @if(!$purchase_defaults['warehouse_id'])
+                                            <small class="form-text">{{ __('mobile.choose_warehouse') }}
+                                                @if((int) Auth::user()->role_id === 1)<a href="{{ route('purchases.defaults.edit') }}">{{ __('mobile.purchase_defaults') }}</a>@endif
+                                            </small>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -49,7 +55,7 @@
                                             <label>{{__('db.Supplier')}}</label>
                                             <select name="supplier_id" class="selectpicker form-control" data-live-search="true" title="{{ __('db.Select supplier...') }}">
                                                 @foreach($lims_supplier_list as $supplier)
-                                                <option value="{{$supplier->id}}">{{$supplier->name .' ('. $supplier->company_name .')'}}</option>
+                                                <option value="{{$supplier->id}}" @selected(old('supplier_id', $purchase_defaults['supplier_id']) == $supplier->id)>{{$supplier->name .' ('. $supplier->company_name .')'}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -153,10 +159,13 @@
                                     <div class="col-md-12 mt-3">
                                         <label>{{__('db.Select Product')}}</label>
                                         <div class="search-box input-group">
-                                            <button class="btn btn-secondary"><i class="fa fa-barcode"></i></button>
+                                            <span class="input-group-text"><i class="fa fa-barcode" aria-hidden="true"></i></span>
                                             <input type="text" name="product_code_name" id="lims_productcodeSearch" placeholder="{{__('db.Please type product code and select')}}" class="form-control" />
-
+                                            @if(\Spatie\Permission\Models\Role::find(Auth::user()->role_id)->hasPermissionTo('products-add'))
+                                            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#quick-product-modal" aria-label="{{ __('mobile.create_product') }}">+</button>
+                                            @endif
                                         </div>
+                                        <div id="purchase-product-picker" data-search="{{ route('purchases.products.search') }}" data-input="lims_productcodeSearch"></div>
                                     </div>
                                 </div>
                                 <div class="row mt-4">
@@ -476,6 +485,7 @@
     </div>
 </section>
 
+@include('backend.purchase.quick-product')
 @endsection
 @push('scripts')
 <script type="text/javascript">
@@ -561,46 +571,6 @@
                 rowindex = $(this).closest('tr').index();
                 $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.recieved').val($(this).val());
             });
-        }
-    });
-
-    <?php $productArray = []; ?>
-    var lims_product_code = [
-        @foreach($lims_product_list_without_variant as $product)
-            <?php
-                $productArray[] = htmlspecialchars($product->code) . '|' . preg_replace('/[\n\r]/', "<br>", htmlspecialchars($product->name));
-            ?>
-        @endforeach
-        @foreach($lims_product_list_with_variant as $product)
-            <?php
-                $productArray[] = htmlspecialchars($product->item_code) . '|' . preg_replace('/[\n\r]/', "<br>", htmlspecialchars($product->name));
-            ?>
-        @endforeach
-
-        <?php
-            echo  '"'.implode('","', $productArray).'"';
-        ?>
-    ];
-
-    var lims_productcodeSearch = $('#lims_productcodeSearch');
-
-    lims_productcodeSearch.autocomplete({
-        source: function(request, response) {
-            var matcher = new RegExp(".?" + $.ui.autocomplete.escapeRegex(request.term), "i");
-            response($.grep(lims_product_code, function(item) {
-                return matcher.test(item);
-            }));
-        },
-        response: function(event, ui) {
-            if (ui.content.length == 1) {
-                var data = ui.content[0].value;
-                $(this).autocomplete( "close" );
-                productSearch(data);
-            };
-        },
-        select: function(event, ui) {
-            var data = ui.item.value;
-            productSearch(data);
         }
     });
 
@@ -854,9 +824,9 @@
     });
 
     function productSearch(data) {
-        $.ajax({
+        return $.ajax({
             type: 'GET',
-            url: 'lims_product_search',
+            url: @json(route('product_purchase.search')),
             data: {
                 data: data
             },
@@ -867,7 +837,7 @@
                         rowindex = i;
                         var qty = parseFloat($('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ') .qty').val()) + 1;
                         $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ') .qty').val(qty);
-                        if($('select[name="status"]').val() == 1 || $('select[name="status"]').val() == 1) {
+                        if($('select[name="status"]').val() == 1 || $('select[name="status"]').val() == 2) {
                             $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ') .recieved').val(qty);
                         }
                         calculateRowProductData(qty);
@@ -1239,4 +1209,19 @@
 </script>
 
 <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
+@endpush
+
+@push('scripts')
+<script src="{{ asset('js/product-picker.js') }}?v={{ filemtime(public_path('js/product-picker.js')) }}"></script>
+<script>
+jQuery(function () {
+    window.purchasePicker = SaleProProductPicker(document.getElementById('purchase-product-picker'), {
+        add: function (product) {
+            if (Array.from(document.querySelectorAll('#myTable .product-code')).some(function (input) { return input.value === product.code; })) return Promise.resolve();
+            return productSearch(product.code + '|' + product.name);
+        },
+        strings: @json(trans('mobile'))
+    });
+});
+</script>
 @endpush

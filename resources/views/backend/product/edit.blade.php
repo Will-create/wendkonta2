@@ -32,7 +32,7 @@
 
                     <div class="card-body">
                         <p class="italic"><small>{{__('db.The field labels marked with * are required input fields')}}.</small></p>
-                        <form id="product-form">
+                        <form id="product-form" method="post" action="{{ url('products/update') }}" enctype="multipart/form-data">
                             <input type="hidden" name="id" value="{{$lims_product_data->id}}" />
                             <div class="row">
                                 <div class="col-md-4">
@@ -1913,6 +1913,7 @@
                     tinyMCE.triggerSave();
                     $(this).attr('disabled','true').html('<span class="spinner-border text-light" role="status"></span> {{__("db.Saving")}}...');
                     if(myDropzone.getAcceptedFiles().length) {
+                        myDropzone.getFilesWithStatus(Dropzone.ERROR).forEach(function(file) { file.status = Dropzone.QUEUED; });
                         myDropzone.processQueue();
                     }
                     else {
@@ -1935,13 +1936,10 @@
                                 window.location.reload(true);
                             },
                             error:function(response) {
-                                //console.log(response);
-                              if(response.responseJSON.errors.name) {
-                                  $("#name-error").text(response.responseJSON.errors.name);
-                              }
-                              else if(response.responseJSON.errors.code) {
-                                  $("#code-error").text(response.responseJSON.errors.code);
-                              }
+                                var errors = (response.responseJSON && response.responseJSON.errors) || {};
+                                if(errors.name) $("#name-error").text(errors.name);
+                                if(errors.code) $("#code-error").text(errors.code);
+                                if(window.SaleProMobile) SaleProMobile.recoverForm(document.getElementById('product-form'), Object.values(errors).flat().join(' ') || (response.responseJSON && response.responseJSON.message));
                             },
                         });
                     }
@@ -1949,6 +1947,10 @@
             });
 
             this.on('sending', function (file, xhr, formData) {
+                var form = document.getElementById('product-form');
+                form.dataset.spPending = 'true';
+                form.dataset.spDirty = 'false';
+                form.setAttribute('aria-busy', 'true');
                 // Append all form inputs to the formData Dropzone will POST
                 var data = $("#product-form").serializeArray();
                 $.each(data, function (key, el) {
@@ -1960,40 +1962,13 @@
             });
         },
         error: function (file, response) {
-            console.log(response);
-            /*if(response.errors.name) {
-              $("#name-error").text(response.errors.name);
-              this.removeAllFiles(true);
+            var errors = response && typeof response === 'object' ? response.errors || {} : {};
+            var message = Object.values(errors).flat().join(' ') || (response && response.message);
+            if(window.SaleProMobile) SaleProMobile.recoverForm(document.getElementById('product-form'), message);
+            if(file.previewElement) {
+                file.previewElement.classList.add('dz-error');
+                file.previewElement.querySelectorAll('[data-dz-errormessage]').forEach(function(node) { node.textContent = message || @json(__('mobile.unsaved')); });
             }
-            else if(response.errors.code) {
-              $("#code-error").text(response.errors.code);
-              this.removeAllFiles(true);
-            }
-            else {
-              try {
-                  var res = JSON.parse(response);
-                  if (typeof res.message !== 'undefined' && !$modal.hasClass('in')) {
-                      $("#success-icon").attr("class", "fas fa-thumbs-down");
-                      $("#success-text").html(res.message);
-                      $modal.modal("show");
-                  } else {
-                      if ($.type(response) === "string")
-                          var message = response; //dropzone sends it's own error messages in string
-                      else
-                          var message = response.message;
-                      file.previewElement.classList.add("dz-error");
-                      _ref = file.previewElement.querySelectorAll("[data-dz-errormessage]");
-                      _results = [];
-                      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                          node = _ref[_i];
-                          _results.push(node.textContent = message);
-                      }
-                      return _results;
-                  }
-              } catch (error) {
-                  console.log(error);
-              }
-            }*/
         },
         successmultiple: function (file, response) {
                 window.location.reload();

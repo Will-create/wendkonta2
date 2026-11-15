@@ -10,7 +10,8 @@ const path = require('path');
 const { JSDOM } = require('jsdom');
 
 const root = path.resolve(__dirname, '../..');
-const blade = fs.readFileSync(path.join(root, 'resources/views/backend/sale/create.blade.php'), 'utf8');
+const blade = fs.readFileSync(path.join(root, 'resources/views/backend/sale/create.blade.php'), 'utf8')
+    .replace(/@json\(__\('([^']*)'\)\)/g, (_, message) => JSON.stringify(message.replace(/^db\./, '')));
 const jquery = fs.readFileSync(path.join(root, 'public/vendor/jquery/jquery.min.js'), 'utf8');
 
 function between(source, startMarker, endMarker) {

@@ -1,0 +1,32 @@
+name: wendkonta
+
+services:
+  php:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    image: wendkonta-php:8.3
+    container_name: wendkonta-php
+    restart: unless-stopped
+    working_dir: /var/www/html
+    ports:
+      - "127.0.0.1:19083:9000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - /www/www/logicielyaar_site-wendkonta:/var/www/html
+    security_opt:
+      - no-new-privileges:true
+    tmpfs:
+      - /tmp
+    healthcheck:
+      test: ["CMD", "php", "-r", "exit(is_resource(@fsockopen('127.0.0.1', 9000)) ? 0 : 1);"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="manifest" href="{{url('manifest.json')}}">
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="<?php echo asset('vendor/bootstrap/css/bootstrap.min.css') ?>" type="text/css">
 
@@ -113,9 +112,11 @@
     <link rel="stylesheet" href="<?php echo asset('vendor/bootstrap/css/bootstrap-rtl.min.css') ?>" type="text/css">
     <link rel="stylesheet" href="<?php echo asset('css/custom-rtl.css') ?>" type="text/css" id="custom-style">
     @endif
-  </head>
+  @include('backend.layout.mobile-head')
+</head>
 
   <body onload="myFunction()">
+@include('backend.layout.mobile-navigation')
     <div id="loader"></div>
       <!-- Side Navbar -->
       <nav class="side-navbar">
@@ -905,6 +906,7 @@
             </ul>
           </div>
         </div>
+        @include('backend.layout.mobile-menu-tools')
       </nav>
       <!-- navbar-->
       <header class="header">

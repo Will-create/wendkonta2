@@ -69,6 +69,7 @@ class SaleProductSelectionTest extends TestCase
         Schema::create('general_settings', function (Blueprint $table) {
             $table->id();
             $table->text('modules')->nullable();
+            $table->string('without_stock')->default('no');
             $table->timestamps();
         });
 
@@ -207,7 +208,7 @@ class SaleProductSelectionTest extends TestCase
                 'embedded' => 0,
                 'batch' => '',
                 'customer_id' => 1,
-                'imei' => '',
+                'imei' => '0',
                 'price' => 12.50,
             ],
         ]);
@@ -216,6 +217,7 @@ class SaleProductSelectionTest extends TestCase
 
         $this->assertSame(2, (int) $payload[15]);
         $this->assertSame(2, (int) $payload[23]);
+        $this->assertNull($payload[18], 'A false serial-number flag must not become a serial number.');
         $this->assertSame('2/2', str_replace(' ', '', $payload[24]));
         $this->assertArrayNotHasKey(25, $payload);
     }
@@ -282,6 +284,95 @@ class SaleProductSelectionTest extends TestCase
             'dqty' => 2,
         ]);
         $this->assertSame(5.0, (float) DB::table('product_warehouse')->where('product_id', 1)->value('qty'));
+    }
+
+    public function test_fractional_order_and_delivery_quantities_are_preserved(): void
+    {
+        $this->insertProduct(1, 'Oil', 'OIL-1');
+        DB::table('customers')->insert(['id' => 10, 'name' => 'Customer']);
+        DB::table('product_warehouse')->insert(['product_id' => 1, 'warehouse_id' => 1, 'qty' => 7, 'price' => 12.5]);
+        $saleId = $this->controller()->store($this->stockRequest(0.5, 0.25));
+        $this->assertIsInt($saleId);
+        $this->assertDatabaseHas('product_sales', ['sale_id' => $saleId, 'qty' => 0.5, 'dqty' => 0.25]);
+        $this->assertSame(6.75, (float) DB::table('product_warehouse')->where('product_id', 1)->value('qty'));
+    }
+
+    public function test_insufficient_warehouse_stock_rolls_back_sale_and_global_quantity(): void
+    {
+        $this->insertProduct(1, 'Oil', 'OIL-1');
+        DB::table('customers')->insert(['id' => 10, 'name' => 'Customer']);
+        DB::table('product_warehouse')->insert(['product_id' => 1, 'warehouse_id' => 1, 'qty' => 1, 'price' => 12.5]);
+        $request = $this->stockRequest(2, 2);
+        $request->headers->set('Accept', 'application/json');
+        $result = $this->controller()->store($request);
+        $this->assertSame(422, $result->getStatusCode());
+        $this->assertSame(0, DB::table('sales')->count());
+        $this->assertSame(20.0, (float) DB::table('products')->where('id', 1)->value('qty'));
+        $this->assertSame(1.0, (float) DB::table('product_warehouse')->where('product_id', 1)->value('qty'));
+    }
+
+    public function test_digital_product_does_not_require_physical_warehouse_stock(): void
+    {
+        $this->insertProduct(1, 'Download', 'OIL-1');
+        DB::table('products')->where('id', 1)->update(['type' => 'digital']);
+        DB::table('customers')->insert(['id' => 10, 'name' => 'Customer']);
+        $saleId = $this->controller()->store($this->stockRequest(1, 1));
+        $this->assertIsInt($saleId);
+        $this->assertSame(20.0, (float) DB::table('products')->where('id', 1)->value('qty'));
+        $this->assertDatabaseHas('product_sales', ['sale_id' => $saleId, 'qty' => 1]);
+    }
+
+    public function test_invalid_unit_conversion_returns_validation_error_without_saving_sale(): void
+    {
+        $this->insertProduct(1, 'Oil', 'OIL-1');
+        DB::table('customers')->insert(['id' => 10, 'name' => 'Customer']);
+        DB::table('units')->where('id', 1)->update(['operator' => '/', 'operation_value' => 0]);
+        $request = $this->stockRequest(1, 1);
+        $request->headers->set('Accept', 'application/json');
+        $response = $this->controller()->store($request);
+        $this->assertSame(422, $response->getStatusCode());
+        $this->assertSame(0, DB::table('sales')->count());
+        $this->assertSame(20.0, (float) DB::table('products')->where('id', 1)->value('qty'));
+    }
+
+    public function test_edit_replaces_fractional_delivery_without_changing_unrelated_stock(): void
+    {
+        $this->insertProduct(1, 'Oil', 'OIL-1');
+        DB::table('customers')->insert(['id' => 10, 'name' => 'Customer']);
+        DB::table('product_warehouse')->insert(['product_id' => 1, 'warehouse_id' => 1, 'qty' => 7]);
+        $id = $this->controller()->store($this->stockRequest(0.5, 0.25));
+        $this->controller()->update($this->stockRequest(0.75, 0.5), $id);
+        $this->assertDatabaseHas('product_sales', ['sale_id' => $id, 'qty' => 0.75, 'dqty' => 0.5]);
+        $this->assertSame(6.5, (float) DB::table('product_warehouse')->value('qty'));
+        $this->assertSame(19.5, (float) DB::table('products')->where('id', 1)->value('qty'));
+    }
+
+    public function test_overselling_edit_keeps_the_previous_sale_lines_and_stock(): void
+    {
+        $this->insertProduct(1, 'Oil', 'OIL-1');
+        DB::table('customers')->insert(['id' => 10, 'name' => 'Customer']);
+        DB::table('product_warehouse')->insert(['product_id' => 1, 'warehouse_id' => 1, 'qty' => 7]);
+        $id = $this->controller()->store($this->stockRequest(0.5, 0.25));
+        $this->controller()->update($this->stockRequest(8, 8), $id);
+        $this->assertDatabaseHas('product_sales', ['sale_id' => $id, 'qty' => 0.5, 'dqty' => 0.25]);
+        $this->assertSame(6.75, (float) DB::table('product_warehouse')->value('qty'));
+        $this->assertSame(19.75, (float) DB::table('products')->where('id', 1)->value('qty'));
+    }
+
+    private function stockRequest(float $qty, float $delivered): StoreSaleRequest
+    {
+        $request = StoreSaleRequest::create('/sales', 'POST', [
+            'reference_no' => 'fractional-stock-test', 'customer_id' => 10, 'warehouse_id' => 1, 'biller_id' => 1,
+            'item' => 1, 'total_qty' => $qty, 'total_discount' => 0, 'total_tax' => 0,
+            'total_price' => 12.5 * $qty, 'order_tax_rate' => 0, 'order_tax' => 0,
+            'order_discount' => 0, 'shipping_cost' => 0, 'grand_total' => 12.5 * $qty,
+            'sale_status' => 1, 'payment_status' => 1, 'paid_amount' => 0,
+            'product_id' => [1], 'product_batch_id' => [''], 'product_code' => ['OIL-1'], 'imei_number' => [''],
+            'qty' => [$qty], 'dqty' => [$delivered], 'dstatus' => [$delivered.' / '.$qty], 'sale_unit' => ['Piece'],
+            'net_unit_price' => [12.5], 'discount' => [0], 'tax_rate' => [0], 'tax' => [0], 'subtotal' => [12.5 * $qty],
+        ]);
+        $request->setContainer($this->app)->setRedirector($this->app['redirect']);
+        return $request;
     }
 
     private function insertProduct(int $id, string $name, string $code): void

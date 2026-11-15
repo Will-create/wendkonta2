@@ -1,0 +1,44 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const {JSDOM} = require('jsdom');
+const root = path.resolve(__dirname, '../..');
+const tick = () => new Promise(resolve => setTimeout(resolve, 0));
+
+(async () => {
+    const dom = new JSDOM('<form><input id="search"><div id="picker" data-input="search" data-search="/products/search"></div><table id="myTable"><tbody><tr><td><input class="product-code" value="EXISTING"><input class="qty" value="7"></td></tr></tbody></table></form>', {url:'https://pos.test/purchases/create', runScripts:'dangerously'});
+    const w = dom.window, pending = [];
+    w.fetch = (url, options) => new Promise(resolve => pending.push({url, options, resolve}));
+    w.eval(fs.readFileSync(path.join(root, 'public/js/product-picker.js'), 'utf8'));
+    const added = []; let active = 0, maxActive = 0;
+    w.productSearch = async value => { ++active; maxActive = Math.max(active, maxActive); await tick(); added.push(value); --active; };
+    const blade = fs.readFileSync(path.join(root, 'resources/views/backend/purchase/create.blade.php'), 'utf8');
+    const body = blade.match(/add: function \(product\) \{([\s\S]*?)\n        },\n        strings:/)[1];
+    const add = w.eval('(function(product) {' + body + '})');
+    const picker = w.SaleProProductPicker(w.document.getElementById('picker'), {add, strings:{select_all:'Select all',add_selected:'Add selected',loading:'Loading',no_products:'No matches',search_error:'Failed',saved:'Saved'}});
+    const input = w.document.getElementById('search');
+    function search(text) { input.value = text; const event = new w.KeyboardEvent('keydown', {key:'Enter', bubbles:true, cancelable:true}); input.dispatchEvent(event); assert(event.defaultPrevented); }
+    search('old'); search('new');
+    assert(pending[0].options.signal.aborted);
+    pending[1].resolve({ok:true,json:async()=>({products:[{code:'A',name:'Alpha'},{code:'EXISTING',name:'Existing'},{code:'B',name:'<img src=x onerror=alert(1)>'}]})});
+    await tick();
+    pending[0].resolve({ok:true,json:async()=>({products:[{code:'STALE',name:'Stale'}]})});
+    await tick();
+    assert.equal(w.document.querySelectorAll('.sp-product-option').length,3);
+    assert(!w.document.querySelector('.sp-product-option img'), 'product labels must remain text');
+    w.document.querySelector('.sp-picker-actions .btn-outline-primary').click();
+    const checks = [...w.document.querySelectorAll('.sp-product-option input')];
+    checks[2].click(); assert.equal(checks[2].checked,false); checks[2].click();
+    w.document.querySelector('.sp-picker-actions .btn-primary').click();
+    await new Promise(resolve => setTimeout(resolve,30));
+    assert.deepEqual(added,['A|Alpha','B|<img src=x onerror=alert(1)>']);
+    assert.equal(maxActive,1, 'purchase row requests must be serialized');
+    assert.equal(w.document.querySelector('.qty').value,'7','bulk add must preserve an existing edited line');
+    picker.created({code:'NEW',name:'New product'});
+    assert.equal(w.document.querySelector('.sp-product-option input').checked,true);
+    w.document.querySelector('.sp-picker-actions .btn-primary').click();
+    await new Promise(resolve=>setTimeout(resolve,20));
+    assert.equal(added.at(-1),'NEW|New product');
+    dom.window.close();
+    console.log('PASS purchase selection, stale search exclusion, select/deselect/all, sequential additions, preserved quantities, safe labels and quick-created products');
+})().catch(error => {console.error(error); process.exitCode=1;});

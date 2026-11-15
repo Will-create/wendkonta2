@@ -657,10 +657,10 @@ class SaleController extends Controller
         $original_paid_amounts = $data['paid_amount'] ?? 0;
         
         // Handle paid_amount array conversion
-        if (is_array($data['paid_amount'])) {
-            $data['paid_amount'] = array_sum($data['paid_amount']);
+        if (is_array($original_paid_amounts)) {
+            $data['paid_amount'] = array_sum($original_paid_amounts);
         } else {
-            $data['paid_amount'] = (float)$data['paid_amount'];
+            $data['paid_amount'] = (float)$original_paid_amounts;
         }
 
         // FIXED: Ensure grand_total exists and is numeric
@@ -816,8 +816,8 @@ class SaleController extends Controller
 
         foreach ($product_id as $i => $id) {
             // FIXED: Better array validation and defaults
-            $current_dqty = isset($dqty[$i]) ? max(0, min((int)$dqty[$i], (int)($qty[$i] ?? 0))) : (int)($qty[$i] ?? 0);
-            $current_qty = (int)($qty[$i] ?? 0);
+            $current_dqty = isset($dqty[$i]) ? max(0, min((float)$dqty[$i], (float)($qty[$i] ?? 0))) : (float)($qty[$i] ?? 0);
+            $current_qty = (float)($qty[$i] ?? 0);
             
             if($current_qty <= 0) continue; // Skip invalid quantities
             
@@ -855,6 +855,9 @@ class SaleController extends Controller
             
             if(isset($sale_unit[$i]) && $sale_unit[$i] != 'n/a') {
                 $lims_sale_unit_data = Unit::where('unit_name', $sale_unit[$i])->first();
+                if (!$lims_sale_unit_data || (float) $lims_sale_unit_data->operation_value <= 0) {
+                    throw \Illuminate\Validation\ValidationException::withMessages(['sale_unit' => 'Select a valid product unit.']);
+                }
                 if ($lims_sale_unit_data) {
                     $sale_unit_id = $lims_sale_unit_data->id;
                     
@@ -875,6 +878,8 @@ class SaleController extends Controller
                 
                 if ($lims_product_variant_data) {
                     $product_sale['variant_id'] = $lims_product_variant_data->variant_id;
+                } else {
+                    throw \Illuminate\Validation\ValidationException::withMessages(['product_code' => 'Select a valid product variant.']);
                 }
             }
 
@@ -884,7 +889,7 @@ class SaleController extends Controller
             }
 
             // Only deduct stock if sale is completed (status = 1)
-            if($data['sale_status'] == 1) {
+            if($data['sale_status'] == 1 && !in_array($lims_product_data->type, ['digital', 'service'])) {
                 
                 // Handle combo products
                 if($lims_product_data->type == 'combo') {
@@ -924,6 +929,9 @@ class SaleController extends Controller
                             ])->first();
                         }
 
+                        if (!filter_var($general_setting->without_stock ?? false, FILTER_VALIDATE_BOOLEAN) && (float)($child_warehouse_data->qty ?? 0) + 0.000001 < $child_delivered_qty) {
+                            throw \Illuminate\Validation\ValidationException::withMessages(['qty' => 'Insufficient component stock for '.$lims_product_data->name]);
+                        }
                         if($child_warehouse_data) {
                             $child_warehouse_data->qty -= $child_delivered_qty;
                             $child_warehouse_data->save();
@@ -959,6 +967,9 @@ class SaleController extends Controller
                         )->first();
                     }
 
+                    if (!filter_var($general_setting->without_stock ?? false, FILTER_VALIDATE_BOOLEAN) && (float)($lims_product_warehouse_data->qty ?? 0) + 0.000001 < $stock_deduction_qty) {
+                        throw \Illuminate\Validation\ValidationException::withMessages(['qty' => 'Insufficient stock for '.$lims_product_data->name]);
+                    }
                     if($lims_product_warehouse_data) {
                         $lims_product_warehouse_data->qty -= $stock_deduction_qty;
                         $lims_product_warehouse_data->save();
@@ -1093,7 +1104,6 @@ class SaleController extends Controller
                         $lims_payment_data->save();
 
                         // Handle specific payment methods
-                        $lims_payment_data = Payment::latest()->first();
                         $data['payment_id'] = $lims_payment_data->id;
 
                         if($paying_method == 'Credit Card' && isset($data['card_number'])){
@@ -1124,6 +1134,7 @@ class SaleController extends Controller
                         else if($paying_method == 'Pesapal'){
                             $redirectUrl = $this->submitOrderRequest($lims_customer_data, $payment_amount);
                             $lims_customer_data->save();
+                            DB::commit();
 
                             return response()->json([
                                 'payment_method' => 'pesapal',
@@ -1171,8 +1182,13 @@ class SaleController extends Controller
     } catch (\Exception $e) {
         DB::rollBack();
         \Log::error('Sale Creation Error: ' . $e->getMessage());
-        \Log::error('Sale Data: ', $data);
-        return redirect()->back()->with('error', 'Error creating sale: ' . $e->getMessage());
+        \Log::error('Sale creation context', ['user_id' => Auth::id(), 'warehouse_id' => $data['warehouse_id'] ?? null]);
+        if ($request->ajax() || $request->expectsJson()) {
+            $validation = $e instanceof \Illuminate\Validation\ValidationException;
+            return response()->json(['message' => $validation ? $e->getMessage() : 'The sale could not be saved. Review its status before trying again.',
+                'errors' => $validation ? $e->errors() : []], $validation ? 422 : 500);
+        }
+        return redirect()->back()->withInput()->with('error', 'Error creating sale: ' . $e->getMessage());
     }
 }
 public function store3(StoreSaleRequest $request)
@@ -2737,7 +2753,7 @@ public function store3(StoreSaleRequest $request)
             ]);
         }
 
-        $lims_product_warehouse_data = $query->whereNull('products.is_imei')
+        $lims_product_warehouse_data = $query->withoutSerialNumber()
                                         ->whereNull('product_warehouse.variant_id')
                                         ->whereNull('product_warehouse.product_batch_id')
                                         ->select('product_warehouse.*', 'products.name', 'products.code', 'products.type', 'products.product_list', 'products.qty_list', 'products.is_embeded')
@@ -3460,7 +3476,7 @@ public function store3(StoreSaleRequest $request)
             $qty, //15
             $product->wholesale_price, //16
             $product->cost, //17
-            $request->data['imei'], // IMEI number //18
+            $product->is_imei ? $request->data['imei'] : null, // IMEI number //18
             $request->data['qty'], // warehouse qty //19
             $product->type, //20
             $batch_id, // batch ID // 21
@@ -4139,9 +4155,13 @@ public function store3(StoreSaleRequest $request)
                 foreach ($lims_product_sale_data as $product_sale) {
                     $old_dqty = $product_sale->dqty;
                     $lims_product_data = Product::find($product_sale->product_id);
+                    if (in_array($lims_product_data->type, ['digital', 'service'])) continue;
                     $lims_sale_unit_data = Unit::find($product_sale->sale_unit_id);
 
                     if ($lims_sale_unit_data) {
+                        if ((float) $lims_sale_unit_data->operation_value <= 0) {
+                            throw \Illuminate\Validation\ValidationException::withMessages(['sale_unit' => 'Select a valid product unit.']);
+                        }
                         if ($lims_sale_unit_data->operator == '*') {
                             $old_dqty *= $lims_sale_unit_data->operation_value;
                         } else {
@@ -4149,18 +4169,30 @@ public function store3(StoreSaleRequest $request)
                         }
                     }
 
+                    if ($lims_product_data->type === 'combo') {
+                        app(\App\Services\ComboStockService::class)->adjust($lims_product_data, (int) $lims_sale_data->warehouse_id, (float) $old_dqty);
+                        continue;
+                    }
                     // Add back old delivered quantity to stock
                     $lims_product_data->qty += $old_dqty;
                     $lims_product_data->save();
 
                     $lims_product_warehouse_data = Product_Warehouse::where([
                         ['product_id', $product_sale->product_id],
-                        ['warehouse_id', $lims_sale_data->warehouse_id]
+                        ['warehouse_id', $lims_sale_data->warehouse_id],
+                        ['variant_id', $product_sale->variant_id],
+                        ['product_batch_id', $product_sale->product_batch_id],
                     ])->first();
 
                     if ($lims_product_warehouse_data) {
                         $lims_product_warehouse_data->qty += $old_dqty;
                         $lims_product_warehouse_data->save();
+                    }
+                    if ($product_sale->variant_id) {
+                        ProductVariant::where('product_id', $product_sale->product_id)->where('variant_id', $product_sale->variant_id)->increment('qty', $old_dqty);
+                    }
+                    if ($product_sale->product_batch_id) {
+                        ProductBatch::where('product_id', $product_sale->product_id)->where('id', $product_sale->product_batch_id)->increment('qty', $old_dqty);
                     }
                 }
             }
@@ -4173,6 +4205,19 @@ public function store3(StoreSaleRequest $request)
                 $new_dqty = isset($dqty[$key]) ? $dqty[$key] : $qty[$key];
                 $lims_product_data = Product::find($pro_id);
                 $lims_sale_unit_data = Unit::where('unit_name', $sale_unit[$key])->first();
+                if ($sale_unit[$key] !== 'n/a' && (!$lims_sale_unit_data || (float) $lims_sale_unit_data->operation_value <= 0)) {
+                    throw \Illuminate\Validation\ValidationException::withMessages(['sale_unit' => 'Select a valid product unit.']);
+                }
+                $variantId = null;
+                if ($lims_product_data->is_variant) {
+                    $variantId = ProductVariant::FindExactProductWithCode($pro_id, $data['product_code'][$key] ?? '')->value('variant_id');
+                    if (!$variantId) throw \Illuminate\Validation\ValidationException::withMessages(['product_code' => 'Select a valid product variant.']);
+                }
+                $batchId = $data['product_batch_id'][$key] ?? null;
+                $batchId = $batchId ?: null;
+                if ($batchId && !ProductBatch::where('product_id', $pro_id)->where('id', $batchId)->exists()) {
+                    throw \Illuminate\Validation\ValidationException::withMessages(['product_batch_id' => 'Select a valid product batch.']);
+                }
 
                 $stock_deduction_qty = $new_dqty;
                 if ($lims_sale_unit_data) {
@@ -4184,19 +4229,29 @@ public function store3(StoreSaleRequest $request)
                 }
 
                 // Deduct new delivered quantity from stock
-                if ($data['sale_status'] == 1) {
-                    $lims_product_data->qty -= $stock_deduction_qty;
-                    $lims_product_data->save();
-
+                if ($data['sale_status'] == 1 && $lims_product_data->type === 'combo') {
+                    app(\App\Services\ComboStockService::class)->adjust($lims_product_data, (int) $data['warehouse_id'], -(float) $stock_deduction_qty);
+                }
+                if ($data['sale_status'] == 1 && !in_array($lims_product_data->type, ['digital', 'service', 'combo'])) {
                     $lims_product_warehouse_data = Product_Warehouse::where([
                         ['product_id', $pro_id],
-                        ['warehouse_id', $data['warehouse_id']]
+                        ['warehouse_id', $data['warehouse_id']],
+                        ['variant_id', $variantId],
+                        ['product_batch_id', $batchId],
                     ])->first();
+                    if (!filter_var(config('without_stock'), FILTER_VALIDATE_BOOLEAN) && (float) ($lims_product_warehouse_data->qty ?? 0) + 0.000001 < $stock_deduction_qty) {
+                        throw \Illuminate\Validation\ValidationException::withMessages(['qty' => 'Insufficient stock for '.$lims_product_data->name]);
+                    }
+
+                    $lims_product_data->qty -= $stock_deduction_qty;
+                    $lims_product_data->save();
 
                     if ($lims_product_warehouse_data) {
                         $lims_product_warehouse_data->qty -= $stock_deduction_qty;
                         $lims_product_warehouse_data->save();
                     }
+                    if ($variantId) ProductVariant::where('product_id', $pro_id)->where('variant_id', $variantId)->decrement('qty', $stock_deduction_qty);
+                    if ($batchId) ProductBatch::where('product_id', $pro_id)->where('id', $batchId)->decrement('qty', $stock_deduction_qty);
                 }
 
                 // Create new product sale record
@@ -4205,8 +4260,11 @@ public function store3(StoreSaleRequest $request)
                 $product_sale->product_id = $pro_id;
                 $product_sale->qty = $qty[$key];
                 $product_sale->dqty = $new_dqty;
-                $product_sale->dstatus = ($dqty[$key] ?? $qty[$key]) . ' / ' . $qty[$key];
-                $product_sale->sale_unit_id = $lims_sale_unit_data ? $lims_sale_unit_data->id : null;
+                // The delivery label is derived in Blade; the legacy dstatus column is numeric.
+                $product_sale->variant_id = $variantId;
+                $product_sale->product_batch_id = $batchId;
+                $product_sale->imei_number = $data['imei_number'][$key] ?? null;
+                $product_sale->sale_unit_id = $lims_sale_unit_data ? $lims_sale_unit_data->id : 0;
                 $product_sale->net_unit_price = $data['net_unit_price'][$key];
                 $product_sale->discount = $data['discount'][$key];
                 $product_sale->tax_rate = $data['tax_rate'][$key];
@@ -4455,10 +4513,10 @@ public function store3(StoreSaleRequest $request)
         $lims_sale_data = Sale::find($data['sale_id']);
         $lims_customer_data = Customer::find($lims_sale_data->customer_id);
         $lims_sale_data->paid_amount += $data['amount'];
-        $balance = $lims_sale_data->grand_total - $lims_sale_data->paid_amount;
-        if($balance > 0 || $balance < 0)
+        $balance = round($lims_sale_data->grand_total - $lims_sale_data->paid_amount, (int) config('decimal', 2));
+        if($balance > 0)
             $lims_sale_data->payment_status = 2;
-        elseif ($balance == 0)
+        else
             $lims_sale_data->payment_status = 4;
 
         if($data['paid_by_id'] == 1)
@@ -4500,7 +4558,6 @@ public function store3(StoreSaleRequest $request)
         $lims_payment_data->save();
         $lims_sale_data->save();
 
-        $lims_payment_data = Payment::latest()->first();
         $data['payment_id'] = $lims_payment_data->id;
 
         if($paying_method == 'Gift Card'){
@@ -4680,15 +4737,16 @@ public function store3(StoreSaleRequest $request)
         $data = $request->all();
         //return $data;
         $lims_payment_data = Payment::find($data['payment_id']);
+        abort_if(\Illuminate\Support\Facades\DB::table('customer_deposit_allocations')->where('payment_id', $lims_payment_data->id)->orWhere('reversal_payment_id', $lims_payment_data->id)->exists(), 422, __('credit.immutable_receipt'));
         $lims_sale_data = Sale::find($lims_payment_data->sale_id);
         $lims_customer_data = Customer::find($lims_sale_data->customer_id);
         //updating sale table
         $amount_dif = $lims_payment_data->amount - $data['edit_amount'];
         $lims_sale_data->paid_amount = $lims_sale_data->paid_amount - $amount_dif;
-        $balance = $lims_sale_data->grand_total - $lims_sale_data->paid_amount;
-        if($balance > 0 || $balance < 0)
+        $balance = round($lims_sale_data->grand_total - $lims_sale_data->paid_amount, (int) config('decimal', 2));
+        if($balance > 0)
             $lims_sale_data->payment_status = 2;
-        elseif ($balance == 0)
+        else
             $lims_sale_data->payment_status = 4;
         $lims_sale_data->save();
 
@@ -4880,12 +4938,13 @@ public function store3(StoreSaleRequest $request)
     public function deletePayment(Request $request)
     {
         $lims_payment_data = Payment::find($request['id']);
+        abort_if(\Illuminate\Support\Facades\DB::table('customer_deposit_allocations')->where('payment_id', $lims_payment_data->id)->orWhere('reversal_payment_id', $lims_payment_data->id)->exists(), 422, __('credit.immutable_receipt'));
         $lims_sale_data = Sale::where('id', $lims_payment_data->sale_id)->first();
         $lims_sale_data->paid_amount -= $lims_payment_data->amount;
-        $balance = $lims_sale_data->grand_total - $lims_sale_data->paid_amount;
-        if($balance > 0 || $balance < 0)
+        $balance = round($lims_sale_data->grand_total - $lims_sale_data->paid_amount, (int) config('decimal', 2));
+        if($balance > 0)
             $lims_sale_data->payment_status = 2;
-        elseif ($balance == 0)
+        else
             $lims_sale_data->payment_status = 4;
         $lims_sale_data->save();
 
@@ -4931,7 +4990,7 @@ public function store3(StoreSaleRequest $request)
             $lims_customer_data->save();
         }
         $lims_payment_data->delete();
-        return redirect('sales')->with('not_permitted', __('db.Payment deleted successfully'));
+        return redirect('sales')->with('message', __('db.Payment deleted successfully'));
     }
 
     public function todaySale()
@@ -4956,9 +5015,17 @@ public function store3(StoreSaleRequest $request)
         $data['paypal_payment'] = Payment::where([
                                     ['paying_method', 'Paypal']
                                 ])->whereDate('created_at', date("Y-m-d"))->sum('amount');
+        $depositCash = app(\App\Services\CustomerDepositCash::class);
+        $today = date('Y-m-d');
+        $data['total_payment'] += $depositCash->total(start: $today, end: $today)
+            - Payment::whereDate('created_at', $today)->sum('customer_credit_transfer');
+        $data['cash_payment'] += $depositCash->total(method: 'Cash', start: $today, end: $today);
+        $data['cheque_payment'] += $depositCash->total(method: 'Cheque', start: $today, end: $today);
         $data['total_sale_return'] = Returns::whereDate('created_at', date("Y-m-d"))->sum('grand_total');
         $data['total_expense'] = Expense::whereDate('created_at', date("Y-m-d"))->sum('amount');
         $data['total_cash'] = $data['total_payment'] - ($data['total_sale_return'] + $data['total_expense']);
+        $data['total_cash'] -= $depositCash->total(start: $today, end: $today)
+            - $depositCash->total(method: 'Cash', start: $today, end: $today);
         return $data;
     }
 
@@ -5351,7 +5418,7 @@ public function store3(StoreSaleRequest $request)
         $lims_sale_data->delete();
         $this->fileDelete(public_path('documents/sale/'), $lims_sale_data->document);
 
-        return Redirect::to($url)->with('not_permitted', $message);
+        return Redirect::to($url)->with('message', $message);
     }
 
     public function registerIPN()
@@ -5621,7 +5688,7 @@ public function store3(StoreSaleRequest $request)
 
         if (!empty($ids)) {
             Sale::withTrashed()->whereIn('id', $ids)->forceDelete();
-            return back()->with('not_permitted', 'Selected sales permanently deleted!');
+            return back()->with('message', 'Selected sales permanently deleted!');
         }
 
         return back()->with('not_permitted', 'No sales selected!');

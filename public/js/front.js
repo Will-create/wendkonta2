@@ -34,7 +34,7 @@ $(document).ready(function () {
         }
     }
 
-    if(('#btnFullscreen').length > 0) {
+    if(document.getElementById('btnFullscreen')) {
         document.getElementById('btnFullscreen').addEventListener('click', function() {
             toggleFullscreen();
         });

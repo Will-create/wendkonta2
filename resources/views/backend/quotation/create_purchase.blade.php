@@ -19,7 +19,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{{__('db.Warehouse')}} *</label>
-                                            <input type="hidden" name="warehouse_id_hidden" value="{{$lims_quotation_data->warehouse_id}}" />
+                                            <input type="hidden" name="warehouse_id_hidden" value="{{ $lims_quotation_data->warehouse_id ?: $purchase_defaults['warehouse_id'] }}" />
                                             <select required name="warehouse_id" class="selectpicker form-control" data-live-search="true" title="{{ __('db.Select warehouse...') }}">
                                                 @foreach($lims_warehouse_list as $warehouse)
                                                 <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
@@ -30,7 +30,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{{__('db.Supplier')}}</label>
-                                            <input type="hidden" name="supplier_id_hidden" value="{{ $lims_quotation_data->supplier_id }}" />
+                                            <input type="hidden" name="supplier_id_hidden" value="{{ $lims_quotation_data->supplier_id ?: $purchase_defaults['supplier_id'] }}" />
                                             <select name="supplier_id" class="selectpicker form-control" data-live-search="true" id="supplier-id" title="{{ __('db.Select supplier...') }}">
                                                 @foreach($lims_supplier_list as $supplier)
                                                 <option value="{{$supplier->id}}">{{$supplier->name .' ('. $supplier->company_name .')'}}</option>

@@ -2,19 +2,13 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
-    public function testExample(): void
+    public function test_dashboard_requires_authentication(): void
     {
-        // $response = $this->get('/auto-update-dashboard');
-        // or
-        $response = $this->get(route('dashboard'));
-
-
-        $response->assertStatus(200);
+        config(['app.key' => 'base64:'.base64_encode(str_repeat('t', 32))]);
+        $this->get('/dashboard')->assertRedirect(route('login'));
     }
 }

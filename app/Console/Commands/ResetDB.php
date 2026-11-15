@@ -21,6 +21,12 @@ class ResetDB extends Command
 
     public function handle()
     {
+        if (app()->environment('production')) {
+            $this->error('Database resets are disabled in production.');
+
+            return self::FAILURE;
+        }
+
         //clearing all the cached queries
         $this->cacheForget('biller_list');
         $this->cacheForget('brand_list');

@@ -65,6 +65,7 @@
                                                     else{
                                                         $customer_id = $lims_customer_list[0]->id;
                                                     }
+                                                    $customer_id = request('customer_id', $customer_id);
                                                 @endphp
                                                 @if($customer_active)
                                                 <select required name="customer_id" id="customer_id" class="selectpicker form-control" data-live-search="true" title="{{ __('db.Select customer...') }}" style="width: 100px">
@@ -795,7 +796,7 @@
                                     </div>
                                 `;
                             } else if (product.product_batch_id != null) {
-                                if(parseInt(product.qty) > 0){
+                                if(parseFloat(product.qty) > 0){
                                     if(product.expired_date == 0) {
                                         product.expired_date = "{{__('db.expired')}}";
                                         var expired = "expired";
@@ -805,7 +806,7 @@
                                                                             data-qty="${product.qty}" 
                                                                             data-dqty="${product.dqty}" 
                                                                             data-dstatus="${product.dqty} / ${product.qty}" 
-                                                                            data-imei="${product.is_imei}" 
+                                                                            data-imei=""
                                                                             data-embedded="${product.is_embeded}" 
                                                                             data-batch="${batch_id}" 
                                                                             data-price="${product.price}">
@@ -820,7 +821,7 @@
                                                             data-qty="${product.qty}" 
                                                             data-dqty="${product.dqty}" 
                                                             data-dstatus="${product.dqty} / ${product.qty}" 
-                                                            data-imei="${product.is_imei}" 
+                                                            data-imei=""
                                                             data-embedded="${product.is_embeded}" 
                                                             data-batch="${batch_id}" 
                                                             data-price="${product.price}">
@@ -2346,7 +2347,9 @@ $(window).keydown(function(e){
 });
 
 $("#submit-button").on("click", function() {
-    $('.payment-form').submit();
+    var form = document.querySelector('.payment-form');
+    if (!form) return;
+    form.dispatchEvent(new Event('submit', {bubbles: true, cancelable: true}));
 });
 
 $(document).on('submit', '.payment-form', function(e) {

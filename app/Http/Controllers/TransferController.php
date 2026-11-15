@@ -292,7 +292,7 @@ class TransferController extends Controller
             ]);
         }
 
-        $lims_product_warehouse_data = $query->whereNull('products.is_imei')
+        $lims_product_warehouse_data = $query->withoutSerialNumber()
                                         ->whereNull('product_warehouse.variant_id')
                                         ->whereNull('product_warehouse.product_batch_id')
                                         ->select('product_warehouse.*', 'products.name', 'products.code', 'products.type', 'products.product_list', 'products.qty_list', 'products.is_embeded')
@@ -762,12 +762,18 @@ class TransferController extends Controller
             }
 
             if($data['status'] != 2) {
+                if (!$lims_purchase_unit_data || (float) $lims_purchase_unit_data->operation_value <= 0) {
+                    throw \Illuminate\Validation\ValidationException::withMessages(['purchase_unit' => 'Select a valid product unit.']);
+                }
                 if ($lims_purchase_unit_data->operator == '*')
                     $quantity = $qty[$i] * $lims_purchase_unit_data->operation_value;
                 else
                     $quantity = $qty[$i] / $lims_purchase_unit_data->operation_value;
+                if (!$lims_product_warehouse_data || (!filter_var(config('without_stock'), FILTER_VALIDATE_BOOLEAN) && (float) $lims_product_warehouse_data->qty + 0.000001 < $quantity)) {
+                    throw \Illuminate\Validation\ValidationException::withMessages(['qty' => 'Insufficient stock in the sending warehouse.']);
+                }
                 //deduct imei number if available
-                if($imei_number[$i]) {
+                if(!empty($imei_number[$i])) {
                     $imei_numbers = explode(",", $imei_number[$i]);
                     $all_imei_numbers = explode(",", $lims_product_warehouse_data->imei_number);
                     foreach ($imei_numbers as $number) {
@@ -812,7 +818,7 @@ class TransferController extends Controller
                     $lims_product_warehouse_data->qty = $quantity;
                 }
                 //add imei number if available
-                if($imei_number[$i]) {
+                if(!empty($imei_number[$i])) {
                     if($lims_product_warehouse_data->imei_number)
                         $lims_product_warehouse_data->imei_number .= ',' . $imei_number[$i];
                     else
@@ -1523,6 +1529,6 @@ class TransferController extends Controller
         $lims_transfer_data->delete();
         $this->fileDelete(public_path('documents/transfer/'), $lims_transfer_data->document);
 
-        return redirect('transfers')->with('not_permitted', __('db.Transfer deleted successfully'));
+        return redirect('transfers')->with('message', __('db.Transfer deleted successfully'));
     }
 }

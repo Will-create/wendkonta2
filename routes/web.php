@@ -71,6 +71,10 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+if (app()->environment('testing') && config('mobile.e2e')) {
+    require base_path('tests/e2e/routes.php');
+}
+
 Route::get('migrate', function() {
 	Artisan::call('migrate');
     Artisan::call('db:seed');
@@ -122,7 +126,8 @@ Route::group(['middleware' => 'auth'], function() {
     });
 });
 
-Route::group(['middleware' => ['common', 'auth', 'active']], function() {
+Route::group(['middleware' => ['common', 'auth', 'active', 'operation.guard']], function() {
+    Route::get('/dashboard/mobile-summary', \App\Http\Controllers\MobileDashboardController::class)->name('dashboard.mobile-summary');
 
     Route::get('/languages', [LanguageController::class, 'index'])->name('languages');
     Route::post('/languages/create', [LanguageController::class, 'store']);
@@ -291,6 +296,11 @@ Route::group(['middleware' => ['common', 'auth', 'active']], function() {
         Route::post('customer/update_point', 'updatePoint')->name('customer.updatePoint');
     });
 
+    Route::get('customer-accounts', [\App\Http\Controllers\CustomerAccountController::class, 'index'])->name('customer.accounts');
+    Route::get('customer/{customer}/account', [\App\Http\Controllers\CustomerAccountController::class, 'show'])->name('customer.account');
+    Route::post('customer/{customer}/account/deposits', [\App\Http\Controllers\CustomerAccountController::class, 'store'])->name('customer.account.deposit');
+    Route::get('customer/{customer}/account/deposits/{deposit}', [\App\Http\Controllers\CustomerAccountController::class, 'receipt'])->name('customer.account.receipt');
+    Route::post('customer/{customer}/account/deposits/{deposit}/reverse', [\App\Http\Controllers\CustomerAccountController::class, 'reverse'])->name('customer.account.reverse');
     Route::resource('customer', CustomerController::class)->except('show');
 
 
@@ -426,6 +436,10 @@ Route::group(['middleware' => ['common', 'auth', 'active']], function() {
         });
         Route::post('importpurchase', 'importPurchase')->name('purchase.import');
     });
+    Route::get('purchase-defaults', [\App\Http\Controllers\PurchaseDefaultsController::class, 'edit'])->name('purchases.defaults.edit');
+    Route::post('purchase-defaults', [\App\Http\Controllers\PurchaseDefaultsController::class, 'update'])->name('purchases.defaults.update');
+    Route::get('purchase-products/search', [\App\Http\Controllers\PurchaseProductController::class, 'search'])->name('purchases.products.search');
+    Route::post('purchase-products', [\App\Http\Controllers\PurchaseProductController::class, 'store'])->name('purchases.products.store');
     Route::resource('purchases', PurchaseController::class);
 
 

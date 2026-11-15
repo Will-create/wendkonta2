@@ -157,21 +157,21 @@ class AdjustmentController extends Controller
     //                             ['code', $product_code[0]],
     //                             ['is_active', true]
     //                         ])
-    //                         ->whereNull('is_variant')
+    //                         ->withoutVariant()
     //                         ->first();
     //     if(!$lims_product_data) {
     //         $lims_product_data = Product::where([
     //                             ['name', $product_code[1]],
     //                             ['is_active', true]
     //                         ])
-    //                         ->whereNotNull(['is_variant'])
+    //                         ->where('products.is_variant', 1)
     //                         ->first();
     //         $lims_product_data = Product::join('product_variants', 'products.id', 'product_variants.product_id')
     //             ->where([
     //                 ['product_variants.item_code', $product_code[0]],
     //                 ['products.is_active', true]
     //             ])
-    //             ->whereNotNull('is_variant')
+    //             ->where('products.is_variant', 1)
     //             ->select('products.*', 'product_variants.item_code', 'product_variants.additional_cost')
     //             ->first();
     //         $lims_product_data->cost += $lims_product_data->additional_cost;
@@ -233,14 +233,14 @@ class AdjustmentController extends Controller
     public function productWithoutVariant()
     {
         return Product::ActiveStandard()->select('id', 'name', 'code')
-                ->whereNull('is_variant')->get();
+                ->withoutVariant()->get();
     }
 
     public function productWithVariant()
     {
         return Product::join('product_variants', 'products.id', 'product_variants.product_id')
             ->ActiveStandard()
-            ->whereNotNull('is_variant')
+            ->where('products.is_variant', 1)
             ->select('products.id', 'products.name', 'product_variants.item_code')
             ->orderBy('position')
             ->get();
@@ -588,6 +588,6 @@ class AdjustmentController extends Controller
         $lims_adjustment_data->delete();
         $this->fileDelete(public_path('documents/adjustment/'), $lims_adjustment_data->document);
 
-        return redirect('qty_adjustment')->with('not_permitted', __('db.Data deleted successfully'));
+        return redirect('qty_adjustment')->with('message', __('db.Data deleted successfully'));
     }
 }

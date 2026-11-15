@@ -68,7 +68,7 @@ class Common
 
         View::share('general_setting', $general_setting);
         View::share('currency', $currency);
-        config(['staff_access' => $general_setting->staff_access, 'is_packing_slip' => $general_setting->is_packing_slip, 'date_format' => $general_setting->date_format, 'currency' => $currency->code, 'currency_position' => $general_setting->currency_position, 'decimal' => $general_setting->decimal, 'is_zatca' => $general_setting->is_zatca, 'company_name' => $general_setting->company_name, 'vat_registration_number' => $general_setting->vat_registration_number, 'without_stock' => $general_setting->without_stock, 'addons' => $general_setting->modules]);
+        config(['currency_id' => $currency->id, 'staff_access' => $general_setting->staff_access, 'is_packing_slip' => $general_setting->is_packing_slip, 'date_format' => $general_setting->date_format, 'currency' => $currency->code, 'currency_position' => $general_setting->currency_position, 'decimal' => $general_setting->decimal, 'is_zatca' => $general_setting->is_zatca, 'company_name' => $general_setting->company_name, 'vat_registration_number' => $general_setting->vat_registration_number, 'without_stock' => $general_setting->without_stock, 'addons' => $general_setting->modules]);
 
         $alert_product = DB::table('products')->where('is_active', true)->whereColumn('alert_quantity', '>', 'qty')->count();
         $dso_alert_product = DB::table('dso_alerts')->select('number_of_products')->whereDate('created_at', date("Y-m-d"))->first();
@@ -77,22 +77,17 @@ class Common
         else
             $dso_alert_product_no = 0;
         View::share(['alert_product' => $alert_product, 'dso_alert_product_no' => $dso_alert_product_no]);
-        $role = Cache::remember('user_role', 60*60*24*365, function () {
-            return DB::table('roles')->find(Auth::user()->role_id);
-        });
+        $role = DB::table('roles')->find(Auth::user()->role_id);
         View::share('role', $role);
         $permission_list = Cache::remember('permissions', 60*60*24*365, function () {
             return DB::table('permissions')->get();
         });
         View::share('permission_list', $permission_list);
-        $role_has_permissions = Cache::remember('role_has_permissions', 60*60*24*365, function () {
-            return DB::table('role_has_permissions')->where('role_id', Auth::user()->role_id)->get();
-        });
+        $role_has_permissions = DB::table('role_has_permissions')->where('role_id', Auth::user()->role_id)->get();
         View::share('role_has_permissions', $role_has_permissions);
 
-        $role_has_permissions_list = Cache::remember('role_has_permissions_list'.Auth::user()->role_id, 60*60*24*365, function () {
-            return DB::table('permissions')->join('role_has_permissions', 'permissions.id', '=', 'role_has_permissions.permission_id')->where('role_id', Auth::user()->role_id)->select('permissions.name')->get();
-        });
+        $role_has_permissions_list = DB::table('permissions')->join('role_has_permissions', 'permissions.id', '=', 'role_has_permissions.permission_id')
+            ->where('role_id', Auth::user()->role_id)->select('permissions.name')->get();
         View::share('role_has_permissions_list', $role_has_permissions_list);
 
         $categories_list = Cache::remember('category_list', 60*60*24*365, function () {

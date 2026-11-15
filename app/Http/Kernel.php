@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'active' => \App\Http\Middleware\Active::class,
         'common' => \App\Http\Middleware\Common::class,
+        'operation.guard' => \App\Http\Middleware\ProtectOperationalSubmission::class,
         'superadminauth' => \App\Http\Middleware\SuperAdminAuth::class,
         'customerauth' => \Modules\Ecommerce\Http\Middleware\CustomerAuth::class,
         'customerauth0' => \Modules\Restaurant\Http\Middleware\CustomerAuth::class,

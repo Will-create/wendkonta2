@@ -1,8 +1,8 @@
 $(document).ready(function () {
 
     'use strict';
-    var brandPrimary;
-    var brandPrimaryRgba;
+    var brandPrimary = '#733686';
+    var brandPrimaryRgba = 'rgba(115, 54, 134, 0.8)';
 
     // ------------------------------------------------------- //
     // Line Chart
@@ -18,6 +18,7 @@ $(document).ready(function () {
         var label2 = CASHFLOW.data('label2');
         var cashFlow_chart = new Chart(CASHFLOW, {
             type: 'line',
+            options: {responsive: true, maintainAspectRatio: false},
             data: {
                 labels: month,
                 datasets: [
@@ -122,6 +123,7 @@ $(document).ready(function () {
         var label2 = SALECHART.data('label2');
         var saleChart = new Chart(SALECHART, {
             type: 'bar',
+            options: {responsive: true, maintainAspectRatio: false},
             data: {
                 labels: (Array.isArray(SALECHART.data('months')) && SALECHART.data('months').length === 12) ? SALECHART.data('months') : ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
                 datasets: [
@@ -306,6 +308,7 @@ $(document).ready(function () {
         var label3 = TRANSACTIONCHART.data('label3');
         var myTransactionChart = new Chart(TRANSACTIONCHART, {
             type: 'doughnut',
+            options: {responsive: true, maintainAspectRatio: false},
             data: {
                 labels: [
                     label1,

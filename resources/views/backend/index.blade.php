@@ -3,6 +3,7 @@
 
 <x-success-message key="message" />
 <x-error-message key="not_permitted" />
+@include('backend.layout.mobile-overview')
 
       @php
         if($general_setting->theme == 'default.css') {
@@ -92,97 +93,13 @@
           </div>
         </div>
       </div>
-      @php
-        $warehouse_report_permission = $role_has_permissions_list->where('name', 'warehouse-report')->first();
-        $sales_index_permission = $role_has_permissions_list->where('name', 'sales-index')->first();
-        $delivery_dashboard_permission = $role_has_permissions_list->where('name', 'delivery')->first();
-      @endphp
-      @if($warehouse_report_permission || $sales_index_permission || $delivery_dashboard_permission)
-      <section class="mt-3">
-        <div class="container-fluid">
-          <div class="row">
-            @if($warehouse_report_permission)
-            <div class="col-md-4">
-              <div class="card">
-                <div class="card-header"><h4>{{__('db.Warehouse Report')}}</h4></div>
-                <div class="card-body">
-                  {!! Form::open(['route' => 'report.warehouse', 'method' => 'post']) !!}
-                  <div class="form-group">
-                    <label>{{__('db.Warehouse')}}</label>
-                    {{-- bootstrap-select hides this control, so a native required attribute blocks submit even when a warehouse is selected --}}
-                    <select name="warehouse_id" class="selectpicker form-control" data-live-search="true" title="{{__('db.Select warehouse...')}}">
-                      @foreach($lims_warehouse_list as $warehouse)
-                        <option value="{{$warehouse->id}}" {{Auth::user()->warehouse_id == $warehouse->id ? 'selected' : ''}}>{{$warehouse->name}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-                  <input type="hidden" name="start_date" value="{{date('Y-m').'-01'}}" />
-                  <input type="hidden" name="end_date" value="{{date('Y-m-d')}}" />
-                  <button type="submit" class="btn btn-primary">{{__('db.Open warehouse report')}}</button>
-                  {!! Form::close() !!}
-                </div>
-              </div>
-            </div>
-            @endif
-            @if($sales_index_permission)
-            <div class="col-md-5">
-              <div class="card">
-                <div class="card-header"><h4>{{__('db.Search invoice')}}</h4></div>
-                <div class="card-body">
-                  <div class="form-group">
-                    <label>{{__('db.Invoice reference')}}</label>
-                    <input type="text" id="invoice-search-reference" class="form-control" placeholder="{{__('db.Invoice reference')}}">
-                  </div>
-                  <div class="form-group">
-                    <label>{{__('db.Invoice date')}}</label>
-                    <input type="date" id="invoice-search-date" class="form-control">
-                  </div>
-                  <div class="form-group">
-                    <label>{{__('db.Customer name')}}</label>
-                    <input type="text" id="invoice-search-customer" class="form-control" placeholder="{{__('db.Customer name')}}">
-                  </div>
-                  <button type="button" id="invoice-search-btn" class="btn btn-primary">{{__('db.Search invoice')}}</button>
-                  <div class="table-responsive mt-3">
-                    <table class="table table-bordered" id="invoice-search-results">
-                      <thead>
-                        <tr>
-                          <th>{{__('db.date')}}</th>
-                          <th>{{__('db.reference')}}</th>
-                          <th>{{__('db.customer')}}</th>
-                          <th>{{__('db.grand total')}}</th>
-                          <th>{{__('db.Delivery Status')}}</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody></tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-            @endif
-            @if($delivery_dashboard_permission)
-            <div class="col-md-3">
-              <div class="card">
-                <div class="card-header"><h4>{{__('db.Delivery Report')}}</h4></div>
-                <div class="card-body">
-                  <p>{{__('db.Pending, partial and completed deliveries for the current period.')}}</p>
-                  <a href="{{route('delivery.report')}}" class="btn btn-primary">{{__('db.Open delivery report')}}</a>
-                </div>
-              </div>
-            </div>
-            @endif
-          </div>
-        </div>
-      </section>
-      @endif
       <!-- Counts Section -->
-      <section class="dashboard-counts">
+      <section class="dashboard-counts sp-dashboard-charts">
         <div class="container-fluid">
-          <div class="row">
+          <div class="row sp-dashboard-chart-row">
             @if($revenue_profit_summary)
             <div class="col-md-12 form-group">
-              <div class="row">
+              <div class="row sp-kpi-grid">
                 <!-- Count item widget-->
                 <div class="col-sm-3">
                   <div class="wrapper count-title">
@@ -230,13 +147,13 @@
               $cash_flow = $role_has_permissions_list->where('name', 'cash_flow')->first();
             @endphp
             @if($cash_flow)
-            <div class="col-md-7 mt-4">
+            <div class="col-md-7 mt-4 sp-dashboard-chart-column">
               <div class="card line-chart-example">
                 <div class="card-header d-flex align-items-center">
                   <h4>{{__('db.Cash Flow')}}</h4>
                 </div>
                 <div class="card-body">
-                  <canvas id="cashFlow" data-color = "{{$color}}" data-color_rgba = "{{$color_rgba}}" data-recieved = "{{json_encode($payment_recieved)}}" data-sent = "{{json_encode($payment_sent)}}" data-month = "{{json_encode($month)}}" data-label1="{{__('db.Payment Recieved')}}" data-label2="{{__('db.Payment Sent')}}"></canvas>
+                  <div class="sp-chart-frame sp-dashboard-chart" data-chart-kind="cashflow"><canvas id="cashFlow" data-color = "{{$color}}" data-color_rgba = "{{$color_rgba}}" data-recieved = "{{json_encode($payment_recieved)}}" data-sent = "{{json_encode($payment_sent)}}" data-month = "{{json_encode($month)}}" data-label1="{{__('db.Payment Recieved')}}" data-label2="{{__('db.Payment Sent')}}"></canvas></div>
                 </div>
               </div>
             </div>
@@ -245,12 +162,12 @@
               $monthly_summary = $role_has_permissions_list->where('name', 'monthly_summary')->first();
             @endphp
             @if($monthly_summary)
-            <div class="col-md-5 mt-4">
+            <div class="col-md-5 mt-4 sp-dashboard-chart-column">
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                   <h4>{{ __('db.month_'.date('n')) }} {{ date('Y') }}</h4>
                 </div>
-                <div class="pie-chart mb-2">
+                <div class="pie-chart sp-chart-frame sp-dashboard-chart mb-2" data-chart-kind="transactions">
                     <canvas id="transactionChart" data-color = "{{$color}}" data-color_rgba = "{{$color_rgba}}" data-revenue={{$revenue}} data-purchase={{$purchase}} data-expense={{$expense}} data-label1="{{__('db.Purchase')}}" data-label2="{{__('db.revenue')}}" data-label3="{{__('db.Expense')}}" width="100" height="95"> </canvas>
                 </div>
               </div>
@@ -274,7 +191,7 @@
                   @php
                     $chartMonths = [__('db.month_1'), __('db.month_2'), __('db.month_3'), __('db.month_4'), __('db.month_5'), __('db.month_6'), __('db.month_7'), __('db.month_8'), __('db.month_9'), __('db.month_10'), __('db.month_11'), __('db.month_12')];
                   @endphp
-                  <canvas id="saleChart" data-sale_chart_value = "{{json_encode($yearly_sale_amount)}}" data-purchase_chart_value = "{{json_encode($yearly_purchase_amount)}}" data-label1="{{__('db.Purchased Amount')}}" data-label2="{{__('db.Sold Amount')}}" data-months='@json($chartMonths)'></canvas>
+                  <div class="sp-chart-frame sp-dashboard-chart" data-chart-kind="yearly"><canvas id="saleChart" data-sale_chart_value = "{{json_encode($yearly_sale_amount)}}" data-purchase_chart_value = "{{json_encode($yearly_purchase_amount)}}" data-label1="{{__('db.Purchased Amount')}}" data-label2="{{__('db.Sold Amount')}}" data-months='@json($chartMonths)'></canvas></div>
                 </div>
               </div>
             </div>
@@ -447,6 +364,91 @@
           </div>
         </div>
       </section>
+      @php
+        $warehouse_report_permission = $role_has_permissions_list->where('name', 'warehouse-report')->first();
+        $sales_index_permission = $role_has_permissions_list->where('name', 'sales-index')->first();
+        $delivery_dashboard_permission = $role_has_permissions_list->where('name', 'delivery')->first();
+      @endphp
+      @if($warehouse_report_permission || $sales_index_permission || $delivery_dashboard_permission)
+      <section class="mt-3">
+        <div class="container-fluid">
+          <div class="row">
+            @if($warehouse_report_permission)
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-header"><h4>{{__('db.Warehouse Report')}}</h4></div>
+                <div class="card-body">
+                  {!! Form::open(['route' => 'report.warehouse', 'method' => 'post']) !!}
+                  <div class="form-group">
+                    <label>{{__('db.Warehouse')}}</label>
+                    {{-- bootstrap-select hides this control, so a native required attribute blocks submit even when a warehouse is selected --}}
+                    <select name="warehouse_id" class="selectpicker form-control" data-live-search="true" title="{{__('db.Select warehouse...')}}">
+                      @foreach($lims_warehouse_list as $warehouse)
+                        <option value="{{$warehouse->id}}" {{Auth::user()->warehouse_id == $warehouse->id ? 'selected' : ''}}>{{$warehouse->name}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <input type="hidden" name="start_date" value="{{date('Y-m').'-01'}}" />
+                  <input type="hidden" name="end_date" value="{{date('Y-m-d')}}" />
+                  <button type="submit" class="btn btn-primary">{{__('db.Open warehouse report')}}</button>
+                  {!! Form::close() !!}
+                </div>
+              </div>
+            </div>
+            @endif
+            @if($sales_index_permission)
+            <div class="col-md-5">
+              <div class="card">
+                <div class="card-header"><h4>{{__('db.Search invoice')}}</h4></div>
+                <div class="card-body">
+                  <div class="form-group">
+                    <label>{{__('db.Invoice reference')}}</label>
+                    <input type="text" id="invoice-search-reference" class="form-control" placeholder="{{__('db.Invoice reference')}}">
+                  </div>
+                  <div class="form-group">
+                    <label>{{__('db.Invoice date')}}</label>
+                    <input type="date" id="invoice-search-date" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label>{{__('db.Customer name')}}</label>
+                    <input type="text" id="invoice-search-customer" class="form-control" placeholder="{{__('db.Customer name')}}">
+                  </div>
+                  <button type="button" id="invoice-search-btn" class="btn btn-primary">{{__('db.Search invoice')}}</button>
+                  <div class="table-responsive mt-3">
+                    <table class="table table-bordered" id="invoice-search-results">
+                      <thead>
+                        <tr>
+                          <th>{{__('db.date')}}</th>
+                          <th>{{__('db.reference')}}</th>
+                          <th>{{__('db.customer')}}</th>
+                          <th>{{__('db.grand total')}}</th>
+                          <th>{{__('db.Delivery Status')}}</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            @endif
+            @if($delivery_dashboard_permission)
+            <div class="col-md-3">
+              <div class="card">
+                <div class="card-header"><h4>{{__('db.Delivery Report')}}</h4></div>
+                <div class="card-body">
+                  <p>{{__('db.Pending, partial and completed deliveries for the current period.')}}</p>
+                  <a href="{{route('delivery.report')}}" class="btn btn-primary">{{__('db.Open delivery report')}}</a>
+                </div>
+              </div>
+            </div>
+            @endif
+          </div>
+        </div>
+      </section>
+      @endif
+
 
 
 @endsection

@@ -258,7 +258,6 @@ $('[data-toggle="tooltip"]').tooltip();
 
 @if(isset(auth()->user()->warehouse_id))
 if ($('select[name="from_warehouse_id"]').val() === '{{auth()->user()->warehouse_id}}') {
-    alert('j');
     $.get('getproduct/{{auth()->user()->warehouse_id}}', function(data) {
         lims_product_array = [];
         product_code = data[0];

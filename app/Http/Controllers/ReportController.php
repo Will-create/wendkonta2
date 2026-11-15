@@ -714,6 +714,15 @@ class ReportController extends Controller
                             ->whereDate('created_at', '<=' , $end_date)
                             ->sum('amount');
         $cash_payment_sale =  $payment_recieved - $credit_card_payment_sale - $cheque_payment_sale - $gift_card_payment_sale - $paypal_payment_sale - $deposit_payment_sale;
+        $depositCash = app(\App\Services\CustomerDepositCash::class);
+        $receiptCash = $depositCash->total(start: $start_date, end: $end_date);
+        $transferCash = Payment::whereNotNull('sale_id')->whereDate('created_at', '>=', $start_date)
+            ->whereDate('created_at', '<=', $end_date)->sum('customer_credit_transfer');
+        $payment_recieved += $receiptCash - $transferCash;
+        $cash_payment_sale += $depositCash->total(method: 'Cash', start: $start_date, end: $end_date);
+        $cheque_payment_sale += $depositCash->total(method: 'Cheque', start: $start_date, end: $end_date);
+        $deposit_payment_sale -= $transferCash;
+        $bank_transfer_payment_sale = $depositCash->total(method: 'Bank Transfer', start: $start_date, end: $end_date);
         $payment_sent_number = DB::table('payments')->whereNotNull('purchase_id')->whereDate('created_at', '>=' , $start_date)
             ->whereDate('created_at', '<=' , $end_date)->count();
         $payment_sent = DB::table('payments')->whereNotNull('purchase_id')->whereDate('created_at', '>=' , $start_date)->whereDate('created_at', '<=' , $end_date)->sum('payments.amount');
@@ -744,7 +753,7 @@ class ReportController extends Controller
             $warehouse_expense[] = Expense::where('warehouse_id', $warehouse->id)->whereDate('created_at', '>=' , $start_date)->whereDate('created_at', '<=' , $end_date)->sum('amount');
         }
 
-        return view('backend.report.profit_loss', compact('purchase', 'product_cost', 'product_tax', 'total_purchase', 'sale', 'total_sale', 'return', 'purchase_return', 'total_return', 'total_purchase_return', 'expense','income', 'payroll', 'total_expense','total_income', 'total_payroll', 'payment_recieved', 'payment_recieved_number', 'cash_payment_sale', 'cheque_payment_sale', 'credit_card_payment_sale', 'gift_card_payment_sale', 'paypal_payment_sale', 'deposit_payment_sale', 'payment_sent', 'payment_sent_number', 'cash_payment_purchase', 'cheque_payment_purchase', 'credit_card_payment_purchase', 'warehouse_name', 'warehouse_sale', 'warehouse_purchase', 'warehouse_return', 'warehouse_purchase_return', 'warehouse_expense', 'start_date', 'end_date'));
+        return view('backend.report.profit_loss', compact('purchase', 'product_cost', 'product_tax', 'total_purchase', 'sale', 'total_sale', 'return', 'purchase_return', 'total_return', 'total_purchase_return', 'expense','income', 'payroll', 'total_expense','total_income', 'total_payroll', 'payment_recieved', 'payment_recieved_number', 'cash_payment_sale', 'bank_transfer_payment_sale', 'cheque_payment_sale', 'credit_card_payment_sale', 'gift_card_payment_sale', 'paypal_payment_sale', 'deposit_payment_sale', 'payment_sent', 'payment_sent_number', 'cash_payment_purchase', 'cheque_payment_purchase', 'credit_card_payment_purchase', 'warehouse_name', 'warehouse_sale', 'warehouse_purchase', 'warehouse_return', 'warehouse_purchase_return', 'warehouse_expense', 'start_date', 'end_date'));
     }
 
     public function calculateAverageCOGS($product_sale_data)
@@ -5361,7 +5370,7 @@ class ReportController extends Controller
                 'grand_total' => number_format($sale->grand_total, cache()->get('general_setting')->decimal),
                 'returned_amount' => number_format($returned_amount, cache()->get('general_setting')->decimal),
                 'paid' => number_format($sale->paid_amount ?? 0, cache()->get('general_setting')->decimal),
-                'due' => number_format(($sale->grand_total - $returned_amount - ($sale->paid_amount ?? 0)), cache()->get('general_setting')->decimal),
+                'due' => number_format(max(0, $sale->grand_total - ($sale->paid_amount ?? 0)), cache()->get('general_setting')->decimal),
             ];
         }
 

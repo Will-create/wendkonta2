@@ -80,7 +80,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" rel="stylesheet">
 
     @stack('css')
-  </head>
+  @include('backend.layout.mobile-head')
+</head>
   <body class="pos-page">
       <div id="content">
           @yield('content')

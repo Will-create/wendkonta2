@@ -1,6 +1,11 @@
 {
     "private": true,
     "scripts": {
+        "test:mobile:dom": "node tests/js/mobile-shell.dom.test.cjs && node tests/js/mobile-ajax.dom.test.cjs && node tests/js/mobile-summary.dom.test.cjs && node tests/js/pwa-worker.test.cjs && node tests/js/mobile-charts.dom.test.cjs",
+        "test:mobile:e2e": "python3 deploy/test_mobile.py",
+        "test:followup": "node tests/js/followup.dom.test.cjs",
+        "test:purchase-selection": "node tests/js/purchase-product-picker.dom.test.cjs",
+        "test:mobile:pagination": "node tests/js/mobile-pagination.dom.test.cjs",
         "test:sale-selection": "node tests/js/sale-product-select.dom.test.cjs",
         "test:sale-selection:browser": "node tests/js/sale-product-select.test.mjs",
         "dev": "npm run development",
@@ -12,6 +17,7 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
+        "@playwright/test": "1.63.0",
         "axios": "^0.19",
         "bootstrap": "^4.0.0",
         "cross-env": "^7.0",

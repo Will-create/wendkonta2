@@ -511,7 +511,7 @@ class ReturnController extends Controller
                 $lims_customer_data->save();
             }
 
-            if ($lims_payment_data->paying_method == 'Deposit') {
+            if ($lims_payment_data->paying_method == 'Deposit' && !(float) $lims_payment_data->customer_credit_transfer) {
                 $lims_customer_data->expense -= (float) $lims_payment_data->amount;
                 $lims_customer_data->save();
             }
@@ -1307,7 +1307,7 @@ class ReturnController extends Controller
                     ->first();
                 $lims_customer_data = Customer::find($lims_return_data->customer_id);
 
-                if ($lims_payment_data && $lims_payment_data->paying_method === 'Deposit') {
+                if ($lims_payment_data && $lims_payment_data->paying_method === 'Deposit' && !(float) $lims_payment_data->customer_credit_transfer) {
                     $lims_customer_data->expense = (float) $lims_customer_data->expense + (float) $lims_payment_data->amount;
                     $lims_customer_data->save();
                 }
@@ -1320,6 +1320,6 @@ class ReturnController extends Controller
         $lims_return_data->delete();
         $this->fileDelete(public_path('documents/sale_return/'), $lims_return_data->document);
 
-        return redirect('return-sale')->with('not_permitted', __('db.Data deleted successfully'));
+        return redirect('return-sale')->with('message', __('db.Data deleted successfully'));
     }
 }
